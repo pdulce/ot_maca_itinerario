@@ -1,0 +1,30 @@
+spring:
+
+  
+kafka:
+  bootstrap:
+    servers: localhost
+    
+giss:
+
+  application:
+    name: mac1
+    capp-code: MACA
+    development-center: ced
+    
+  audit:
+    enabled: false
+
+  security:
+    web:
+      fake:
+        enabled: true
+        roles:
+        authorities: READ_FAKE, WRITE_FAKE
+        type-of-user: INTRANET
+
+  kafka:
+    default-config:
+      secured-connection:
+        enabled: false
+  
