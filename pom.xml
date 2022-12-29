@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>giss.mad.itinerario</groupId>
-    <artifactId>mac1</artifactId>
+    <artifactId>ot_maca_itinerario</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <description>Proyecto backend para el servicio </description>
