@@ -22,7 +22,7 @@ public class PesosEntregaElementoPromocionable implements IPesosActividades {
         int number_activity = 0;
 
 
-        listaPesosActividades.get(number_activity).addAll(new PesosEje(restTemplate, AXE[1],  /*pesos*/List.of(10,1)).getPesos());
+        listaPesosActividades.get(number_activity).addAll(new PesosEje(restTemplate, AXE[1],  /*pesos*/List.of(10, 1)).getPesos());
         listaPesosActividades.get(number_activity).addAll(new PesosEje(restTemplate, AXE[18],  /*pesos*/List.of(0,0,-1,-1)).getPesos());
         mapaDeActividadesConPesos.put(ACTIVITY[1], listaPesosActividades.get(number_activity));
         number_activity++;
