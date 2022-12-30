@@ -6,4 +6,5 @@ import org.springframework.context.annotation.Configuration;
 @EnableGissSwagger
 @Configuration
 public class SwaggerConfig {
+
 }

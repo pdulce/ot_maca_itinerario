@@ -6,4 +6,5 @@ import org.springframework.context.annotation.Configuration;
 @EnableGissKafkaConsumer
 @Configuration
 public class KafkaConfig {
+
 }

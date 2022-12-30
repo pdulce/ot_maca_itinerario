@@ -1,32 +1,32 @@
-package giss.mad.marcocalidad.itinerariocalidad.model.auxactiv;
+package giss.mad.itinerario.model.auxactiv;
 
 public class ActividadReduced {
 
-    private Integer num;
-    private String actividad;
+  private Integer num;
+  private String actividad;
 
-    public ActividadReduced(Integer id_, String name_){
-        this.num = id_;
-        this.actividad = name_;
-    }
+  public ActividadReduced(Integer id_, String name_) {
+    this.num = id_;
+    this.actividad = name_;
+  }
 
-    public ActividadReduced() {
+  public ActividadReduced() {
 
-    }
+  }
 
-    public Integer getNum() {
-        return num;
-    }
+  public Integer getNum() {
+    return num;
+  }
 
-    public void setNum(Integer id) {
-        this.num = id;
-    }
+  public void setNum(Integer id) {
+    this.num = id;
+  }
 
-    public String getActividad() {
-        return actividad;
-    }
+  public String getActividad() {
+    return actividad;
+  }
 
-    public void setActividad(String name) {
-        this.actividad = name;
-    }
+  public void setActividad(String name) {
+    this.actividad = name;
+  }
 }

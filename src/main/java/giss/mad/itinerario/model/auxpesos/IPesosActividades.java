@@ -1,4 +1,4 @@
-package giss.mad.marcocalidad.itinerariocalidad.model.auxpesos;
+package giss.mad.itinerario.model.auxpesos;
 
 import org.springframework.web.client.RestTemplate;
 
@@ -7,7 +7,10 @@ import java.util.Map;
 
 public interface IPesosActividades {
 
-    static final int[] AXE = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22};
-    static final int[] ACTIVITY = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
-    public Map<Integer, List<Weight>> getPesosPorActividades(RestTemplate restTemplate);
+  static final int[] AXE = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+      20, 21, 22};
+  static final int[] ACTIVITY = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+      19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31};
+
+  public Map<Integer, List<Weight>> getPesosPorActividades(RestTemplate restTemplate);
 }

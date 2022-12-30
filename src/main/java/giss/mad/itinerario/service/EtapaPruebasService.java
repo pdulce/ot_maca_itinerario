@@ -1,7 +1,7 @@
-package giss.mad.marcocalidad.itinerariocalidad.service;
+package giss.mad.itinerario.service;
 
-import giss.mad.marcocalidad.itinerariocalidad.model.EtapaPruebas;
-import giss.mad.marcocalidad.itinerariocalidad.repo.EtapaPruebasRepository;
+import giss.mad.itinerario.model.EtapaPruebas;
+import giss.mad.itinerario.model.repository.EtapaPruebasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,54 +14,57 @@ import java.util.List;
 @Service
 public class EtapaPruebasService {
 
-    @Autowired
-    private EtapaPruebasRepository etapaPruebasRepository;
+  @Autowired
+  private EtapaPruebasRepository etapaPruebasRepository;
 
-    private static final List<String> etapas = List.of("DiseÃ±o", "AnÃ¡lisis de cÃ³digo estÃ¡tico", "Desarrollo", "IntegraciÃ³n",
-            "Pruebas de AceptaciÃ³n", "Funcionales", "Rendimiento", "Seguridad", "Accesibilidad", "Usabilidad", "AutomatizaciÃ³n de Pruebas",
-            "AnÃ¡lisis de IA");
+  private static final List<String> etapas = List.of("DiseÃ±o", "AnÃ¡lisis de cÃ³digo estÃ¡tico",
+      "Desarrollo", "IntegraciÃ³n",
+      "Pruebas de AceptaciÃ³n", "Funcionales", "Rendimiento", "Seguridad", "Accesibilidad",
+      "Usabilidad", "AutomatizaciÃ³n de Pruebas",
+      "AnÃ¡lisis de IA");
 
-    public Collection<EtapaPruebas> getAll() {
-        return this.etapaPruebasRepository.findAllByDeletedIsNull();
+  public Collection<EtapaPruebas> getAll() {
+    return this.etapaPruebasRepository.findAllByDeletedIsNull();
+  }
+
+  public EtapaPruebas get(Integer idActividadQA) {
+    return this.etapaPruebasRepository.findByIdAndDeletedIsNull(idActividadQA);
+  }
+
+  @Transactional
+  public EtapaPruebas remove(Integer idetapaPruebas) {
+    EtapaPruebas etapaPruebas = this.etapaPruebasRepository.findByIdAndDeletedIsNull(
+        idetapaPruebas);
+    if (this.etapaPruebasRepository.findByIdAndDeletedIsNull(etapaPruebas.getId()) != null) {
+      this.etapaPruebasRepository.delete(etapaPruebas);
     }
+    return etapaPruebas;
+  }
 
-    public EtapaPruebas get(Integer idActividadQA) {
-        return this.etapaPruebasRepository.findByIdAndDeletedIsNull(idActividadQA);
-    }
+  @Transactional
+  public EtapaPruebas save(EtapaPruebas actividadQA) {
+    return this.etapaPruebasRepository.save(actividadQA);
+  }
 
-    @Transactional
-    public EtapaPruebas remove(Integer idetapaPruebas) {
-        EtapaPruebas etapaPruebas = this.etapaPruebasRepository.findByIdAndDeletedIsNull(idetapaPruebas);
-        if (this.etapaPruebasRepository.findByIdAndDeletedIsNull(etapaPruebas.getId()) != null) {
-            this.etapaPruebasRepository.delete(etapaPruebas);
-        }
-        return etapaPruebas;
+  @Transactional
+  public EtapaPruebas update(EtapaPruebas etapaPruebas) {
+    if (this.etapaPruebasRepository.findByIdAndDeletedIsNull(etapaPruebas.getId()) != null) {
+      return this.etapaPruebasRepository.save(etapaPruebas);
     }
+    return null;
+  }
 
-    @Transactional
-    public EtapaPruebas save(EtapaPruebas actividadQA) {
-        return this.etapaPruebasRepository.save(actividadQA);
+  @Transactional
+  public void initializeDB() {
+    int id = 1;
+    for (String etapaName : etapas) {
+      EtapaPruebas etapaPruebas = new EtapaPruebas();
+      etapaPruebas.setId(id);
+      etapaPruebas.setName(etapaName);
+      etapaPruebas.setDescription(etapaName);
+      etapaPruebas.setCreationDate(new Timestamp(Calendar.getInstance().getTime().getTime()));
+      this.save(etapaPruebas);
+      id++;
     }
-
-    @Transactional
-    public EtapaPruebas update(EtapaPruebas etapaPruebas) {
-        if (this.etapaPruebasRepository.findByIdAndDeletedIsNull(etapaPruebas.getId()) != null) {
-            return this.etapaPruebasRepository.save(etapaPruebas);
-        }
-        return null;
-    }
-
-    @Transactional
-    public void initializeDB() {
-        int id = 1;
-        for (String etapaName: etapas){
-            EtapaPruebas etapaPruebas = new EtapaPruebas();
-            etapaPruebas.setId(id);
-            etapaPruebas.setName(etapaName);
-            etapaPruebas.setDescription(etapaName);
-            etapaPruebas.setCreationDate(new Timestamp(Calendar.getInstance().getTime().getTime()));
-            this.save(etapaPruebas);
-            id++;
-        }
-    }
+  }
 }

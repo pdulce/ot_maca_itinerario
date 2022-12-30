@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class KafkaConsumerService extends ConsumerService<String, Object> {
 
-    public KafkaConsumerService() {
-        super((k, v) -> log.info("######################" + String.valueOf(v)));
-    }
+  public KafkaConsumerService() {
+    super((k, v) -> log.info("######################" + String.valueOf(v)));
+  }
 }

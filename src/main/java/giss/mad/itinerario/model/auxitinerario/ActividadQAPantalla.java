@@ -1,4 +1,4 @@
-package giss.mad.marcocalidad.itinerariocalidad.model.auxitinerario;
+package giss.mad.itinerario.model.auxitinerario;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -6,65 +6,65 @@ import javax.persistence.Id;
 
 public class ActividadQAPantalla {
 
-    @Id
-    @JsonIgnore
-    private Long id;
+  @Id
+  @JsonIgnore
+  private Long id;
 
-    private String stage;
-    private String activity;
+  private String stage;
+  private String activity;
 
-    private String realization;
+  private String realization;
 
-    @JsonIgnore
-    private String observations;
+  @JsonIgnore
+  private String observations;
 
-    private Boolean included;
+  private Boolean included;
 
-    public Long getId() {
-        return id;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public String getActivity() {
-        return activity;
-    }
+  public String getActivity() {
+    return activity;
+  }
 
-    public void setActivity(String activity) {
-        this.activity = activity;
-    }
+  public void setActivity(String activity) {
+    this.activity = activity;
+  }
 
-    public String getRealization() {
-        return realization;
-    }
+  public String getRealization() {
+    return realization;
+  }
 
-    public void setRealization(String realization) {
-        this.realization = realization;
-    }
+  public void setRealization(String realization) {
+    this.realization = realization;
+  }
 
-    public String getObservations() {
-        return observations;
-    }
+  public String getObservations() {
+    return observations;
+  }
 
-    public void setObservations(String observations) {
-        this.observations = observations;
-    }
+  public void setObservations(String observations) {
+    this.observations = observations;
+  }
 
-    public Boolean getIncluded() {
-        return included;
-    }
+  public Boolean getIncluded() {
+    return included;
+  }
 
-    public void setIncluded(Boolean included_) {
-        this.included = included_;
-    }
+  public void setIncluded(Boolean included_) {
+    this.included = included_;
+  }
 
-    public String getStage() {
-        return stage;
-    }
+  public String getStage() {
+    return stage;
+  }
 
-    public void setStage(String stage) {
-        this.stage = stage;
-    }
+  public void setStage(String stage) {
+    this.stage = stage;
+  }
 }

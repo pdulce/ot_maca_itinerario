@@ -1,4 +1,4 @@
-package giss.mad.marcocalidad.itinerariocalidad.model;
+package giss.mad.itinerario.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -8,88 +8,88 @@ import java.util.List;
 @Table(name = "EtapaPruebas", schema = "itinerario")
 public class EtapaPruebas {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
-    @Column(name = "name", unique=true, length = 50, nullable = false)
-    private String name;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", nullable = false)
+  private Integer id;
+  @Column(name = "name", unique = true, length = 50, nullable = false)
+  private String name;
 
-    @Column(name = "description")
-    private String description;
+  @Column(name = "description")
+  private String description;
 
-    @Column(name = "is_deleted")
-    private Integer deleted;
+  @Column(name = "is_deleted")
+  private Integer deleted;
 
-    @Column(name = "creation_date", nullable = false)
-    private Timestamp creationDate;
+  @Column(name = "creation_date", nullable = false)
+  private Timestamp creationDate;
 
-    @Column(name = "update_date")
-    private Timestamp updateDate;
-
-
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = ActividadQA.class)
-    @JoinColumn(name = "testing_stage_id")
-    private List<ActividadQA> actividadesQA;
+  @Column(name = "update_date")
+  private Timestamp updateDate;
 
 
-    public EtapaPruebas() {
+  @OneToMany(cascade = CascadeType.ALL, targetEntity = ActividadQA.class)
+  @JoinColumn(name = "testing_stage_id")
+  private List<ActividadQA> actividadesQA;
 
-    }
 
-    public Integer getId() {
-        return id;
-    }
+  public EtapaPruebas() {
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  }
 
-    public String getName() {
-        return name;
-    }
+  public Integer getId() {
+    return id;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public Timestamp getCreationDate() {
-        return creationDate;
-    }
+  public String getDescription() {
+    return description;
+  }
 
-    public void setCreationDate(Timestamp creation_date) {
-        this.creationDate = creation_date;
-    }
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-    public Timestamp getUpdateDate() {
-        return updateDate;
-    }
+  public Timestamp getCreationDate() {
+    return creationDate;
+  }
 
-    public void setUpdateDate(Timestamp update_date) {
-        this.updateDate = update_date;
-    }
+  public void setCreationDate(Timestamp creation_date) {
+    this.creationDate = creation_date;
+  }
 
-    public List<ActividadQA> getActividadesQA() {
-        return actividadesQA;
-    }
+  public Timestamp getUpdateDate() {
+    return updateDate;
+  }
 
-    public void setActividadesQA(List<ActividadQA> actividadesQA) {
-        this.actividadesQA = actividadesQA;
-    }
+  public void setUpdateDate(Timestamp update_date) {
+    this.updateDate = update_date;
+  }
 
-    public Integer getDeleted() {
-        return deleted;
-    }
+  public List<ActividadQA> getActividadesQA() {
+    return actividadesQA;
+  }
 
-    public void setDeleted(Integer is_deleted) {
-        this.deleted = is_deleted;
-    }
+  public void setActividadesQA(List<ActividadQA> actividadesQA) {
+    this.actividadesQA = actividadesQA;
+  }
+
+  public Integer getDeleted() {
+    return deleted;
+  }
+
+  public void setDeleted(Integer is_deleted) {
+    this.deleted = is_deleted;
+  }
 }
