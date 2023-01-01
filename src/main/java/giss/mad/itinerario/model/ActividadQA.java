@@ -1,7 +1,15 @@
 package giss.mad.itinerario.model;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
@@ -54,7 +62,7 @@ public class ActividadQA {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(final Integer id) {
     this.id = id;
   }
 
@@ -62,7 +70,7 @@ public class ActividadQA {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(final String name) {
     this.name = name;
   }
 
@@ -70,7 +78,7 @@ public class ActividadQA {
     return description;
   }
 
-  public void setDescription(String description) {
+  public void setDescription(final String description) {
     this.description = description;
   }
 
@@ -78,7 +86,7 @@ public class ActividadQA {
     return help;
   }
 
-  public void setHelp(String help) {
+  public void setHelp(final String help) {
     this.help = help;
   }
 
@@ -86,47 +94,47 @@ public class ActividadQA {
     return creationDate;
   }
 
-  public void setCreationDate(Timestamp creation_date) {
-    this.creationDate = creation_date;
+  public void setCreationDate(final Timestamp creationDate) {
+    this.creationDate = creationDate;
   }
 
   public Timestamp getUpdateDate() {
     return updateDate;
   }
 
-  public void setUpdateDate(Timestamp update_date) {
-    this.updateDate = update_date;
+  public void setUpdateDate(final Timestamp updateDate) {
+    this.updateDate = updateDate;
   }
 
   public Integer getTestingStageId() {
     return testingStageId;
   }
 
-  public void setTestingStageId(Integer testing_stage_id) {
-    this.testingStageId = testing_stage_id;
+  public void setTestingStageId(final Integer testingStageId) {
+    this.testingStageId = testingStageId;
   }
 
   public String getIdealThreshold() {
     return idealThreshold;
   }
 
-  public void setIdealThreshold(String ideal_threshold) {
-    this.idealThreshold = ideal_threshold;
+  public void setIdealThreshold(final String idealThreshold) {
+    this.idealThreshold = idealThreshold;
   }
 
   public Integer getDeleted() {
     return deleted;
   }
 
-  public void setDeleted(Integer is_deleted) {
-    this.deleted = is_deleted;
+  public void setDeleted(final Integer isDeleted) {
+    this.deleted = isDeleted;
   }
 
   public List<Peso> getPesos() {
     return pesos;
   }
 
-  public void setPesos(List<Peso> pesos) {
+  public void setPesos(final List<Peso> pesos) {
     this.pesos = pesos;
   }
 
@@ -134,7 +142,7 @@ public class ActividadQA {
     return umbrales;
   }
 
-  public void setUmbrales(List<UmbralActividad> umbrales) {
+  public void setUmbrales(final List<UmbralActividad> umbrales) {
     this.umbrales = umbrales;
   }
 }

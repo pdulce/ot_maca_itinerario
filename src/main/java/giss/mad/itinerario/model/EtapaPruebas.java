@@ -1,7 +1,15 @@
 package giss.mad.itinerario.model;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
@@ -36,12 +44,11 @@ public class EtapaPruebas {
   public EtapaPruebas() {
 
   }
-
   public Integer getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(final Integer id) {
     this.id = id;
   }
 
@@ -49,7 +56,7 @@ public class EtapaPruebas {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(final String name) {
     this.name = name;
   }
 
@@ -57,7 +64,7 @@ public class EtapaPruebas {
     return description;
   }
 
-  public void setDescription(String description) {
+  public void setDescription(final String description) {
     this.description = description;
   }
 
@@ -65,23 +72,23 @@ public class EtapaPruebas {
     return creationDate;
   }
 
-  public void setCreationDate(Timestamp creation_date) {
-    this.creationDate = creation_date;
+  public void setCreationDate(final Timestamp creationDate) {
+    this.creationDate = creationDate;
   }
 
   public Timestamp getUpdateDate() {
     return updateDate;
   }
 
-  public void setUpdateDate(Timestamp update_date) {
-    this.updateDate = update_date;
+  public void setUpdateDate(final Timestamp updateDate) {
+    this.updateDate = updateDate;
   }
 
   public List<ActividadQA> getActividadesQA() {
     return actividadesQA;
   }
 
-  public void setActividadesQA(List<ActividadQA> actividadesQA) {
+  public void setActividadesQA(final List<ActividadQA> actividadesQA) {
     this.actividadesQA = actividadesQA;
   }
 
@@ -89,7 +96,7 @@ public class EtapaPruebas {
     return deleted;
   }
 
-  public void setDeleted(Integer is_deleted) {
-    this.deleted = is_deleted;
+  public void setDeleted(final Integer isDeleted) {
+    this.deleted = isDeleted;
   }
 }

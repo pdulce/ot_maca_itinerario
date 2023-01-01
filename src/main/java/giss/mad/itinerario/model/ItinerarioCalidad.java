@@ -1,7 +1,15 @@
 package giss.mad.itinerario.model;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
@@ -35,12 +43,11 @@ public class ItinerarioCalidad {
   public ItinerarioCalidad() {
 
   }
-
   public Integer getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(final Integer id) {
     this.id = id;
   }
 
@@ -48,47 +55,47 @@ public class ItinerarioCalidad {
     return catalogueId;
   }
 
-  public void setCatalogueId(Integer delivery_or_element_id) {
-    this.catalogueId = delivery_or_element_id;
+  public void setCatalogueId(final Integer deliveryOrElementId) {
+    this.catalogueId = deliveryOrElementId;
   }
 
   public Boolean getDelivery() {
     return delivery;
   }
 
-  public void setDelivery(Boolean is_delivery) {
-    this.delivery = is_delivery;
+  public void setDelivery(final Boolean isDelivery) {
+    this.delivery = isDelivery;
   }
 
   public Integer getDeleted() {
     return deleted;
   }
 
-  public void setDeleted(Integer is_deleted) {
-    this.deleted = is_deleted;
+  public void setDeleted(final Integer isDeleted) {
+    this.deleted = isDeleted;
   }
 
   public Timestamp getCreationDate() {
     return creationDate;
   }
 
-  public void setCreationDate(Timestamp creation_date) {
-    this.creationDate = creation_date;
+  public void setCreationDate(final Timestamp creationDate) {
+    this.creationDate = creationDate;
   }
 
   public Timestamp getUpdateDate() {
     return updateDate;
   }
 
-  public void setUpdateDate(Timestamp update_date) {
-    this.updateDate = update_date;
+  public void setUpdateDate(final Timestamp updateDate) {
+    this.updateDate = updateDate;
   }
 
   public List<ActividadItinerario> getActividadesDeItinerario() {
     return actividadesDeItinerario;
   }
 
-  public void setActividadesDeItinerario(List<ActividadItinerario> actividadesDeItinerario) {
+  public void setActividadesDeItinerario(final List<ActividadItinerario> actividadesDeItinerario) {
     this.actividadesDeItinerario = actividadesDeItinerario;
   }
 }

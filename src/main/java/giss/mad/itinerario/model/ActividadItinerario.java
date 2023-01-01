@@ -1,7 +1,12 @@
 package giss.mad.itinerario.model;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "ActividadItinerario", schema = "itinerario")
@@ -50,7 +55,7 @@ public class ActividadItinerario {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(final Integer id) {
     this.id = id;
   }
 
@@ -58,31 +63,31 @@ public class ActividadItinerario {
     return activityId;
   }
 
-  public void setActivityId(Integer activity_id) {
-    this.activityId = activity_id;
+  public void setActivityId(final Integer activityId) {
+    this.activityId = activityId;
   }
 
   public Integer getQualityItineraryId() {
     return qualityItineraryId;
   }
 
-  public void setQualityItineraryId(Integer quality_itinerary_id) {
-    this.qualityItineraryId = quality_itinerary_id;
+  public void setQualityItineraryId(final Integer qualityItineraryId) {
+    this.qualityItineraryId = qualityItineraryId;
   }
 
   public String getInferredThreshold() {
     return inferredThreshold;
   }
 
-  public void setInferredThreshold(String inferred_threshold) {
-    this.inferredThreshold = inferred_threshold;
+  public void setInferredThreshold(final String inferredThreshold) {
+    this.inferredThreshold = inferredThreshold;
   }
 
   public String getObservations() {
     return observations;
   }
 
-  public void setObservations(String observations) {
+  public void setObservations(final String observations) {
     this.observations = observations;
   }
 
@@ -90,7 +95,7 @@ public class ActividadItinerario {
     return help;
   }
 
-  public void setHelp(String help) {
+  public void setHelp(final String help) {
     this.help = help;
   }
 
@@ -98,39 +103,39 @@ public class ActividadItinerario {
     return includedInItinerary;
   }
 
-  public void setIncludedInItinerary(Boolean included_in_itinerary) {
-    this.includedInItinerary = included_in_itinerary;
+  public void setIncludedInItinerary(final Boolean includedInItinerary) {
+    this.includedInItinerary = includedInItinerary;
   }
 
   public Integer getDeleted() {
     return deleted;
   }
 
-  public void setDeleted(Integer is_deleted) {
-    this.deleted = is_deleted;
+  public void setDeleted(final Integer isDeleted) {
+    this.deleted = isDeleted;
   }
 
   public Timestamp getCreationDate() {
     return creationDate;
   }
 
-  public void setCreationDate(Timestamp creation_date) {
-    this.creationDate = creation_date;
+  public void setCreationDate(final Timestamp creationDate) {
+    this.creationDate = creationDate;
   }
 
   public Timestamp getUpdateDate() {
     return updateDate;
   }
 
-  public void setUpdateDate(Timestamp update_date) {
-    this.updateDate = update_date;
+  public void setUpdateDate(final Timestamp updateDate) {
+    this.updateDate = updateDate;
   }
 
   public Integer getActivitSumOfAxes() {
     return activitSumOfAxes;
   }
 
-  public void setActivitSumOfAxes(Integer activity_sum_of_axes) {
-    this.activitSumOfAxes = activity_sum_of_axes;
+  public void setActivitSumOfAxes(final Integer activitySumOfAxes) {
+    this.activitSumOfAxes = activitySumOfAxes;
   }
 }

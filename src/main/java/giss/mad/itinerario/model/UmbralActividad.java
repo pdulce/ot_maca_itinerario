@@ -1,7 +1,12 @@
 package giss.mad.itinerario.model;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "UmbralActividad", schema = "itinerario")
@@ -54,7 +59,7 @@ public class UmbralActividad {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(final Integer id) {
     this.id = id;
   }
 
@@ -62,39 +67,39 @@ public class UmbralActividad {
     return lowerLimit;
   }
 
-  public void setLowerLimit(Integer lower_limit) {
-    this.lowerLimit = lower_limit;
+  public void setLowerLimit(final Integer lowerLimit) {
+    this.lowerLimit = lowerLimit;
   }
 
   public Integer getUpperLimit() {
     return upperLimit;
   }
 
-  public void setUpperLimit(Integer upper_limit) {
-    this.upperLimit = upper_limit;
+  public void setUpperLimit(final Integer upperLimit) {
+    this.upperLimit = upperLimit;
   }
 
   public Integer getActivityId() {
     return activityId;
   }
 
-  public void setActivityId(Integer activity_id) {
-    this.activityId = activity_id;
+  public void setActivityId(final Integer activityId) {
+    this.activityId = activityId;
   }
 
   public Integer getElemenTypeId() {
     return elemenTypeId;
   }
 
-  public void setElemenTypeId(Integer element_type_id) {
-    this.elemenTypeId = element_type_id;
+  public void setElemenTypeId(final Integer elementTypeId) {
+    this.elemenTypeId = elementTypeId;
   }
 
   public String getThreshold() {
     return threshold;
   }
 
-  public void setThreshold(String threshold) {
+  public void setThreshold(final String threshold) {
     this.threshold = threshold;
   }
 
@@ -102,7 +107,7 @@ public class UmbralActividad {
     return help;
   }
 
-  public void setHelp(String help) {
+  public void setHelp(final String help) {
     this.help = help;
   }
 
@@ -110,39 +115,39 @@ public class UmbralActividad {
     return forDelivery;
   }
 
-  public void setForDelivery(boolean is_for_delivery) {
-    this.forDelivery = is_for_delivery;
+  public void setForDelivery(final boolean isForDelivery) {
+    this.forDelivery = isForDelivery;
   }
 
   public boolean isExcludeUnreachedThreshold() {
     return excludeUnreachedThreshold;
   }
 
-  public void setExcludeUnreachedThreshold(boolean exclude_unreached_threshold) {
-    this.excludeUnreachedThreshold = exclude_unreached_threshold;
+  public void setExcludeUnreachedThreshold(final boolean excludeUnreachedThreshold) {
+    this.excludeUnreachedThreshold = excludeUnreachedThreshold;
   }
 
   public Integer getDeleted() {
     return deleted;
   }
 
-  public void setDeleted(Integer is_deleted) {
-    this.deleted = is_deleted;
+  public void setDeleted(final Integer isDeleted) {
+    this.deleted = isDeleted;
   }
 
   public Timestamp getCreationDate() {
     return creationDate;
   }
 
-  public void setCreationDate(Timestamp creation_date) {
-    this.creationDate = creation_date;
+  public void setCreationDate(final Timestamp creationDate) {
+    this.creationDate = creationDate;
   }
 
   public Timestamp getUpdateDate() {
     return updateDate;
   }
 
-  public void setUpdateDate(Timestamp update_date) {
-    this.updateDate = update_date;
+  public void setUpdateDate(final Timestamp updateDate) {
+    this.updateDate = updateDate;
   }
 }

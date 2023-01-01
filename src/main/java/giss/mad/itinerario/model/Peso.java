@@ -1,7 +1,12 @@
 package giss.mad.itinerario.model;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "Peso", schema = "itinerario")
@@ -48,7 +53,7 @@ public class Peso {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(final Integer id) {
     this.id = id;
   }
 
@@ -56,7 +61,7 @@ public class Peso {
     return elementTypeId;
   }
 
-  public void setElementTypeId(Integer elementTypeId) {
+  public void setElementTypeId(final Integer elementTypeId) {
     this.elementTypeId = elementTypeId;
   }
 
@@ -64,7 +69,7 @@ public class Peso {
     return activityId;
   }
 
-  public void setActivityId(Integer activityId) {
+  public void setActivityId(final Integer activityId) {
     this.activityId = activityId;
   }
 
@@ -72,7 +77,7 @@ public class Peso {
     return axisAttributeId;
   }
 
-  public void setAxisAttributeId(Integer axisAttributeId) {
+  public void setAxisAttributeId(final Integer axisAttributeId) {
     this.axisAttributeId = axisAttributeId;
   }
 
@@ -80,7 +85,7 @@ public class Peso {
     return domainValueId;
   }
 
-  public void setDomainValueId(Integer domainValueId) {
+  public void setDomainValueId(final Integer domainValueId) {
     this.domainValueId = domainValueId;
   }
 
@@ -88,7 +93,7 @@ public class Peso {
     return weightValue;
   }
 
-  public void setWeightValue(Integer weightValue) {
+  public void setWeightValue(final Integer weightValue) {
     this.weightValue = weightValue;
   }
 
@@ -96,7 +101,7 @@ public class Peso {
     return forDelivery;
   }
 
-  public void setForDelivery(Boolean forDelivery) {
+  public void setForDelivery(final Boolean forDelivery) {
     this.forDelivery = forDelivery;
   }
 
@@ -104,7 +109,7 @@ public class Peso {
     return deleted;
   }
 
-  public void setDeleted(Integer deleted) {
+  public void setDeleted(final Integer deleted) {
     this.deleted = deleted;
   }
 
@@ -112,7 +117,7 @@ public class Peso {
     return creationDate;
   }
 
-  public void setCreationDate(Timestamp creationDate) {
+  public void setCreationDate(final Timestamp creationDate) {
     this.creationDate = creationDate;
   }
 
@@ -120,7 +125,7 @@ public class Peso {
     return updateDate;
   }
 
-  public void setUpdateDate(Timestamp updateDate) {
+  public void setUpdateDate(final Timestamp updateDate) {
     this.updateDate = updateDate;
   }
 }

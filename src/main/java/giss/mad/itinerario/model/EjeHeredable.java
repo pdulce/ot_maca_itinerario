@@ -1,7 +1,12 @@
 package giss.mad.itinerario.model;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "EjeHeredable", schema = "itinerario")
@@ -36,12 +41,11 @@ public class EjeHeredable {
   public EjeHeredable() {
 
   }
-
   public Integer getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(final Integer id) {
     this.id = id;
   }
 
@@ -49,7 +53,7 @@ public class EjeHeredable {
     return elementTypeId;
   }
 
-  public void setElementTypeId(Integer elementTypeId) {
+  public void setElementTypeId(final Integer elementTypeId) {
     this.elementTypeId = elementTypeId;
   }
 
@@ -57,7 +61,7 @@ public class EjeHeredable {
     return axisId;
   }
 
-  public void setAxisId(Integer axisId) {
+  public void setAxisId(final Integer axisId) {
     this.axisId = axisId;
   }
 
@@ -65,7 +69,7 @@ public class EjeHeredable {
     return forDelivery;
   }
 
-  public void setForDelivery(Boolean forDelivery) {
+  public void setForDelivery(final Boolean forDelivery) {
     this.forDelivery = forDelivery;
   }
 
@@ -73,7 +77,7 @@ public class EjeHeredable {
     return deleted;
   }
 
-  public void setDeleted(Integer deleted) {
+  public void setDeleted(final Integer deleted) {
     this.deleted = deleted;
   }
 
@@ -81,7 +85,7 @@ public class EjeHeredable {
     return creationDate;
   }
 
-  public void setCreationDate(Timestamp creationDate) {
+  public void setCreationDate(final Timestamp creationDate) {
     this.creationDate = creationDate;
   }
 
@@ -89,7 +93,7 @@ public class EjeHeredable {
     return updateDate;
   }
 
-  public void setUpdateDate(Timestamp updateDate) {
+  public void setUpdateDate(final Timestamp updateDate) {
     this.updateDate = updateDate;
   }
 
@@ -97,7 +101,7 @@ public class EjeHeredable {
     return writable;
   }
 
-  public void setWritable(Boolean writable) {
+  public void setWritable(final Boolean writable) {
     this.writable = writable;
   }
 }
