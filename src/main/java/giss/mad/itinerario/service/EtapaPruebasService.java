@@ -17,22 +17,21 @@ public class EtapaPruebasService {
   @Autowired
   private EtapaPruebasRepository etapaPruebasRepository;
 
-  private static final List<String> etapas = List.of("DiseÃ±o", "AnÃ¡lisis de cÃ³digo estÃ¡tico",
-      "Desarrollo", "IntegraciÃ³n",
-      "Pruebas de AceptaciÃ³n", "Funcionales", "Rendimiento", "Seguridad", "Accesibilidad",
-      "Usabilidad", "AutomatizaciÃ³n de Pruebas",
-      "AnÃ¡lisis de IA");
+  private static final List<String> ETAPAS = List.of("Diseño",
+      "Análisis de código estático", "Desarrollo", "Integración",
+      "Pruebas de Aceptación", "Funcionales", "Rendimiento", "Seguridad", "Accesibilidad",
+      "Usabilidad", "Automatización de Pruebas", "Análisis de IA");
 
   public Collection<EtapaPruebas> getAll() {
     return this.etapaPruebasRepository.findAllByDeletedIsNull();
   }
 
-  public EtapaPruebas get(Integer idActividadQA) {
+  public EtapaPruebas get(final Integer idActividadQA) {
     return this.etapaPruebasRepository.findByIdAndDeletedIsNull(idActividadQA);
   }
 
   @Transactional
-  public EtapaPruebas remove(Integer idetapaPruebas) {
+  public EtapaPruebas remove(final Integer idetapaPruebas) {
     EtapaPruebas etapaPruebas = this.etapaPruebasRepository.findByIdAndDeletedIsNull(
         idetapaPruebas);
     if (this.etapaPruebasRepository.findByIdAndDeletedIsNull(etapaPruebas.getId()) != null) {
@@ -42,12 +41,12 @@ public class EtapaPruebasService {
   }
 
   @Transactional
-  public EtapaPruebas save(EtapaPruebas actividadQA) {
+  public EtapaPruebas save(final EtapaPruebas actividadQA) {
     return this.etapaPruebasRepository.save(actividadQA);
   }
 
   @Transactional
-  public EtapaPruebas update(EtapaPruebas etapaPruebas) {
+  public EtapaPruebas update(final EtapaPruebas etapaPruebas) {
     if (this.etapaPruebasRepository.findByIdAndDeletedIsNull(etapaPruebas.getId()) != null) {
       return this.etapaPruebasRepository.save(etapaPruebas);
     }
@@ -56,8 +55,8 @@ public class EtapaPruebasService {
 
   @Transactional
   public void initializeDB() {
-    int id = 1;
-    for (String etapaName : etapas) {
+    int id = Constantes.NUMBER_1;
+    for (String etapaName : ETAPAS) {
       EtapaPruebas etapaPruebas = new EtapaPruebas();
       etapaPruebas.setId(id);
       etapaPruebas.setName(etapaName);

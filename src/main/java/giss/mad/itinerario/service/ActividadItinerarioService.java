@@ -49,17 +49,17 @@ public class ActividadItinerarioService {
   private ItinerarioCalidadRepository itinerarioCalidadRepo;
 
   public Collection<ActividadItinerario> getByIdActividadesByItinerario(
-      Integer qualityItineraryId) {
+      final Integer qualityItineraryId) {
     return this.actividadItinerarioRepository.findAllByQualityItineraryIdAndDeletedIsNull(
         qualityItineraryId);
   }
 
-  public ActividadItinerario getByIdActividadItinerario(Integer idActividadItinerario) {
+  public ActividadItinerario getByIdActividadItinerario(final Integer idActividadItinerario) {
     return this.actividadItinerarioRepository.findByIdAndDeletedIsNull(idActividadItinerario);
   }
 
   @Transactional
-  public ActividadItinerario remove(Integer idActividadItinerario) {
+  public ActividadItinerario remove(final Integer idActividadItinerario) {
     ActividadItinerario actividadItinerario = this.actividadItinerarioRepository.findByIdAndDeletedIsNull(
         idActividadItinerario);
     if (this.actividadItinerarioRepository.findByIdAndDeletedIsNull(actividadItinerario.getId())
@@ -70,12 +70,12 @@ public class ActividadItinerarioService {
   }
 
   @Transactional
-  public ActividadItinerario save(ActividadItinerario actividadItinerario) {
+  public ActividadItinerario save(final ActividadItinerario actividadItinerario) {
     return this.actividadItinerarioRepository.save(actividadItinerario);
   }
 
   @Transactional
-  public ActividadItinerario update(ActividadItinerario actividadItinerario) {
+  public ActividadItinerario update(final ActividadItinerario actividadItinerario) {
     if (this.actividadItinerarioRepository.findByIdAndDeletedIsNull(actividadItinerario.getId())
         != null) {
       return this.actividadItinerarioRepository.save(actividadItinerario);
@@ -83,7 +83,7 @@ public class ActividadItinerarioService {
     return null;
   }
 
-  public ItinerarioPantalla calculateItinerary(ReplicaElementOEntrega elemOrDelivery) {
+  public ItinerarioPantalla calculateItinerary(final ReplicaElementOEntrega elemOrDelivery) {
 
     ItinerarioCalidad itinerarioDetallado = calcularActividadItinerarioWithDetailedInfo(
         elemOrDelivery);
@@ -119,7 +119,6 @@ public class ActividadItinerarioService {
     }
 
     List<StagePantalla> stageListForPantalla = new ArrayList<>();
-    //recorremos la hashmap... y...
     for (String stageKey : stagesMap.keySet()) {
       StagePantalla stage = new StagePantalla();
       stage.setStage(stageKey);
@@ -129,7 +128,7 @@ public class ActividadItinerarioService {
     }
     Collections.sort(stageListForPantalla, new Comparator<StagePantalla>() {
       @Override
-      public int compare(StagePantalla o1, StagePantalla o2) {
+      public int compare(final StagePantalla o1, final StagePantalla o2) {
         if (o1.getIdStage() > o2.getIdStage()) {
           return 1;
         } else if (o1.getIdStage() < o2.getIdStage()) {
@@ -145,9 +144,46 @@ public class ActividadItinerarioService {
     return itinerario;
   }
 
+  /****** Definición del algoritmo ***/
+
+  // Recorremos todas las actividades de QA existentes
+  // Crear objeto ActividadItinerario_i, seteando el 'creation_date', 'activity_id' e
+  // 'itinerarioCalidadId'
+  // Para cada una, hacemos esto
+  // Inicializamos acumuladorSumaPesosActividad = 0
+  // Inicializamos var Boolean includedInItinerary = TRUE;
+  // 1.1: recorremos el keySet de mapOfAxisWithValuesDomain
+  // 1.1.a: para cada entrada de ese mapa, obtenemos la colecciÃ³n de pesos existentes para esta
+  // combinación de idActividad-axisId-valueDomainId
+  // 1.1.b: recorremos la colecciÃ³n de pesos y obtenemos el weigthValue que tiene el mismo
+  // valueDomainId que el recibido en el mapa de axis-valoresDominio pasado como argumento
+  // 1.1.b: SI (weigthValue == -1) THEN MARCAR PARA Excluir esta actividad del itinerario, ==>
+  // includedInItinerary = FALSE
+  // 1.1.C: ELSE THEN acumuladorSumaPesosActividad += weigthValue
+  // 1.2: terminado de recorrer el bucle, seteamos en el objeto ActividadItinerario_i el atributo
+  // 'activity_sum_of_axes'
+
+  // 1.3: Ahora, buscamos el umbral que encaje con este sumatorio, acudiendo a la entidad
+  // UmbralActividad
+  // 1.4: Hacemos la consulta de Collection<UmbralActividad> getUmbralesByIdActividad, filtrando
+  // el objeto umbral seteado con
+  // elementTypeId, isDelivery y activity_id
+  // Inicializar variable Boolean found = FALSE
+  // 1.5: Recorrer esa colecciÃ³n de umbrales mientras includedInItinerary=TRUE AND found=FALSE,
+  // y accedo a los atributos lower_limit y upper_limit
+  // 1.6: SI (acumuladorSumaPesosActividad >= lower_limit AND acumuladorSumaPesosActividad <=
+  // upper_limit) THEN
+  // 1.6.a: Recojo el atributo 'threshold', y lo seteo en atributo 'inferred_threshold' del
+  // objeto ActividadItinerario_i
+  // 1.6.b: Setear la variable found = TRUE
+  // 1.7: Setear atributo 'exclude_unreached_threshold' del objeto ActividadItinerario_i con
+  // variable includedInItinerary
+  // 1.8: save to table
+
+  /****** Implementamos el algoritmo ***/
   @Transactional
   public ItinerarioCalidad calcularActividadItinerarioWithDetailedInfo(
-      ReplicaElementOEntrega elemOrDelivery) {
+      final ReplicaElementOEntrega elemOrDelivery) {
 
     Integer elementInstanceId = elemOrDelivery.getId();
     Integer elementTypeId = elemOrDelivery.getCatalogElementTypeId();
@@ -155,8 +191,8 @@ public class ActividadItinerarioService {
 
     List<ValorEje> valoresAttrsYejes = elemOrDelivery.getAttributeValuesCollection();
     //invocar al microservicio de /catalogo/ejes/get
-    List<Integer> ejes = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-        20, 21, 22);//this.atributoEjeRepository.findByAxis(true);
+    List<Integer> ejes = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+        17, 18, 19, 20, 21, 22);
     Map<Integer, Integer> mapOfAxisWithValuesDomain = new HashMap<>();
     for (ValorEje valorEjeOatributo : valoresAttrsYejes) {
       Integer valueOfDomainId = valorEjeOatributo.getDomainValueId();
@@ -176,37 +212,10 @@ public class ActividadItinerarioService {
     itinerarioCalidad.setCreationDate(fecCreacion);
     itinerarioCalidad = this.itinerarioCalidadRepo.save(itinerarioCalidad);
 
-    /****** DefiniciÃ³n del algoritmo ***/
-
-    // Recorremos todas las actividades de QA existentes
-    // Crear objeto ActividadItinerario_i, seteando el 'creation_date', 'activity_id' y 'itinerarioCalidadId'
-    // Para cada una, hacemos esto
-    // Inicializamos acumuladorSumaPesosActividad = 0
-    // Inicializamos var Boolean includedInItinerary = TRUE;
-    // 1.1: recorremos el keySet de mapOfAxisWithValuesDomain
-    // 1.1.a: para cada entrada de ese mapa, obtenemos la colecciÃ³n de pesos existentes para esta combinaciÃ³n de idActividad-axisId-valueDomainId
-    // 1.1.b: recorremos la colecciÃ³n de pesos y obtenemos el weigthValue que tiene el mismo valueDomainId que el recibido en el mapa de axis-valoresDominio pasado como argumento
-    // 1.1.b: SI (weigthValue == -1) THEN MARCAR PARA Excluir esta actividad del itinerario, ==> includedInItinerary = FALSE
-    // 1.1.C: ELSE THEN acumuladorSumaPesosActividad += weigthValue
-    // 1.2: terminado de recorrer el bucle, seteamos en el objeto ActividadItinerario_i el atributo 'activity_sum_of_axes'
-
-    // 1.3: Ahora, buscamos el umbral que encaje con este sumatorio, acudiendo a la entidad UmbralActividad
-    // 1.4: Hacemos la consulta de Collection<UmbralActividad> getUmbralesByIdActividad, filtrando el objeto umbral seteado con
-    // elementTypeId, isDelivery y activity_id
-    // Inicializar variable Boolean found = FALSE
-    // 1.5: Recorrer esa colecciÃ³n de umbrales mientras includedInItinerary=TRUE AND found=FALSE, y accedo a los atributos lower_limit y upper_limit
-    // 1.6: SI (acumuladorSumaPesosActividad >= lower_limit AND acumuladorSumaPesosActividad <= upper_limit) THEN
-    // 1.6.a: Recojo el atributo 'threshold', y lo seteo en atributo 'inferred_threshold' del objeto ActividadItinerario_i
-    // 1.6.b: Setear la variable found = TRUE
-    // 1.7: Setear atributo 'exclude_unreached_threshold' del objeto ActividadItinerario_i con variable includedInItinerary
-    // 1.8: save to table
-
-    /****** Implementamos el algoritmo ***/
-
     List<ActividadItinerario> actividadesItinerario = new ArrayList<>();
     List<ActividadQA> actividadesQA = this.qAactividadRepository.findAllByDeletedIsNull(
         Sort.by(Sort.Order.asc("testingStageId")));
-    Integer sumWeightsAllActivities = 0;
+    Integer sumWeightsAllActivities = Constantes.NUMBER_0;
     for (ActividadQA actividadQA : actividadesQA) {
       String observations = "";
       ActividadItinerario actividadItinerarioIesima = new ActividadItinerario();
@@ -218,41 +227,49 @@ public class ActividadItinerarioService {
       String etapa = this.etapaPruebasRepository.findByIdAndDeletedIsNull(
           actividadQA.getTestingStageId()).getName();
       actividadItinerarioIesima.setHelp("Actividad--> " + etapa + " - " + actividadQA.getName());
-      Integer acumuladorSumaPesosActividad = 0;
+      Integer acumuladorSumaPesosActividad = Constantes.NUMBER_0;
       Boolean includedInItinerary = true;
       for (Integer axisId : mapOfAxisWithValuesDomain.keySet()) {
         Integer valorDominioId = mapOfAxisWithValuesDomain.get(axisId);
-        //buscamos el peso que corresponde a ese valorDomainId para la lista de pesos de esta actividad-eje
+        //buscamos el peso que corresponde a ese valorDomainId para la lista de pesos de esta
+        // actividad-eje
         Collection<Peso> pesosFound =
-            this.pesoRepository.findAllByDeletedIsNullAndElementTypeIdAndForDeliveryAndActivityIdAndAxisAttributeId(
+            this.pesoRepository.
+                findAllByDeletedIsNullAndElementTypeIdAndForDeliveryAndActivityIdAndAxisAttributeId(
                 elementTypeId, isDelivery, actividadQA.getId(), axisId);
         if (pesosFound.isEmpty()) {
-          //miro si este eje es heredable, para tomar los pesos del padre , o si es entrega, del elemento asociado
-          EjeHeredable ejeHeredable = this.ejeHeredableRepository.findByElementTypeIdAndAxisIdAndForDeliveryAndDeletedIsNull(
+          //miro si este eje es heredable, para tomar los pesos del padre , o si es entrega, del
+          // elemento asociado
+          EjeHeredable ejeHeredable = this.ejeHeredableRepository.
+              findByElementTypeIdAndAxisIdAndForDeliveryAndDeletedIsNull(
               elementTypeId, axisId, isDelivery);
 
           if (ejeHeredable != null
               && isDelivery) {//los proyectos son el raÃ­z en la jerarquÃ­a, no tienen elementos de nivel superior
             //tomamos los pesos del elemento de catÃ¡logo asociado
             pesosFound =
-                this.pesoRepository.findAllByDeletedIsNullAndElementTypeIdAndForDeliveryAndActivityIdAndAxisAttributeId(
+                this.pesoRepository.
+                    findAllByDeletedIsNullAndElementTypeIdAndForDeliveryAndActivityIdAndAxisAttributeId(
                     elementTypeId, false, actividadQA.getId(), axisId);
-          } else if (ejeHeredable != null && elementTypeId < 3) {
+          } else if (ejeHeredable != null && elementTypeId < Constantes.NUMBER_3) {
             //tomamos los pesos del elemento de catÃ¡logo padre en la jerarquÃ­a
             pesosFound =
-                this.pesoRepository.findAllByDeletedIsNullAndElementTypeIdAndForDeliveryAndActivityIdAndAxisAttributeId(
-                    elementTypeId + 1, false, actividadQA.getId(), axisId);
+                this.pesoRepository.
+                    findAllByDeletedIsNullAndElementTypeIdAndForDeliveryAndActivityIdAndAxisAttributeId(
+                    elementTypeId + Constantes.NUMBER_1, false,
+                        actividadQA.getId(), axisId);
           }
         }
         for (Peso peso : pesosFound) {
           if (peso.getDomainValueId() == valorDominioId) {
-            if (peso.getWeightValue() == -1) {
+            if (peso.getWeightValue() == Constantes.NUMBER_MINUS_ONE) {
               actividadItinerarioIesima.setInferredThreshold(
                   "Actividad excluida por valor de dominio existente");
               observations =
                   "Esta actividad no se incluye en el itinerario; valor -1 (EXLUYE) para el eje "
                       + axisId + " para el valor de dominio existente";
-              includedInItinerary = false;// esta actividad queda exluida del itinerario, aunque se guarda en tabla a efectos de histÃ±orico y auditorÃ­as
+              includedInItinerary = false;// esta actividad queda exluida del itinerario,
+              // aunque se guarda en tabla a efectos de histÃ±orico y auditorÃ­as
             } else {
               acumuladorSumaPesosActividad += peso.getWeightValue();
               sumWeightsAllActivities += acumuladorSumaPesosActividad;
@@ -265,7 +282,8 @@ public class ActividadItinerarioService {
       actividadItinerarioIesima.setActivitSumOfAxes(acumuladorSumaPesosActividad);
       //encajar el sumatorio en los rangos definidos por los umbrales de esta actividad
       Collection<UmbralActividad> umbralesActividad =
-          this.umbralActividadRepository.findAllByDeletedIsNullAndElemenTypeIdAndForDeliveryAndActivityId(
+          this.umbralActividadRepository.
+              findAllByDeletedIsNullAndElemenTypeIdAndForDeliveryAndActivityId(
               elementTypeId, isDelivery, actividadQA.getId());
 
       if (includedInItinerary) {//tto. si no ha sido excluida la actividad segÃºn el peso -1
@@ -278,7 +296,7 @@ public class ActividadItinerarioService {
             actividadItinerarioIesima.setInferredThreshold(umbralActividad.getThreshold());
             observations = "Actividad INCLUIDA en itinerario; sumatorio de pesos-ejes ("
                 + acumuladorSumaPesosActividad + ") ";
-            if (umbralActividad.getUpperLimit() < 9999) {
+            if (umbralActividad.getUpperLimit() < Constantes.NUMBER_9999) {
               observations += " estÃ¡ dentro del rango [" + umbralActividad.getLowerLimit() + " , "
                   + umbralActividad.getUpperLimit() + "]";
             } else {
@@ -290,7 +308,7 @@ public class ActividadItinerarioService {
         if (!found) {
           includedInItinerary = false;
           actividadItinerarioIesima.setInferredThreshold(
-              "Actividad excluida, no alcanza el umbral de realizaciÃ³n mÃ­nimo");
+              "Actividad excluida, no alcanza el umbral de realización mínimo");
           observations =
               "Esta actividad no se incluye en el itinerario; el sumatorio de pesos-ejes "
                   + acumuladorSumaPesosActividad
@@ -302,7 +320,7 @@ public class ActividadItinerarioService {
       this.actividadItinerarioRepository.save(actividadItinerarioIesima);
       actividadesItinerario.add(actividadItinerarioIesima);
     }
-    if (sumWeightsAllActivities == 0) {
+    if (sumWeightsAllActivities == Constantes.NUMBER_0) {
       itinerarioCalidad.setActividadesDeItinerario(new ArrayList<>());
     } else {
       itinerarioCalidad.setActividadesDeItinerario(actividadesItinerario);

@@ -14,6 +14,11 @@ import giss.mad.itinerario.model.repository.ActividadQARepository;
 import giss.mad.itinerario.model.repository.EtapaPruebasRepository;
 import giss.mad.itinerario.model.repository.PesoRepository;
 import giss.mad.itinerario.model.repository.UmbralActividadRepository;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -22,17 +27,23 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Service
 public class UmbralActividadService {
 
-  public static final int[] AXE = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-      19, 20, 21, 22, 23};
+  public static final int[] AXE = {Constantes.NUMBER_0, Constantes.NUMBER_1, Constantes.NUMBER_2,
+      Constantes.NUMBER_3, Constantes.NUMBER_4, Constantes.NUMBER_5, Constantes.NUMBER_6,
+      Constantes.NUMBER_7, Constantes.NUMBER_8, Constantes.NUMBER_9, Constantes.NUMBER_10,
+      Constantes.NUMBER_11, Constantes.NUMBER_12, Constantes.NUMBER_13, Constantes.NUMBER_14,
+      Constantes.NUMBER_15, Constantes.NUMBER_16, Constantes.NUMBER_17, Constantes.NUMBER_18,
+      Constantes.NUMBER_19, Constantes.NUMBER_20, Constantes.NUMBER_21, Constantes.NUMBER_22,
+      Constantes.NUMBER_23};
 
   @Autowired
   private UmbralActividadRepository umbralActividadRepository;
-
   @Autowired
   private EtapaPruebasRepository etapaPruebasRepository;
   @Autowired
@@ -44,18 +55,18 @@ public class UmbralActividadService {
     return this.umbralActividadRepository.findAllByDeletedIsNull();
   }
 
-  public Collection<UmbralActividad> getUmbralesByIdActividad(Integer idElementType,
-      Boolean isDelivery, Integer idActividad) {
-    return this.umbralActividadRepository.findAllByDeletedIsNullAndElemenTypeIdAndForDeliveryAndActivityId(
+  public Collection<UmbralActividad> getUmbralesByIdActividad(final Integer idElementType,
+      final Boolean isDelivery, final Integer idActividad) {
+    return this.umbralActividadRepository.
+        findAllByDeletedIsNullAndElemenTypeIdAndForDeliveryAndActivityId(
         idElementType, isDelivery, idActividad);
   }
 
-  public Collection<UmbralGraph> getUmbralesByTypeOfElement(Integer idElementType,
-      Boolean isDelivery) {
+  public Collection<UmbralGraph> getUmbralesByTypeOfElement(final Integer idElementType,
+      final Boolean isDelivery) {
 
-    Collection<UmbralActividad> c = this.umbralActividadRepository.findAllByDeletedIsNullAndElemenTypeIdAndForDelivery(
-        idElementType, isDelivery);
-
+    Collection<UmbralActividad> c = this.umbralActividadRepository.
+        findAllByDeletedIsNullAndElemenTypeIdAndForDelivery(idElementType, isDelivery);
     if (c == null) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
@@ -75,15 +86,13 @@ public class UmbralActividadService {
   }
 
 
-  public Collection<StageBuble> getUmbralesByStage(Integer idElementType, Boolean isDelivery) {
-
-    Collection<UmbralActividad> c = this.umbralActividadRepository.findAllByDeletedIsNullAndElemenTypeIdAndForDelivery(
-        idElementType, isDelivery);
-
+  public Collection<StageBuble> getUmbralesByStage(final Integer idElementType,
+      final Boolean isDelivery) {
+    Collection<UmbralActividad> c = this.umbralActividadRepository.
+        findAllByDeletedIsNullAndElemenTypeIdAndForDelivery(idElementType, isDelivery);
     if (c == null) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
-
     List<StageBuble> stages4Bubles = new ArrayList<>();
     for (UmbralActividad umbral : c) {
       ActividadQA actividad = this.actividadRepository.findByIdAndDeletedIsNull(
@@ -95,10 +104,8 @@ public class UmbralActividadService {
           actividad.getTestingStageId()).getName();
       StageBuble stageBuble = StageBuble.obtenerStageBuble(stageName, stages4Bubles);
       if (stageBuble != null) {
-        //el umbral que creemos lo aÃ±adimos la lista del stageObject
         data = stageBuble.getData();
-      } else {
-        //creamos el state, y su lista desde cero
+      } else{
         data = new ArrayList<>();
         stageBuble = new StageBuble();
         stageBuble.setId(actividad.getTestingStageId());
@@ -110,7 +117,7 @@ public class UmbralActividadService {
     }
     Collections.sort(stages4Bubles, new Comparator<StageBuble>() {
       @Override
-      public int compare(StageBuble o1, StageBuble o2) {
+      public int compare(final StageBuble o1, final StageBuble o2) {
         if (o1.getId() > o2.getId()) {
           return 1;
         } else if (o1.getId() < o2.getId()) {
@@ -124,12 +131,12 @@ public class UmbralActividadService {
   }
 
 
-  public UmbralActividad get(Integer idUmbral) {
+  public UmbralActividad get(final Integer idUmbral) {
     return this.umbralActividadRepository.findByIdAndDeletedIsNull(idUmbral);
   }
 
   @Transactional
-  public UmbralActividad remove(Integer idUmbralActividad) {
+  public UmbralActividad remove(final Integer idUmbralActividad) {
     UmbralActividad umbralActividad = this.umbralActividadRepository.findByIdAndDeletedIsNull(
         idUmbralActividad);
     if (this.umbralActividadRepository.findByIdAndDeletedIsNull(umbralActividad.getId()) != null) {
@@ -139,20 +146,20 @@ public class UmbralActividadService {
   }
 
   @Transactional
-  public UmbralActividad save(UmbralActividad umbralActividad) {
+  public UmbralActividad save(final UmbralActividad umbralActividad) {
     return this.umbralActividadRepository.save(umbralActividad);
   }
 
   @Transactional
-  public UmbralActividad update(UmbralActividad umbralActividad) {
+  public UmbralActividad update(final UmbralActividad umbralActividad) {
     if (this.umbralActividadRepository.findByIdAndDeletedIsNull(umbralActividad.getId()) != null) {
       return this.umbralActividadRepository.save(umbralActividad);
     }
     return null;
   }
 
-  private Integer maxOf(List<Peso> pesosDeEje) {
-    Integer max = 0;
+  private Integer maxOf(final List<Peso> pesosDeEje) {
+    Integer max = Constantes.NUMBER_0;
     for (Peso peso : pesosDeEje) {
       if (max < peso.getWeightValue()) {
         max = peso.getWeightValue();
@@ -161,11 +168,13 @@ public class UmbralActividadService {
     return max;
   }
 
-  public Integer getMaximumOfWeigths(Integer elementType, Boolean isDelivery, Integer idActivity) {
-    Integer sumaOfMaxAxisPesosForActivity = 0;
-    for (int i = 1; i < AXE.length - 1; i++) {
+  public Integer getMaximumOfWeigths(final Integer elementType, final Boolean isDelivery,
+      final Integer idActivity) {
+    Integer sumaOfMaxAxisPesosForActivity = Constantes.NUMBER_0;
+    for (int i = Constantes.NUMBER_1; i < AXE.length - Constantes.NUMBER_1; i++) {
       sumaOfMaxAxisPesosForActivity += maxOf(
-          this.pesoRepository.findAllByDeletedIsNullAndElementTypeIdAndForDeliveryAndActivityIdAndAxisAttributeId(
+          this.pesoRepository.
+              findAllByDeletedIsNullAndElementTypeIdAndForDeliveryAndActivityIdAndAxisAttributeId(
               elementType, isDelivery, idActivity, AXE[i]));
     }
     return sumaOfMaxAxisPesosForActivity;
@@ -174,38 +183,45 @@ public class UmbralActividadService {
   @Transactional
   public void initializeDB() {
     this.umbralActividadRepository.deleteAll();
-    //TODO
-
     Map<AuxActividadElem, Integer> maxPuntuacionesPesosActividades = new HashMap<>();
     Collection<ActividadQA> actividades = this.actividadRepository.findAllByDeletedIsNull(
         Sort.by(Sort.Order.asc("testingStageId")));
     for (ActividadQA actividad : actividades) {
-      Integer sumaPesosActividad_i_Promo = getMaximumOfWeigths(1, false, actividad.getId());
-      AuxActividadElem aux1 = new AuxActividadElem(1, actividad.getId(), false);
+      Integer sumaPesosActividad_i_Promo = getMaximumOfWeigths(Constantes.NUMBER_1,
+          false, actividad.getId());
+      AuxActividadElem aux1 = new AuxActividadElem(Constantes.NUMBER_1, actividad.getId(),
+          false);
       maxPuntuacionesPesosActividades.put(aux1, sumaPesosActividad_i_Promo);
-      Integer sumaPesosActividad_i_EntregaPromo = getMaximumOfWeigths(1, false, actividad.getId());
-      AuxActividadElem aux2 = new AuxActividadElem(1, actividad.getId(), true);
+      Integer sumaPesosActividad_i_EntregaPromo = getMaximumOfWeigths(Constantes.NUMBER_1,
+          false, actividad.getId());
+      AuxActividadElem aux2 = new AuxActividadElem(Constantes.NUMBER_1, actividad.getId(),
+          true);
       maxPuntuacionesPesosActividades.put(aux2, sumaPesosActividad_i_EntregaPromo);
-
-      Integer sumaPesosActividad_i_AgrupFunc = getMaximumOfWeigths(2, false, actividad.getId());
-      AuxActividadElem aux3 = new AuxActividadElem(2, actividad.getId(), false);
+      Integer sumaPesosActividad_i_AgrupFunc = getMaximumOfWeigths(Constantes.NUMBER_2,
+          false, actividad.getId());
+      AuxActividadElem aux3 = new AuxActividadElem(Constantes.NUMBER_2, actividad.getId(),
+          false);
       maxPuntuacionesPesosActividades.put(aux3, sumaPesosActividad_i_AgrupFunc);
-      Integer sumaPesosActividad_i_EntregaAgrupFunc = getMaximumOfWeigths(2, false,
-          actividad.getId());
-      AuxActividadElem aux4 = new AuxActividadElem(2, actividad.getId(), true);
+      Integer sumaPesosActividad_i_EntregaAgrupFunc = getMaximumOfWeigths(Constantes.NUMBER_2,
+          false, actividad.getId());
+      AuxActividadElem aux4 = new AuxActividadElem(Constantes.NUMBER_2, actividad.getId(),
+          true);
       maxPuntuacionesPesosActividades.put(aux4, sumaPesosActividad_i_EntregaAgrupFunc);
-
-      Integer sumaPesosActividad_i_Proyecto = getMaximumOfWeigths(3, false, actividad.getId());
-      AuxActividadElem aux5 = new AuxActividadElem(3, actividad.getId(), false);
+      Integer sumaPesosActividad_i_Proyecto = getMaximumOfWeigths(Constantes.NUMBER_3,
+          false, actividad.getId());
+      AuxActividadElem aux5 = new AuxActividadElem(Constantes.NUMBER_3, actividad.getId(),
+          false);
       maxPuntuacionesPesosActividades.put(aux5, sumaPesosActividad_i_Proyecto);
-      Integer sumaPesosActividad_i_EntregaProyecto = getMaximumOfWeigths(3, false,
-          actividad.getId());
-      AuxActividadElem aux6 = new AuxActividadElem(3, actividad.getId(), false);
+      Integer sumaPesosActividad_i_EntregaProyecto = getMaximumOfWeigths(Constantes.NUMBER_3,
+          false, actividad.getId());
+      AuxActividadElem aux6 = new AuxActividadElem(Constantes.NUMBER_3, actividad.getId(),
+          false);
       maxPuntuacionesPesosActividades.put(aux6, sumaPesosActividad_i_EntregaProyecto);
     }
 
-    Map<Map<Integer, Boolean>, Map<Integer, List<Umbral>>> elementsOfCatalogo = new UmbralesIniciador().getElementsOfCatalogo();
-    int id = 1;
+    Map<Map<Integer, Boolean>, Map<Integer, List<Umbral>>> elementsOfCatalogo =
+        new UmbralesIniciador().getElementsOfCatalogo();
+    int id = Constantes.NUMBER_1;
     for (Map<Integer, Boolean> idElement_withIsDelivery : elementsOfCatalogo.keySet()) {
       Integer idOfElement = idElement_withIsDelivery.keySet().iterator().next();
       Boolean isDelivery = idElement_withIsDelivery.get(idOfElement);
@@ -223,8 +239,8 @@ public class UmbralActividadService {
           umbralActividad.setActivityId(idOfActivitiy);
           umbralActividad.setThreshold(umbralObject.getThreshold());
           umbralActividad.setHelp(
-              "RecomendaciÃ³n de % realizaciÃ³n mÃ­nima de consecuciÃ³n en las tareas de calidad de la actividad <<"
-                  + nombreActividad + ">>");
+              "Recomendación de % realización mínima de consecución en las tareas de calidad de la "
+                  + "actividad <<" + nombreActividad + ">>");
           umbralActividad.setLowerLimit(umbralObject.getLowerRange());
           umbralActividad.setUpperLimit(umbralObject.getUpperRange());
           umbralActividad.setExcludeUnreachedThreshold(
@@ -233,8 +249,9 @@ public class UmbralActividadService {
               new Timestamp(Calendar.getInstance().getTime().getTime()));
           this.save(umbralActividad);
           /** fin grabacion umbral ***/
-        }//for de umbral-actividad
-      }//mapa actividades del elemento catalogo
-    }//for elementos de catalogo
+        }
+      }
+    }
   }
+
 }

@@ -10,12 +10,16 @@ import giss.mad.itinerario.model.auxumbrales.UmbralBuble;
 import giss.mad.itinerario.model.repository.ActividadQARepository;
 import giss.mad.itinerario.model.repository.EtapaPruebasRepository;
 import giss.mad.itinerario.model.repository.ItinerarioCalidadRepository;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.*;
 
 @Service
 public class ItinerarioCalidadService {
@@ -34,13 +38,13 @@ public class ItinerarioCalidadService {
   }
 
   public Collection<ItinerarioCalidad> getAllItinerariosByIdElementOrEntrega(
-      Integer idElementoOrEntrega, Boolean isDelivery) {
+      final Integer idElementoOrEntrega, final Boolean isDelivery) {
     return this.itinerarioCalidadRepository.findAllByCatalogueIdAndDelivery(idElementoOrEntrega,
         isDelivery, Sort.by(Sort.Order.desc("creationDate")));
   }
 
-  public ItinerarioCalidad getItinerarioMasRecienteByIdElementOrEntrega(Integer idElementoOrEntrega,
-      Boolean isDelivery) {
+  public ItinerarioCalidad getItinerarioMasRecienteByIdElementOrEntrega(
+      final Integer idElementoOrEntrega,final Boolean isDelivery) {
 
     List<ItinerarioCalidad> itList = new ArrayList<>(
         this.itinerarioCalidadRepository.findAllByCatalogueIdAndDelivery(idElementoOrEntrega,
@@ -49,11 +53,11 @@ public class ItinerarioCalidadService {
     return itList.get(0);
   }
 
-  public ItinerarioCalidad getByIdItinerario(Integer idItinerario) {
+  public ItinerarioCalidad getByIdItinerario(final Integer idItinerario) {
     return this.itinerarioCalidadRepository.findByIdAndDeletedIsNull(idItinerario);
   }
 
-  public Collection<ActividadQAPantalla> getActivitiesByItineraryId(Integer idItinerario,
+  public Collection<ActividadQAPantalla> getActivitiesByItineraryId(final Integer idItinerario,
       Boolean included) {
     Collection<ActividadQAPantalla> collection_ = new ArrayList<>();
     ItinerarioCalidad itinerarioCalidad = this.itinerarioCalidadRepository.findByIdAndDeletedIsNull(
@@ -78,7 +82,7 @@ public class ItinerarioCalidadService {
     return collection_;
   }
 
-  public Collection<ActividadQAPantalla> getActivitiesByItineraryId(Integer idItinerario) {
+  public Collection<ActividadQAPantalla> getActivitiesByItineraryId(final Integer idItinerario) {
     Collection<ActividadQAPantalla> collection_ = new ArrayList<>();
     ItinerarioCalidad itinerarioCalidad = this.itinerarioCalidadRepository.findByIdAndDeletedIsNull(
         idItinerario);
@@ -100,10 +104,9 @@ public class ItinerarioCalidadService {
     return collection_;
   }
 
-  public Collection<StageBuble> getByIdItinerarioOnlyIncluded(Integer idItinerario) {
+  public Collection<StageBuble> getByIdItinerarioOnlyIncluded(final Integer idItinerario) {
     ItinerarioCalidad itinerarioCalidad = this.itinerarioCalidadRepository.findByIdAndDeletedIsNull(
         idItinerario);
-
     List<StageBuble> stages4Bubles = new ArrayList<>();
     for (ActividadItinerario actividadItinerario : itinerarioCalidad.getActividadesDeItinerario()) {
       if (!actividadItinerario.getIncludedInItinerary()) {
@@ -133,7 +136,7 @@ public class ItinerarioCalidadService {
     }
     Collections.sort(stages4Bubles, new Comparator<StageBuble>() {
       @Override
-      public int compare(StageBuble o1, StageBuble o2) {
+      public int compare(final StageBuble o1, final StageBuble o2) {
         if (o1.getId() > o2.getId()) {
           return 1;
         } else if (o1.getId() < o2.getId()) {
@@ -147,7 +150,7 @@ public class ItinerarioCalidadService {
   }
 
   @Transactional
-  public ItinerarioCalidad remove(Integer idItinerarioCalidad) {
+  public ItinerarioCalidad remove(final Integer idItinerarioCalidad) {
     ItinerarioCalidad itinerarioCalidad = this.itinerarioCalidadRepository.findById(
         idItinerarioCalidad).orElse(null);
     if (this.itinerarioCalidadRepository.findByIdAndDeletedIsNull(itinerarioCalidad.getId())
@@ -158,12 +161,12 @@ public class ItinerarioCalidadService {
   }
 
   @Transactional
-  public ItinerarioCalidad save(ItinerarioCalidad itinerarioCalidad) {
+  public ItinerarioCalidad save(final ItinerarioCalidad itinerarioCalidad) {
     return this.itinerarioCalidadRepository.save(itinerarioCalidad);
   }
 
   @Transactional
-  public ItinerarioCalidad update(ItinerarioCalidad itinerarioCalidad) {
+  public ItinerarioCalidad update(final ItinerarioCalidad itinerarioCalidad) {
     if (this.itinerarioCalidadRepository.findByIdAndDeletedIsNull(itinerarioCalidad.getId())
         != null) {
       return this.itinerarioCalidadRepository.save(itinerarioCalidad);

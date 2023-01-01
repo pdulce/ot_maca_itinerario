@@ -7,6 +7,9 @@ import giss.mad.itinerario.model.auxpesos.PesoGraph;
 import giss.mad.itinerario.model.auxpesos.Weight;
 import giss.mad.itinerario.model.repository.EjeHeredableRepository;
 import giss.mad.itinerario.model.repository.PesoRepository;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Map;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -17,7 +20,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Service
 public class PesoService {
@@ -30,15 +35,16 @@ public class PesoService {
   @Autowired
   private EjeHeredableRepository ejeHeredableRepository;
 
-  private Map<Integer, List<Integer>> pesosHeredables = Map.of(1, List.of(5, 6, 7, 12, 15, 16, 20));
-  private Map<Integer, List<Integer>> pesosHeredablesForDeliveries = Map.of(1,
-      List.of(7, 15, 16, 20));//writables
+  private Map<Integer, List<Integer>> pesosHeredables = Map.of(Constantes.NUMBER_1,
+      List.of(5, 6, 7, 12, 15, 16, 20));
+  private Map<Integer, List<Integer>> pesosHeredablesForDeliveries = Map.of(Constantes.NUMBER_1,
+      List.of(7, 15, 16, 20));
 
   public Collection<Peso> getAll() {
     return this.pesoRepository.findAllByDeletedIsNull();
   }
 
-  public Collection<PesoGraph> getAllByElement(Integer idElement, Boolean isDelivery) {
+  public Collection<PesoGraph> getAllByElement(final Integer idElement, Boolean isDelivery) {
     Collection<Peso> c = this.pesoRepository.findAllByDeletedIsNullAndElementTypeIdAndForDelivery(
         idElement, isDelivery, Sort.by(Sort.Order.asc("id")));
     if (c == null) {
@@ -55,12 +61,12 @@ public class PesoService {
     return pesos;
   }
 
-  public Peso get(Integer idPeso) {
+  public Peso get(final Integer idPeso) {
     return this.pesoRepository.findByIdAndDeletedIsNull(idPeso);
   }
 
   @Transactional
-  public Peso remove(Integer idPeso) {
+  public Peso remove(final Integer idPeso) {
     Peso actividadQA = this.pesoRepository.findByIdAndDeletedIsNull(idPeso);
     if (this.pesoRepository.findByIdAndDeletedIsNull(actividadQA.getId()) != null) {
       this.pesoRepository.delete(actividadQA);
@@ -69,12 +75,12 @@ public class PesoService {
   }
 
   @Transactional
-  public Peso save(Peso peso) {
+  public Peso save(final Peso peso) {
     return this.pesoRepository.save(peso);
   }
 
   @Transactional
-  public Peso update(Peso peso) {
+  public Peso update(final Peso peso) {
     if (this.pesoRepository.findById(peso.getId()).isPresent()) {
       return this.pesoRepository.save(peso);
     }
@@ -86,13 +92,11 @@ public class PesoService {
     HttpHeaders headers = new HttpHeaders();
     headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
     HttpEntity<String> entity = new HttpEntity<>(headers);
-
     String jsonString = restTemplate.exchange("/catalogo/ejes/getAll", HttpMethod.GET, entity,
         String.class).getBody();
-
     JSONArray jsonArr = new JSONArray(jsonString);
     List<Integer> axisIds = new ArrayList<>();
-    for (int i = 0; i < jsonArr.length(); i++) {
+    for (int i = Constantes.NUMBER_0; i < jsonArr.length(); i++) {
       Integer id = (Integer) jsonArr.getJSONObject(i).get("id");
       axisIds.add(id);
     }
@@ -103,8 +107,6 @@ public class PesoService {
   public void initializeDB() {
     this.ejeHeredableRepository.deleteAll();
     this.pesoRepository.deleteAll();
-    //anyadimos los ejes heredables, tanto en la jerarquÃ­a de elementos de catÃ¡logo, como entre entregas y sus elem. de catÃ¡logo asociados
-
     for (Integer idElementType : this.pesosHeredablesForDeliveries.keySet()) {
       List<Integer> ejesHeredablesForDeliveryList = this.pesosHeredablesForDeliveries.get(
           idElementType);
@@ -145,7 +147,7 @@ public class PesoService {
 
     Map<Map<Integer, Boolean>, Map<Integer, List<Weight>>> elementsOfCatalogo = new PesoEjeIniciador(
         restTemplate).getElementsOfCatalogo();
-    int id = 1;
+    int id = Constantes.NUMBER_1;
     for (Map<Integer, Boolean> idElement_withIsDelivery : elementsOfCatalogo.keySet()) {
       Integer idOfElementType = idElement_withIsDelivery.keySet().iterator().next();
       Boolean isDelivery = idElement_withIsDelivery.get(idOfElementType);
@@ -168,9 +170,10 @@ public class PesoService {
           peso.setCreationDate(new Timestamp(Calendar.getInstance().getTime().getTime()));
           this.save(peso);
           /** fin grabacion peso ***/
-        }//for de pesos-ejes-valordominio
-      }//mapa actividades del elemento catalogo
-    }//for elementos de catalogo
+        }
+      }
+    }
   }
+
 }
 
