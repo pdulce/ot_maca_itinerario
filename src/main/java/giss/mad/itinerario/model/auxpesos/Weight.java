@@ -6,9 +6,9 @@ public class Weight {
   private Integer idOfvalueDomain;
   private Integer weightValue;
 
-  public Weight(Integer idOfAxis_, Integer idOfvalueDomain_, Integer weightValue) {
-    this.idOfAxis = idOfAxis_;
-    this.idOfvalueDomain = idOfvalueDomain_;
+  public Weight(final  Integer idOfAxis, final Integer idOfvalueDomain, final Integer weightValue) {
+    this.idOfAxis = idOfAxis;
+    this.idOfvalueDomain = idOfvalueDomain;
     this.weightValue = weightValue;
   }
 

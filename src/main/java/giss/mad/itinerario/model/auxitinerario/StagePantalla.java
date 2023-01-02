@@ -22,7 +22,7 @@ public class StagePantalla {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(final Integer id) {
     this.id = id;
   }
 
@@ -30,7 +30,7 @@ public class StagePantalla {
     return stage;
   }
 
-  public void setStage(String stage) {
+  public void setStage(final String stage) {
     this.stage = stage;
   }
 
@@ -38,7 +38,7 @@ public class StagePantalla {
     return idStage;
   }
 
-  public void setIdStage(Integer idStage) {
+  public void setIdStage(final Integer idStage) {
     this.idStage = idStage;
   }
 
@@ -46,7 +46,7 @@ public class StagePantalla {
     return activities;
   }
 
-  public void setActivities(List<ActividadQAPantalla> activities) {
+  public void setActivities(final List<ActividadQAPantalla> activities) {
     this.activities = activities;
   }
 }

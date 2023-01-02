@@ -18,7 +18,7 @@ public class ReplicaElementOEntrega {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(final Integer id) {
     this.id = id;
   }
 
@@ -27,7 +27,7 @@ public class ReplicaElementOEntrega {
     return catalogElementTypeId;
   }
 
-  public void setCatalogElementTypeId(Integer catalogElementTypeId) {
+  public void setCatalogElementTypeId(final Integer catalogElementTypeId) {
     this.catalogElementTypeId = catalogElementTypeId;
   }
 
@@ -35,7 +35,7 @@ public class ReplicaElementOEntrega {
     return delivery;
   }
 
-  public void setDelivery(Boolean delivery) {
+  public void setDelivery(final Boolean delivery) {
     this.delivery = delivery;
   }
 
@@ -43,7 +43,7 @@ public class ReplicaElementOEntrega {
     return attributeValuesCollection;
   }
 
-  public void setAttributeValuesCollection(List<ValorEje> attributeValuesCollection) {
+  public void setAttributeValuesCollection(final List<ValorEje> attributeValuesCollection) {
     this.attributeValuesCollection = attributeValuesCollection;
   }
 }

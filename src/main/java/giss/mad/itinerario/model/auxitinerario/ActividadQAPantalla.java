@@ -24,7 +24,7 @@ public class ActividadQAPantalla {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(final Long id) {
     this.id = id;
   }
 
@@ -32,7 +32,7 @@ public class ActividadQAPantalla {
     return activity;
   }
 
-  public void setActivity(String activity) {
+  public void setActivity(final String activity) {
     this.activity = activity;
   }
 
@@ -40,7 +40,7 @@ public class ActividadQAPantalla {
     return realization;
   }
 
-  public void setRealization(String realization) {
+  public void setRealization(final String realization) {
     this.realization = realization;
   }
 
@@ -48,7 +48,7 @@ public class ActividadQAPantalla {
     return observations;
   }
 
-  public void setObservations(String observations) {
+  public void setObservations(final String observations) {
     this.observations = observations;
   }
 
@@ -56,15 +56,15 @@ public class ActividadQAPantalla {
     return included;
   }
 
-  public void setIncluded(Boolean included_) {
-    this.included = included_;
+  public void setIncluded(final Boolean included) {
+    this.included = included;
   }
 
   public String getStage() {
     return stage;
   }
 
-  public void setStage(String stage) {
+  public void setStage(final String stage) {
     this.stage = stage;
   }
 }

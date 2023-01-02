@@ -1,5 +1,6 @@
 package giss.mad.itinerario.model.auxpesos;
 
+import giss.mad.itinerario.service.Constantes;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -20,28 +21,29 @@ public class PesosEje {
     return pesos;
   }
 
-  public void setPesos(List<Weight> pesos) {
+  public void setPesos(final List<Weight> pesos) {
     this.pesos = pesos;
   }
 
-  public List<Integer> getAxisList(Integer idAxis, RestTemplate restTemplate) {
+  public List<Integer> getAxisList(final Integer idAxis, final RestTemplate restTemplate) {
     HttpHeaders headers = new HttpHeaders();
     headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
     HttpEntity<String> entity = new HttpEntity<>(headers);
 
-    String jsonString = restTemplate.exchange("/catalogo/valordominio/getByAttributeId/" + idAxis,
-        HttpMethod.GET, entity, String.class).getBody();
+    String jsonString = restTemplate.exchange("/catalogo/valordominio/getByAttributeId/" +
+            idAxis, HttpMethod.GET, entity, String.class).getBody();
 
     JSONArray jsonArr = new JSONArray(jsonString);
     List<Integer> axisIds = new ArrayList<>();
-    for (int i = 0; i < jsonArr.length(); i++) {
+    for (int i = Constantes.NUMBER_0; i < jsonArr.length(); i++) {
       Integer id = (Integer) jsonArr.getJSONObject(i).get("id");
       axisIds.add(id);
     }
     return axisIds;
   }
 
-  public PesosEje(RestTemplate restTemplate, Integer idAxis, List<Integer> weights) {
+  public PesosEje(final RestTemplate restTemplate, final Integer idAxis,
+      final List<Integer> weights) {
 
     List<Integer> valoresDominioOfAxisIds = getAxisList(idAxis, restTemplate);
     if (weights.size() > valoresDominioOfAxisIds.size()) {
@@ -50,7 +52,7 @@ public class PesosEje {
               + ">");
     }
     List<Weight> pesos = new ArrayList<>();
-    for (int i = 0; i < weights.size(); i++) {
+    for (int i = Constantes.NUMBER_0; i < weights.size(); i++) {
       pesos.add(new Weight(idAxis, valoresDominioOfAxisIds.get(i), weights.get(i)));
     }
     this.setPesos(pesos);

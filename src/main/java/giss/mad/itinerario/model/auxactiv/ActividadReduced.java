@@ -5,9 +5,9 @@ public class ActividadReduced {
   private Integer num;
   private String actividad;
 
-  public ActividadReduced(Integer id_, String name_) {
-    this.num = id_;
-    this.actividad = name_;
+  public ActividadReduced(final Integer id, final String name) {
+    this.num = id;
+    this.actividad = name;
   }
 
   public ActividadReduced() {
@@ -18,7 +18,7 @@ public class ActividadReduced {
     return num;
   }
 
-  public void setNum(Integer id) {
+  public void setNum(final Integer id) {
     this.num = id;
   }
 
@@ -26,7 +26,7 @@ public class ActividadReduced {
     return actividad;
   }
 
-  public void setActividad(String name) {
+  public void setActividad(final String name) {
     this.actividad = name;
   }
 }

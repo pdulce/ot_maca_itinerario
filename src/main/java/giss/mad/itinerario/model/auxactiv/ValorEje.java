@@ -17,7 +17,7 @@ public class ValorEje {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(final Long id) {
     this.id = id;
   }
 
@@ -25,7 +25,7 @@ public class ValorEje {
     return axisAttributeId;
   }
 
-  public void setAxisAttributeId(Integer axisAttributeId) {
+  public void setAxisAttributeId(final Integer axisAttributeId) {
     this.axisAttributeId = axisAttributeId;
   }
 
@@ -33,7 +33,7 @@ public class ValorEje {
     return domainValueId;
   }
 
-  public void setDomainValueId(Integer domainValueId) {
+  public void setDomainValueId(final Integer domainValueId) {
     this.domainValueId = domainValueId;
   }
 }

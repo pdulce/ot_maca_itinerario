@@ -22,7 +22,7 @@ public class ItinerarioPantalla {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(final Long id) {
     this.id = id;
   }
 
@@ -30,7 +30,7 @@ public class ItinerarioPantalla {
     return elementId;
   }
 
-  public void setElementId(Integer elementId) {
+  public void setElementId(final Integer elementId) {
     this.elementId = elementId;
   }
 
@@ -38,7 +38,7 @@ public class ItinerarioPantalla {
     return creationDate;
   }
 
-  public void setCreationDate(Timestamp creationDate) {
+  public void setCreationDate(final Timestamp creationDate) {
     this.creationDate = creationDate;
   }
 
@@ -46,7 +46,7 @@ public class ItinerarioPantalla {
     return stages;
   }
 
-  public void setStages(List<StagePantalla> stages) {
+  public void setStages(final List<StagePantalla> stages) {
     this.stages = stages;
   }
 
@@ -54,7 +54,7 @@ public class ItinerarioPantalla {
     return delivery;
   }
 
-  public void setDelivery(Boolean delivery) {
+  public void setDelivery(final Boolean delivery) {
     this.delivery = delivery;
   }
 
