@@ -23,7 +23,7 @@ public class ActividadQAService {
   @Autowired
   private ActividadQARepository actividadQARepository;
 
-  private final static List<String> ACTIVIDADES = List.of("Revisión Requisitos",
+  private static final List<String> ACTIVIDADES = List.of("Revisión Requisitos",
       "Revisión de Historias de usuario",
       "Diseño planes prueba Funcional", "Diseño planes prueba Rendimiento",
       "Análisis de código estático",
@@ -39,43 +39,57 @@ public class ActividadQAService {
       "Automatización de Pruebas Funcionales", "Automatización de Pruebas de APIs",
       "Análisis de IA");
 
-  private final static Map<String, List<Integer>> UMBRALES_IDEALES = new HashMap<>();
-  private final static Map<Integer, Collection<Integer>> ETAPAS_Y_ACTIVIDADES = new HashMap<>();
+  private static final Map<String, List<Integer>> UMBRALES_IDEALES = new HashMap<>();
+  private static final Map<Integer, Collection<Integer>> ETAPAS_Y_ACTIVIDADES = new HashMap<>();
 
   static {
 
-    UMBRALES_IDEALES.put("Puntos lista de comprobación >= 80 % total", List.of(1, 2));
-    UMBRALES_IDEALES.put("100 % en requisitos críticos y 80 % en el resto", List.of(3));
-    UMBRALES_IDEALES.put("95 % requisitos críticos", List.of(4));
-    UMBRALES_IDEALES.put("75 % total", List.of(5));
+    UMBRALES_IDEALES.put("Puntos lista de comprobación >= 80 % total", List.of(Constantes.NUMBER_1,
+        Constantes.NUMBER_2));
+    UMBRALES_IDEALES.put("100 % en requisitos críticos y 80 % en el resto",
+        List.of(Constantes.NUMBER_3));
+    UMBRALES_IDEALES.put("95 % requisitos críticos", List.of(Constantes.NUMBER_4));
+    UMBRALES_IDEALES.put("75 % total", List.of(Constantes.NUMBER_5));
     UMBRALES_IDEALES.put("Funcionalidades críticas 100 % OK, Resto de funcionalidades 80 % OK y "
-        + "SIN defectos bloqueantes",  List.of(10));
+        + "Sin defectos bloqueantes",  List.of(Constantes.NUMBER_10));
     UMBRALES_IDEALES.put(
         "Funcionalidades críticas 100 % OK, Resto de funcionalidades 90 % OK y SIN defectos "
-            + "bloqueantes", List.of(11));
+            + "bloqueantes", List.of(Constantes.NUMBER_11));
     UMBRALES_IDEALES.put(
         "Trans / seg un 15 % superior al nivel de accesos esperado y Porcentaje de errores < 5 % en"
-            + " funcionalidades críticas",    List.of(13, 14, 15, 16, 17, 18));
+            + " funcionalidades críticas", List.of(Constantes.NUMBER_13, Constantes.NUMBER_14,
+            Constantes.NUMBER_15, Constantes.NUMBER_16, Constantes.NUMBER_17,
+            Constantes.NUMBER_18));
     UMBRALES_IDEALES.put(
-        "Sin vulnerabilidades de criticidad 2 y 3 segÃºn criterios CSI, 100% críticas y 80% resto",
-        List.of(19, 20, 21, 22, 23));
+        "Sin vulnerabilidades de criticidad 2 y 3 según criterios CSI, 100% críticas y 80% resto",
+        List.of(Constantes.NUMBER_19, Constantes.NUMBER_20, Constantes.NUMBER_21,
+            Constantes.NUMBER_22, Constantes.NUMBER_23));
     UMBRALES_IDEALES.put("Nivel AA en pautas WCAG2  100% frontales críticas y 80% del resto",
-        List.of(24));
+        List.of(Constantes.NUMBER_24));
     UMBRALES_IDEALES.put("Cobertura del 75 % de funcionalidades críticas y del 50 % en el resto",
-        List.of(28));
+        List.of(Constantes.NUMBER_28));
 
-    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_1, List.of(1, 2, 3, 4));
-    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_2, List.of(5));
-    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_3, List.of(6, 7));
-    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_4, List.of(8, 9));
-    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_5, List.of(10));
-    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_6, List.of(11, 12));
-    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_7, List.of(13, 14, 15, 16, 17, 18, 19));
-    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_8, List.of(20, 21, 22, 23, 24));
-    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_9, List.of(25));
-    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_10, List.of(26, 27, 28));
-    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_11, List.of(29, 30));
-    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_12, List.of(31));
+    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_1, List.of(Constantes.NUMBER_1, Constantes.NUMBER_2,
+        Constantes.NUMBER_3, Constantes.NUMBER_4));
+    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_2, List.of(Constantes.NUMBER_5));
+    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_3, List.of(Constantes.NUMBER_6,
+        Constantes.NUMBER_7));
+    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_4, List.of(Constantes.NUMBER_8,
+        Constantes.NUMBER_9));
+    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_5, List.of(Constantes.NUMBER_10));
+    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_6, List.of(Constantes.NUMBER_11,
+        Constantes.NUMBER_12));
+    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_7, List.of(Constantes.NUMBER_13,
+        Constantes.NUMBER_14, Constantes.NUMBER_15, Constantes.NUMBER_16, Constantes.NUMBER_17,
+        Constantes.NUMBER_18, Constantes.NUMBER_19));
+    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_8, List.of(Constantes.NUMBER_20,
+        Constantes.NUMBER_21, Constantes.NUMBER_22, Constantes.NUMBER_23, Constantes.NUMBER_24));
+    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_9, List.of(Constantes.NUMBER_25));
+    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_10, List.of(Constantes.NUMBER_26,
+        Constantes.NUMBER_27, Constantes.NUMBER_28));
+    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_11, List.of(Constantes.NUMBER_29,
+        Constantes.NUMBER_30));
+    ETAPAS_Y_ACTIVIDADES.put(Constantes.NUMBER_12, List.of(Constantes.NUMBER_31));
   }
 
   public Collection<ActividadQA> getAll() {

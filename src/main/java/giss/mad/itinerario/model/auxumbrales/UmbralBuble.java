@@ -10,7 +10,7 @@ public class UmbralBuble {
   private String recomen;
 
   public UmbralBuble(final String nameOfActividad, final Integer lowerRange,
-      final Integer upperRange, String recomendacion) {
+      final Integer upperRange, final String recomendacion) {
     this.actividad = nameOfActividad;
     this.recomen = recomendacion;
     if (upperRange >= Constantes.NUMBER_500) {

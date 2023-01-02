@@ -1,17 +1,16 @@
 package giss.mad.itinerario.model.auxpesos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
+import javax.persistence.Id;
 
 public class PesoGraph {
 
   @Id
   @JsonIgnore
   private Long id;
-  private Integer activity_id;
-  private Integer axis_attribute_id;
-  private Integer weight_value;
+  private Integer activityId;
+  private Integer axisAttributeId;
+  private Integer weightValue;
 
   public Long getId() {
     return id;
@@ -21,28 +20,28 @@ public class PesoGraph {
     this.id = id;
   }
 
-  public Integer getActivity_id() {
-    return activity_id;
+  public Integer getActivityId() {
+    return activityId;
   }
 
-  public void setActivity_id(final Integer activityId) {
-    this.activity_id = activityId;
+  public void setActivityId(final Integer activityId) {
+    this.activityId = activityId;
   }
 
-  public Integer getAxis_attribute_id() {
-    return axis_attribute_id;
+  public Integer getAxisAttributeId() {
+    return axisAttributeId;
   }
 
-  public void setAxis_attribute_id(final Integer axisAttributeId) {
-    this.axis_attribute_id = axisAttributeId;
+  public void setAxisAttributeId(final Integer axisAttributeId) {
+    this.axisAttributeId = axisAttributeId;
   }
 
-  public Integer getWeight_value() {
-    return weight_value;
+  public Integer getWeightValue() {
+    return weightValue;
   }
 
-  public void setWeight_value(final Integer weightValue) {
-    this.weight_value = weightValue;
+  public void setWeightValue(final Integer weightValue) {
+    this.weightValue = weightValue;
   }
 
 }

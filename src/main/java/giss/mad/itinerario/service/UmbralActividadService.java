@@ -96,7 +96,7 @@ public class UmbralActividadService {
       StageBuble stageBuble = StageBuble.obtenerStageBuble(stageName, stages4Bubles);
       if (stageBuble != null) {
         data = stageBuble.getData();
-      } else{
+      } else {
         data = new ArrayList<>();
         stageBuble = new StageBuble();
         stageBuble.setId(actividad.getTestingStageId());
@@ -159,7 +159,7 @@ public class UmbralActividadService {
     return max;
   }
 
-  public Integer getMaximumOfWeigths(final Integer elementType, final Boolean isDelivery,
+  public final Integer getMaximumOfWeigths(final Integer elementType, final Boolean isDelivery,
       final Integer idActivity) {
     Integer sumaOfMaxAxisPesosForActivity = Constantes.NUMBER_0;
     for (int i = Constantes.NUMBER_1; i < AXE.length - Constantes.NUMBER_1; i++) {

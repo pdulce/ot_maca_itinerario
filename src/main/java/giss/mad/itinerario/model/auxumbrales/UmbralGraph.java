@@ -15,24 +15,24 @@ public class UmbralGraph {
       final Integer lowerRange, final Integer upperRange, final String recomendacion) {
     this.x = idActividad;
     if (upperRange == Constantes.NUMBER_9999) {
-      int lowerRange_ = (String.valueOf(lowerRange).endsWith("1"))
+      int lowerRangeAux = (String.valueOf(lowerRange).endsWith("1"))
           ? lowerRange - Constantes.NUMBER_1 : lowerRange;
-      lowerRange_ = (String.valueOf(lowerRange_).endsWith("9"))
-          ? lowerRange_ + Constantes.NUMBER_1 : lowerRange_;
-      this.y = lowerRange_ + Constantes.NUMBER_80;
-      this.name = "UMBRAL >=" + lowerRange_;
+      lowerRangeAux = (String.valueOf(lowerRangeAux).endsWith("9"))
+          ? lowerRangeAux + Constantes.NUMBER_1 : lowerRangeAux;
+      this.y = lowerRangeAux + Constantes.NUMBER_80;
+      this.name = "UMBRAL >=" + lowerRangeAux;
       this.z = Constantes.NUMBER_50;
     } else {
-      int lowerRange_ = (String.valueOf(lowerRange).endsWith("1"))
+      int lowerRangeAux = (String.valueOf(lowerRange).endsWith("1"))
           ? lowerRange - Constantes.NUMBER_1 : lowerRange;
-      lowerRange_ = (String.valueOf(lowerRange_).endsWith("9"))
-          ? lowerRange_ + Constantes.NUMBER_1 : lowerRange_;
-      int upperRange_ = (String.valueOf(upperRange).endsWith("1"))
+      lowerRangeAux = (String.valueOf(lowerRangeAux).endsWith("9"))
+          ? lowerRangeAux + Constantes.NUMBER_1 : lowerRangeAux;
+      int upperRangeAux = (String.valueOf(upperRange).endsWith("1"))
           ? upperRange - Constantes.NUMBER_1 : upperRange;
-      upperRange_ = (String.valueOf(upperRange_).endsWith("9"))
-          ? upperRange_ + Constantes.NUMBER_1 : upperRange_;
-      this.y = (upperRange_ + lowerRange_) / Constantes.NUMBER_2;
-      this.name = "UMBRAL [" + lowerRange_ + ", " + upperRange_ + "]";
+      upperRangeAux = (String.valueOf(upperRangeAux).endsWith("9"))
+          ? upperRangeAux + Constantes.NUMBER_1 : upperRangeAux;
+      this.y = (upperRangeAux + lowerRangeAux) / Constantes.NUMBER_2;
+      this.name = "UMBRAL [" + lowerRangeAux + ", " + upperRangeAux + "]";
       this.z = Constantes.NUMBER_25;
     }
     this.actividad = nameOfactividad;

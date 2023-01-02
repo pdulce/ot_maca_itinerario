@@ -9,9 +9,9 @@ public interface ActividadItinerarioRepository extends JpaRepository<ActividadIt
 
 
   List<ActividadItinerario>
-  findAllByQualityItineraryIdAndDeletedIsNull(final Integer qualityItineraryId);
+  findAllByQualityItineraryIdAndDeletedIsNull(Integer qualityItineraryId);
 
-  ActividadItinerario findByIdAndDeletedIsNull(final Integer id);
+  ActividadItinerario findByIdAndDeletedIsNull(Integer id);
 
 }
 

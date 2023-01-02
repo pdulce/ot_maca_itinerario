@@ -12,7 +12,7 @@ public class ReplicaElementOEntrega {
 
   private Boolean delivery;
 
-  List<ValorEje> attributeValuesCollection;
+  private List<ValorEje> attributeValuesCollection;
 
   public Integer getId() {
     return id;

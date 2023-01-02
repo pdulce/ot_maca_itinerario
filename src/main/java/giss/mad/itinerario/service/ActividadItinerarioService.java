@@ -18,13 +18,21 @@ import giss.mad.itinerario.model.repository.EtapaPruebasRepository;
 import giss.mad.itinerario.model.repository.ItinerarioCalidadRepository;
 import giss.mad.itinerario.model.repository.PesoRepository;
 import giss.mad.itinerario.model.repository.UmbralActividadRepository;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.List;
 
 @Service
 public class ActividadItinerarioService {
@@ -188,11 +196,13 @@ public class ActividadItinerarioService {
     Integer elementInstanceId = elemOrDelivery.getId();
     Integer elementTypeId = elemOrDelivery.getCatalogElementTypeId();
     Boolean isDelivery = elemOrDelivery.getDelivery();
-
     List<ValorEje> valoresAttrsYejes = elemOrDelivery.getAttributeValuesCollection();
-    //invocar al microservicio de /catalogo/ejes/get
-    List<Integer> ejes = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
-        17, 18, 19, 20, 21, 22);
+    List<Integer> ejes = List.of(Constantes.NUMBER_1, Constantes.NUMBER_2,
+        Constantes.NUMBER_3, Constantes.NUMBER_4, Constantes.NUMBER_5, Constantes.NUMBER_6,
+        Constantes.NUMBER_7, Constantes.NUMBER_8, Constantes.NUMBER_9, Constantes.NUMBER_10,
+        Constantes.NUMBER_11, Constantes.NUMBER_12, Constantes.NUMBER_13, Constantes.NUMBER_14,
+        Constantes.NUMBER_15, Constantes.NUMBER_16, Constantes.NUMBER_17, Constantes.NUMBER_18,
+        Constantes.NUMBER_19, Constantes.NUMBER_20, Constantes.NUMBER_21, Constantes.NUMBER_22);
     Map<Integer, Integer> mapOfAxisWithValuesDomain = new HashMap<>();
     for (ValorEje valorEjeOatributo : valoresAttrsYejes) {
       Integer valueOfDomainId = valorEjeOatributo.getDomainValueId();
@@ -203,15 +213,12 @@ public class ActividadItinerarioService {
         }
       }
     }
-
     Timestamp fecCreacion = new Timestamp(Calendar.getInstance().getTime().getTime());
-
     ItinerarioCalidad itinerarioCalidad = new ItinerarioCalidad();
     itinerarioCalidad.setCatalogueId(elementInstanceId);
     itinerarioCalidad.setDelivery(isDelivery);
     itinerarioCalidad.setCreationDate(fecCreacion);
     itinerarioCalidad = this.itinerarioCalidadRepo.save(itinerarioCalidad);
-
     List<ActividadItinerario> actividadesItinerario = new ArrayList<>();
     List<ActividadQA> actividadesQA = this.qAactividadRepository.findAllByDeletedIsNull(
         Sort.by(Sort.Order.asc("testingStageId")));
@@ -231,28 +238,22 @@ public class ActividadItinerarioService {
       Boolean includedInItinerary = true;
       for (Integer axisId : mapOfAxisWithValuesDomain.keySet()) {
         Integer valorDominioId = mapOfAxisWithValuesDomain.get(axisId);
-        //buscamos el peso que corresponde a ese valorDomainId para la lista de pesos de esta
-        // actividad-eje
         Collection<Peso> pesosFound =
             this.pesoRepository.
                 findAllByDeletedIsNullAndElementTypeIdAndForDeliveryAndActivityIdAndAxisAttributeId(
                 elementTypeId, isDelivery, actividadQA.getId(), axisId);
         if (pesosFound.isEmpty()) {
-          //miro si este eje es heredable, para tomar los pesos del padre , o si es entrega, del
-          // elemento asociado
           EjeHeredable ejeHeredable = this.ejeHeredableRepository.
               findByElementTypeIdAndAxisIdAndForDeliveryAndDeletedIsNull(
               elementTypeId, axisId, isDelivery);
 
           if (ejeHeredable != null
-              && isDelivery) {//los proyectos son el raÃ­z en la jerarquÃ­a, no tienen elementos de nivel superior
-            //tomamos los pesos del elemento de catÃ¡logo asociado
+              && isDelivery) {
             pesosFound =
                 this.pesoRepository.
                     findAllByDeletedIsNullAndElementTypeIdAndForDeliveryAndActivityIdAndAxisAttributeId(
                     elementTypeId, false, actividadQA.getId(), axisId);
           } else if (ejeHeredable != null && elementTypeId < Constantes.NUMBER_3) {
-            //tomamos los pesos del elemento de catÃ¡logo padre en la jerarquÃ­a
             pesosFound =
                 this.pesoRepository.
                     findAllByDeletedIsNullAndElementTypeIdAndForDeliveryAndActivityIdAndAxisAttributeId(
@@ -268,25 +269,22 @@ public class ActividadItinerarioService {
               observations =
                   "Esta actividad no se incluye en el itinerario; valor -1 (EXLUYE) para el eje "
                       + axisId + " para el valor de dominio existente";
-              includedInItinerary = false;// esta actividad queda exluida del itinerario,
-              // aunque se guarda en tabla a efectos de histÃ±orico y auditorÃ­as
+              includedInItinerary = false;
             } else {
               acumuladorSumaPesosActividad += peso.getWeightValue();
               sumWeightsAllActivities += acumuladorSumaPesosActividad;
             }
             break;
           }
-        }//fin de recorrido de pesos
-
-      }//fin de recorrido de ejes
+        }
+      }
       actividadItinerarioIesima.setActivitSumOfAxes(acumuladorSumaPesosActividad);
-      //encajar el sumatorio en los rangos definidos por los umbrales de esta actividad
       Collection<UmbralActividad> umbralesActividad =
           this.umbralActividadRepository.
               findAllByDeletedIsNullAndElemenTypeIdAndForDeliveryAndActivityId(
               elementTypeId, isDelivery, actividadQA.getId());
 
-      if (includedInItinerary) {//tto. si no ha sido excluida la actividad segÃºn el peso -1
+      if (includedInItinerary) {
         Boolean found = false;
         Iterator<UmbralActividad> umbralesIterator = umbralesActividad.iterator();
         while (umbralesIterator.hasNext() && !found) {

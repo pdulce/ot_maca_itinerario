@@ -44,7 +44,7 @@ public class ItinerarioCalidadService {
   }
 
   public ItinerarioCalidad getItinerarioMasRecienteByIdElementOrEntrega(
-      final Integer idElementoOrEntrega,final Boolean isDelivery) {
+      final Integer idElementoOrEntrega, final Boolean isDelivery) {
 
     List<ItinerarioCalidad> itList = new ArrayList<>(
         this.itinerarioCalidadRepository.findAllByCatalogueIdAndDelivery(idElementoOrEntrega,
@@ -58,8 +58,8 @@ public class ItinerarioCalidadService {
   }
 
   public Collection<ActividadQAPantalla> getActivitiesByItineraryId(final Integer idItinerario,
-      Boolean included) {
-    Collection<ActividadQAPantalla> collection_ = new ArrayList<>();
+      final Boolean included) {
+    Collection<ActividadQAPantalla> actividadQAPantallaArrayList = new ArrayList<>();
     ItinerarioCalidad itinerarioCalidad = this.itinerarioCalidadRepository.findByIdAndDeletedIsNull(
         idItinerario);
     if (itinerarioCalidad != null && !itinerarioCalidad.getActividadesDeItinerario().isEmpty()) {
@@ -75,15 +75,15 @@ public class ItinerarioCalidadService {
           act4Screen.setRealization(actividadItinerario.getInferredThreshold());
           act4Screen.setActivity(actividad.getName());
           act4Screen.setStage(etapaPruebas.getName());
-          collection_.add(act4Screen);
+          actividadQAPantallaArrayList.add(act4Screen);
         }
       }
     }
-    return collection_;
+    return actividadQAPantallaArrayList;
   }
 
   public Collection<ActividadQAPantalla> getActivitiesByItineraryId(final Integer idItinerario) {
-    Collection<ActividadQAPantalla> collection_ = new ArrayList<>();
+    Collection<ActividadQAPantalla> actividadQAPantallaArrayList = new ArrayList<>();
     ItinerarioCalidad itinerarioCalidad = this.itinerarioCalidadRepository.findByIdAndDeletedIsNull(
         idItinerario);
     if (itinerarioCalidad != null && !itinerarioCalidad.getActividadesDeItinerario().isEmpty()) {
@@ -98,10 +98,10 @@ public class ItinerarioCalidadService {
         act4Screen.setRealization(actividadItinerario.getInferredThreshold());
         act4Screen.setActivity(actividad.getName());
         act4Screen.setStage(etapaPruebas.getName());
-        collection_.add(act4Screen);
+        actividadQAPantallaArrayList.add(act4Screen);
       }
     }
-    return collection_;
+    return actividadQAPantallaArrayList;
   }
 
   public Collection<StageBuble> getByIdItinerarioOnlyIncluded(final Integer idItinerario) {

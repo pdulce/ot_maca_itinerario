@@ -14,16 +14,12 @@
   <artifactId>ot_maca_itinerario</artifactId>
   <version>1.0.0-SNAPSHOT</version>
 
-  <description>Proyecto backend para el servicio</description>
+  <description>Proyecto backend Itinerario para el servicio</description>
 
   <dependencies>
     <dependency>
       <groupId>es.giss.arch</groupId>
       <artifactId>giss-arch-starter-web</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>es.giss.arch</groupId>
-      <artifactId>giss-arch-starter-restclient</artifactId>
     </dependency>
 
     <dependency>
@@ -43,13 +39,6 @@
       <artifactId>h2</artifactId>
       <scope>test</scope>
     </dependency>
-
-    <dependency>
-      <groupId>org.json</groupId>
-      <artifactId>json</artifactId>
-      <version>20220924</version>
-    </dependency>
-
 
   </dependencies>
   <build>

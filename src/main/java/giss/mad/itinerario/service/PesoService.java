@@ -36,7 +36,7 @@ public class PesoService {
     return this.pesoRepository.findAllByDeletedIsNull();
   }
 
-  public Collection<PesoGraph> getAllByElement(final Integer idElement, Boolean isDelivery) {
+  public Collection<PesoGraph> getAllByElement(final Integer idElement, final Boolean isDelivery) {
     Collection<Peso> c = this.pesoRepository.findAllByDeletedIsNullAndElementTypeIdAndForDelivery(
         idElement, isDelivery, Sort.by(Sort.Order.asc("id")));
     if (c == null) {
@@ -45,9 +45,9 @@ public class PesoService {
     Collection<PesoGraph> pesos = new ArrayList<>();
     for (Peso peso : c) {
       PesoGraph pesoGraph = new PesoGraph();
-      pesoGraph.setActivity_id(peso.getActivityId());
-      pesoGraph.setAxis_attribute_id(peso.getAxisAttributeId());
-      pesoGraph.setWeight_value(peso.getWeightValue());
+      pesoGraph.setActivityId(peso.getActivityId());
+      pesoGraph.setAxisAttributeId(peso.getAxisAttributeId());
+      pesoGraph.setWeightValue(peso.getWeightValue());
       pesos.add(pesoGraph);
     }
     return pesos;

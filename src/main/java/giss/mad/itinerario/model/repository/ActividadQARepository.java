@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface ActividadQARepository extends JpaRepository<ActividadQA, Integer> {
 
-  List<ActividadQA> findAllByDeletedIsNull(final Sort sort);
+  List<ActividadQA> findAllByDeletedIsNull(Sort sort);
 
-  ActividadQA findByIdAndDeletedIsNull(final Integer id);
+  ActividadQA findByIdAndDeletedIsNull(Integer id);
 
 }
 

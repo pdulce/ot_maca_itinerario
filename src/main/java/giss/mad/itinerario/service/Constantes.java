@@ -5,8 +5,8 @@ public final class Constantes {
   private Constantes() {
 
   }
-  public static final int NUMBER_9999=	9999;
-  public static final int NUMBER_MINUS_ONE=	-1;
+  public static final int NUMBER_9999 =	9999;
+  public static final int NUMBER_MINUS_ONE =	-1;
   public static final int NUMBER_0	=	0;
   public static final int NUMBER_1	=	1;
   public static final int NUMBER_2	=	2;
