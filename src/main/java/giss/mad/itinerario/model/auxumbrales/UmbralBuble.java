@@ -1,5 +1,7 @@
 package giss.mad.itinerario.model.auxumbrales;
 
+import giss.mad.itinerario.service.Constantes;
+
 public class UmbralBuble {
 
   private Integer value;
@@ -7,22 +9,23 @@ public class UmbralBuble {
   private String name;
   private String recomen;
 
-  public UmbralBuble(String nameOfactividad_, Integer lowerRange_, Integer upperRange_,
-      String recomendacion_) {
-    this.actividad = nameOfactividad_;
-    this.recomen = recomendacion_;
-    if (upperRange_ >= 500) {
-      this.name = "Rango >=" + lowerRange_;
-      this.value = lowerRange_ + 80;
+  public UmbralBuble(final String nameOfActividad, final Integer lowerRange,
+      final Integer upperRange, String recomendacion) {
+    this.actividad = nameOfActividad;
+    this.recomen = recomendacion;
+    if (upperRange >= Constantes.NUMBER_500) {
+      this.name = "Rango >=" + lowerRange;
+      this.value = lowerRange + Constantes.NUMBER_80;
     } else {
-      this.name = "Rango [" + lowerRange_ + ", " + upperRange_ + "]";
-      this.value = upperRange_ - lowerRange_;
+      this.name = "Rango [" + lowerRange + ", " + upperRange + "]";
+      this.value = upperRange - lowerRange;
     }
   }
 
-  public UmbralBuble(String nameOfactividad_, String recomendacion_, Integer sumOfWeights) {
-    this.actividad = nameOfactividad_;
-    this.recomen = recomendacion_;
+  public UmbralBuble(final String nameOfactividad, final String recomendacion,
+      final Integer sumOfWeights) {
+    this.actividad = nameOfactividad;
+    this.recomen = recomendacion;
     this.name = "Suma obtenida: " + sumOfWeights;
     this.value = sumOfWeights;
   }
@@ -31,7 +34,7 @@ public class UmbralBuble {
     return value;
   }
 
-  public void setValue(Integer value) {
+  public void setValue(final Integer value) {
     this.value = value;
   }
 
@@ -39,7 +42,7 @@ public class UmbralBuble {
     return actividad;
   }
 
-  public void setActividad(String actividad) {
+  public void setActividad(final String actividad) {
     this.actividad = actividad;
   }
 
@@ -47,7 +50,7 @@ public class UmbralBuble {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(final String name) {
     this.name = name;
   }
 
@@ -55,7 +58,7 @@ public class UmbralBuble {
     return recomen;
   }
 
-  public void setRecomen(String recomen) {
+  public void setRecomen(final String recomen) {
     this.recomen = recomen;
   }
 }

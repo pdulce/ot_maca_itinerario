@@ -16,7 +16,7 @@ public class StageBuble {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(final String name) {
     this.name = name;
   }
 
@@ -24,7 +24,7 @@ public class StageBuble {
     return data;
   }
 
-  public void setData(List<UmbralBuble> data) {
+  public void setData(final List<UmbralBuble> data) {
     this.data = data;
   }
 
@@ -32,11 +32,12 @@ public class StageBuble {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(final Integer id) {
     this.id = id;
   }
 
-  public static StageBuble obtenerStageBuble(String stageName, Collection<StageBuble> lista) {
+  public static StageBuble obtenerStageBuble(final String stageName,
+      final Collection<StageBuble> lista) {
     for (StageBuble stage : lista) {
       if (stage.getName().contentEquals(stageName)) {
         return stage;

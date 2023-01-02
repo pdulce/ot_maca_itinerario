@@ -11,12 +11,13 @@ public interface PesoRepository extends JpaRepository<Peso, Integer> {
   List<Peso> findAllByDeletedIsNull();
 
   List<Peso> findAllByDeletedIsNullAndElementTypeIdAndForDeliveryAndActivityIdAndAxisAttributeId(
-      Integer elementTypeId, Boolean forDelivery, Integer activityId, Integer axisAttributeId);
+      final Integer elementTypeId, final Boolean forDelivery, final Integer activityId,
+      final Integer axisAttributeId);
 
   Peso findByIdAndDeletedIsNull(Integer id);
 
-  List<Peso> findAllByDeletedIsNullAndElementTypeIdAndForDelivery(Integer elementTypeId,
-      Boolean forDelivery, Sort sort);
+  List<Peso> findAllByDeletedIsNullAndElementTypeIdAndForDelivery(final Integer elementTypeId,
+      final Boolean forDelivery, final Sort sort);
 
 
 }

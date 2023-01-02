@@ -8,9 +8,10 @@ import java.util.List;
 public interface ActividadItinerarioRepository extends JpaRepository<ActividadItinerario, Integer> {
 
 
-  List<ActividadItinerario> findAllByQualityItineraryIdAndDeletedIsNull(Integer qualityItineraryId);
+  List<ActividadItinerario>
+  findAllByQualityItineraryIdAndDeletedIsNull(final Integer qualityItineraryId);
 
-  ActividadItinerario findByIdAndDeletedIsNull(Integer id);
+  ActividadItinerario findByIdAndDeletedIsNull(final Integer id);
 
 }
 

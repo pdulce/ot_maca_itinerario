@@ -9,9 +9,9 @@ public interface EtapaPruebasRepository extends JpaRepository<EtapaPruebas, Inte
 
   List<EtapaPruebas> findAllByDeletedIsNull();
 
-  EtapaPruebas findByNameAndDeletedIsNull(String name);
+  EtapaPruebas findByNameAndDeletedIsNull(final String name);
 
-  EtapaPruebas findByIdAndDeletedIsNull(Integer id);
+  EtapaPruebas findByIdAndDeletedIsNull(final Integer id);
 
 }
 

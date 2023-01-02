@@ -1,61 +1,49 @@
 package giss.mad.itinerario.model.auxumbrales;
 
+import giss.mad.itinerario.service.Constantes;
+
 public class UmbralGraph {
 
-  private Integer x;// idActividad;
+  private Integer x;
   private Integer y;
   private Integer z;
   private String actividad;
-
   private String name;
   private String recomen;
 
-  public UmbralGraph(String nameOfactividad_, Integer idActividad_, Integer lowerRange,
-      Integer upperRange, String recomendacion_) {
-    this.x = idActividad_;
-    if (upperRange == 9999) {
-      int lowerRange_ = (String.valueOf(lowerRange).endsWith("1")) ? lowerRange - 1 : lowerRange;
-      lowerRange_ = (String.valueOf(lowerRange_).endsWith("9")) ? lowerRange_ + 1 : lowerRange_;
-      this.y = lowerRange_ + 80;
+  public UmbralGraph(final String nameOfactividad, final Integer idActividad,
+      final Integer lowerRange, final Integer upperRange, final String recomendacion) {
+    this.x = idActividad;
+    if (upperRange == Constantes.NUMBER_9999) {
+      int lowerRange_ = (String.valueOf(lowerRange).endsWith("1"))
+          ? lowerRange - Constantes.NUMBER_1 : lowerRange;
+      lowerRange_ = (String.valueOf(lowerRange_).endsWith("9"))
+          ? lowerRange_ + Constantes.NUMBER_1 : lowerRange_;
+      this.y = lowerRange_ + Constantes.NUMBER_80;
       this.name = "UMBRAL >=" + lowerRange_;
-      this.z = 50;
+      this.z = Constantes.NUMBER_50;
     } else {
-      int lowerRange_ = (String.valueOf(lowerRange).endsWith("1")) ? lowerRange - 1 : lowerRange;
-      lowerRange_ = (String.valueOf(lowerRange_).endsWith("9")) ? lowerRange_ + 1 : lowerRange_;
-      int upperRange_ = (String.valueOf(upperRange).endsWith("1")) ? upperRange - 1 : upperRange;
-      upperRange_ = (String.valueOf(upperRange_).endsWith("9")) ? upperRange_ + 1 : upperRange_;
-      this.y = (upperRange_ + lowerRange_) / 2;
+      int lowerRange_ = (String.valueOf(lowerRange).endsWith("1"))
+          ? lowerRange - Constantes.NUMBER_1 : lowerRange;
+      lowerRange_ = (String.valueOf(lowerRange_).endsWith("9"))
+          ? lowerRange_ + Constantes.NUMBER_1 : lowerRange_;
+      int upperRange_ = (String.valueOf(upperRange).endsWith("1"))
+          ? upperRange - Constantes.NUMBER_1 : upperRange;
+      upperRange_ = (String.valueOf(upperRange_).endsWith("9"))
+          ? upperRange_ + Constantes.NUMBER_1 : upperRange_;
+      this.y = (upperRange_ + lowerRange_) / Constantes.NUMBER_2;
       this.name = "UMBRAL [" + lowerRange_ + ", " + upperRange_ + "]";
-      this.z = 25;
+      this.z = Constantes.NUMBER_25;
     }
-    //this.z = //procesar(recomendacion_);
-    this.actividad = nameOfactividad_;
-    this.recomen = recomendacion_;
-  }
-
-  private Integer procesar(String recomendacion) {
-    String[] parts = recomendacion.split("%");
-    int numberOfPerc = parts.length;
-    int numbers = 0;
-    double percentage = 0.0;
-    for (int i = 0; i < numberOfPerc; i++) {
-      String[] subparts = parts[i].split(" ");
-      String percentageStr = subparts[subparts.length - 1].trim();
-      if (Character.isDigit(percentageStr.charAt(0))) {
-        percentage += Integer.parseInt(percentageStr);
-      } else {
-        continue;
-      }
-      numbers++;
-    }
-    return Double.valueOf((percentage / numbers) * 0.8).intValue();
+    this.actividad = nameOfactividad;
+    this.recomen = recomendacion;
   }
 
   public Integer getX() {
     return x;
   }
 
-  public void setX(Integer x) {
+  public void setX(final Integer x) {
     this.x = x;
   }
 
@@ -63,7 +51,7 @@ public class UmbralGraph {
     return y;
   }
 
-  public void setY(Integer y) {
+  public void setY(final Integer y) {
     this.y = y;
   }
 
@@ -71,7 +59,7 @@ public class UmbralGraph {
     return z;
   }
 
-  public void setZ(Integer z) {
+  public void setZ(final Integer z) {
     this.z = z;
   }
 
@@ -79,7 +67,7 @@ public class UmbralGraph {
     return recomen;
   }
 
-  public void setRecomen(String recomen) {
+  public void setRecomen(final String recomen) {
     this.recomen = recomen;
   }
 
@@ -87,7 +75,7 @@ public class UmbralGraph {
     return actividad;
   }
 
-  public void setActividad(String actividad) {
+  public void setActividad(final String actividad) {
     this.actividad = actividad;
   }
 
@@ -95,7 +83,7 @@ public class UmbralGraph {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(final String name) {
     this.name = name;
   }
 }

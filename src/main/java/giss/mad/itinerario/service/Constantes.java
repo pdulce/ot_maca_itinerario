@@ -156,5 +156,11 @@ public final class Constantes {
   public static final int NUMBER_146	=	146;
   public static final int NUMBER_147	=	147;
 
-
+  public static final int NUMBER_500	=	500;
+  public static final int NUMBER_200	=	200;
+  public static final int NUMBER_199	=	199;
+  public static final int NUMBER_170	=	170;
+  public static final int NUMBER_169	=	169;
+  public static final int NUMBER_159	=	159;
+  public static final int NUMBER_160	=	160;
 }

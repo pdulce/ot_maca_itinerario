@@ -9,12 +9,12 @@ import java.util.Optional;
 
 public interface ItinerarioCalidadRepository extends JpaRepository<ItinerarioCalidad, Integer> {
 
-  List<ItinerarioCalidad> findAllByCatalogueIdAndDelivery(Integer catalogueId, Boolean delivery,
-      Sort sort);
+  List<ItinerarioCalidad> findAllByCatalogueIdAndDelivery(final Integer catalogueId,
+      final Boolean delivery, final Sort sort);
 
   List<ItinerarioCalidad> findAllByDeletedIsNull();
 
-  ItinerarioCalidad findByIdAndDeletedIsNull(Integer id);
+  ItinerarioCalidad findByIdAndDeletedIsNull(final Integer id);
 
 }
 

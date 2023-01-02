@@ -5,10 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EjeHeredableRepository extends JpaRepository<EjeHeredable, Integer> {
 
-  EjeHeredable findByIdAndDeletedIsNull(Integer id);
+  EjeHeredable findByIdAndDeletedIsNull(final Integer id);
 
-  EjeHeredable findByElementTypeIdAndAxisIdAndForDeliveryAndDeletedIsNull(Integer elementTypeId,
-      Integer axisId, Boolean forDelivery);
+  EjeHeredable findByElementTypeIdAndAxisIdAndForDeliveryAndDeletedIsNull(
+      final Integer elementTypeId, final Integer axisId, Boolean forDelivery);
 
 }
 

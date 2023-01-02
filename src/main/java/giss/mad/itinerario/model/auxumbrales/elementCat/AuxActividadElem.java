@@ -6,7 +6,8 @@ public class AuxActividadElem {
   private Integer activityId;
   private Boolean isDelivery;
 
-  public AuxActividadElem(Integer elementTypeId, Integer activityId, Boolean isDelivery) {
+  public AuxActividadElem(final Integer elementTypeId, final Integer activityId,
+      final Boolean isDelivery) {
     this.elementTypeId = elementTypeId;
     this.activityId = activityId;
     this.isDelivery = isDelivery;

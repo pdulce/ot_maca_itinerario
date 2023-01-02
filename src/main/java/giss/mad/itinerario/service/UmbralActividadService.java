@@ -187,45 +187,45 @@ public class UmbralActividadService {
     Collection<ActividadQA> actividades = this.actividadRepository.findAllByDeletedIsNull(
         Sort.by(Sort.Order.asc("testingStageId")));
     for (ActividadQA actividad : actividades) {
-      Integer sumaPesosActividad_i_Promo = getMaximumOfWeigths(Constantes.NUMBER_1,
+      Integer sumaPesosActividadIPromo = getMaximumOfWeigths(Constantes.NUMBER_1,
           false, actividad.getId());
       AuxActividadElem aux1 = new AuxActividadElem(Constantes.NUMBER_1, actividad.getId(),
           false);
-      maxPuntuacionesPesosActividades.put(aux1, sumaPesosActividad_i_Promo);
-      Integer sumaPesosActividad_i_EntregaPromo = getMaximumOfWeigths(Constantes.NUMBER_1,
+      maxPuntuacionesPesosActividades.put(aux1, sumaPesosActividadIPromo);
+      Integer sumaPesosActividadIEntregaPromo = getMaximumOfWeigths(Constantes.NUMBER_1,
           false, actividad.getId());
       AuxActividadElem aux2 = new AuxActividadElem(Constantes.NUMBER_1, actividad.getId(),
           true);
-      maxPuntuacionesPesosActividades.put(aux2, sumaPesosActividad_i_EntregaPromo);
-      Integer sumaPesosActividad_i_AgrupFunc = getMaximumOfWeigths(Constantes.NUMBER_2,
+      maxPuntuacionesPesosActividades.put(aux2, sumaPesosActividadIEntregaPromo);
+      Integer sumaPesosActividadIAgrupFunc = getMaximumOfWeigths(Constantes.NUMBER_2,
           false, actividad.getId());
       AuxActividadElem aux3 = new AuxActividadElem(Constantes.NUMBER_2, actividad.getId(),
           false);
-      maxPuntuacionesPesosActividades.put(aux3, sumaPesosActividad_i_AgrupFunc);
-      Integer sumaPesosActividad_i_EntregaAgrupFunc = getMaximumOfWeigths(Constantes.NUMBER_2,
+      maxPuntuacionesPesosActividades.put(aux3, sumaPesosActividadIAgrupFunc);
+      Integer sumaPesosActividadIEntregaAgrupFunc = getMaximumOfWeigths(Constantes.NUMBER_2,
           false, actividad.getId());
       AuxActividadElem aux4 = new AuxActividadElem(Constantes.NUMBER_2, actividad.getId(),
           true);
-      maxPuntuacionesPesosActividades.put(aux4, sumaPesosActividad_i_EntregaAgrupFunc);
-      Integer sumaPesosActividad_i_Proyecto = getMaximumOfWeigths(Constantes.NUMBER_3,
+      maxPuntuacionesPesosActividades.put(aux4, sumaPesosActividadIEntregaAgrupFunc);
+      Integer sumaPesosActividadIProyecto = getMaximumOfWeigths(Constantes.NUMBER_3,
           false, actividad.getId());
       AuxActividadElem aux5 = new AuxActividadElem(Constantes.NUMBER_3, actividad.getId(),
           false);
-      maxPuntuacionesPesosActividades.put(aux5, sumaPesosActividad_i_Proyecto);
-      Integer sumaPesosActividad_i_EntregaProyecto = getMaximumOfWeigths(Constantes.NUMBER_3,
+      maxPuntuacionesPesosActividades.put(aux5, sumaPesosActividadIProyecto);
+      Integer sumaPesosActividadIEntregaProyecto = getMaximumOfWeigths(Constantes.NUMBER_3,
           false, actividad.getId());
       AuxActividadElem aux6 = new AuxActividadElem(Constantes.NUMBER_3, actividad.getId(),
           false);
-      maxPuntuacionesPesosActividades.put(aux6, sumaPesosActividad_i_EntregaProyecto);
+      maxPuntuacionesPesosActividades.put(aux6, sumaPesosActividadIEntregaProyecto);
     }
 
     Map<Map<Integer, Boolean>, Map<Integer, List<Umbral>>> elementsOfCatalogo =
         new UmbralesIniciador().getElementsOfCatalogo();
     int id = Constantes.NUMBER_1;
-    for (Map<Integer, Boolean> idElement_withIsDelivery : elementsOfCatalogo.keySet()) {
-      Integer idOfElement = idElement_withIsDelivery.keySet().iterator().next();
-      Boolean isDelivery = idElement_withIsDelivery.get(idOfElement);
-      Map<Integer, List<Umbral>> activitiesMap = elementsOfCatalogo.get(idElement_withIsDelivery);
+    for (Map<Integer, Boolean> idElementWithIsDelivery : elementsOfCatalogo.keySet()) {
+      Integer idOfElement = idElementWithIsDelivery.keySet().iterator().next();
+      Boolean isDelivery = idElementWithIsDelivery.get(idOfElement);
+      Map<Integer, List<Umbral>> activitiesMap = elementsOfCatalogo.get(idElementWithIsDelivery);
       for (Integer idOfActivitiy : activitiesMap.keySet()) {
         String nombreActividad = this.actividadRepository.findByIdAndDeletedIsNull(idOfActivitiy)
             .getName();

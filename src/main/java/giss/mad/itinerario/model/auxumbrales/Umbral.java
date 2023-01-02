@@ -6,14 +6,14 @@ public class Umbral {
   private Integer lowerRange;
   private Integer upperRange;
   private String threshold;
-  private Boolean exclude_unreached_threshold;
+  private Boolean excludeUnreachedThreshold;
 
-  public Umbral(Integer lowerRange, Integer upperRange, String threshold,
-      Boolean exclude_unreached_threshold) {
+  public Umbral(final Integer lowerRange, final Integer upperRange, final String threshold,
+      final Boolean excludeUnreachedThreshold) {
     this.lowerRange = lowerRange;
     this.upperRange = upperRange;
     this.threshold = threshold;
-    this.exclude_unreached_threshold = exclude_unreached_threshold;
+    this.excludeUnreachedThreshold = excludeUnreachedThreshold;
   }
 
   public Integer getLowerRange() {
@@ -29,14 +29,14 @@ public class Umbral {
   }
 
   public Boolean isExcluded_unreached_threshold() {
-    return exclude_unreached_threshold;
+    return excludeUnreachedThreshold;
   }
 
   public Integer getIdActividad() {
     return idActividad;
   }
 
-  public void setIdActividad(Integer idActividad) {
+  public void setIdActividad(final Integer idActividad) {
     this.idActividad = idActividad;
   }
 }
