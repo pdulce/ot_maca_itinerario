@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "UmbralActividad", schema = "itinerario")
+@Table(name = "UmbralActividad", schema = "MACA_ITINERARIO")
 public class UmbralActividad {
 
   @Id

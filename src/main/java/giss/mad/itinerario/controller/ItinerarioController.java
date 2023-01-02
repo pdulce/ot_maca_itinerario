@@ -58,17 +58,6 @@ public final class ItinerarioController {
   @Autowired
   private ItinerarioCalidadService itinerarioCalidadService;
 
-
-  @GetMapping("/initDb")
-  public String iniciarItinerario() {
-    if (this.actividadQAService.getAll().isEmpty()) {
-      this.etapaPruebasService.initializeDB();
-      this.actividadQAService.initializeDB();
-    }
-    return "Hello! I am the MACA Itinerary-db initializer, work well done!";
-  }
-
-
   @GetMapping("/QAStages/getAll")
   public Collection<EtapaPruebas> getEtapasPruebas() {
     Collection<EtapaPruebas> c = this.etapaPruebasService.getAll();

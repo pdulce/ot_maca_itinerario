@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "EtapaPruebas", schema = "itinerario")
+@Table(name = "EtapaPruebas", schema = "MACA_ITINERARIO")
 public class EtapaPruebas {
 
   @Id

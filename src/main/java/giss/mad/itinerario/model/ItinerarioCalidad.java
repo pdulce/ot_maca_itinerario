@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "ItinerarioCalidad", schema = "itinerario")
+@Table(name = "ItinerarioCalidad", schema = "MACA_ITINERARIO")
 public class ItinerarioCalidad {
 
   @Id
