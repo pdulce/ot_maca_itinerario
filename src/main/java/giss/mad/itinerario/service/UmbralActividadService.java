@@ -5,31 +5,22 @@ import giss.mad.itinerario.model.EtapaPruebas;
 import giss.mad.itinerario.model.Peso;
 import giss.mad.itinerario.model.UmbralActividad;
 import giss.mad.itinerario.model.auxumbrales.StageBuble;
-import giss.mad.itinerario.model.auxumbrales.Umbral;
 import giss.mad.itinerario.model.auxumbrales.UmbralBuble;
 import giss.mad.itinerario.model.auxumbrales.UmbralGraph;
-import giss.mad.itinerario.model.auxumbrales.UmbralesIniciador;
-import giss.mad.itinerario.model.auxumbrales.elementCat.AuxActividadElem;
 import giss.mad.itinerario.model.repository.ActividadQARepository;
 import giss.mad.itinerario.model.repository.EtapaPruebasRepository;
 import giss.mad.itinerario.model.repository.PesoRepository;
 import giss.mad.itinerario.model.repository.UmbralActividadRepository;
-import java.util.Calendar;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import javax.transaction.Transactional;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 @Service
 public class UmbralActividadService {
@@ -178,80 +169,6 @@ public class UmbralActividadService {
               elementType, isDelivery, idActivity, AXE[i]));
     }
     return sumaOfMaxAxisPesosForActivity;
-  }
-
-  @Transactional
-  public void initializeDB() {
-    this.umbralActividadRepository.deleteAll();
-    Map<AuxActividadElem, Integer> maxPuntuacionesPesosActividades = new HashMap<>();
-    Collection<ActividadQA> actividades = this.actividadRepository.findAllByDeletedIsNull(
-        Sort.by(Sort.Order.asc("testingStageId")));
-    for (ActividadQA actividad : actividades) {
-      Integer sumaPesosActividadIPromo = getMaximumOfWeigths(Constantes.NUMBER_1,
-          false, actividad.getId());
-      AuxActividadElem aux1 = new AuxActividadElem(Constantes.NUMBER_1, actividad.getId(),
-          false);
-      maxPuntuacionesPesosActividades.put(aux1, sumaPesosActividadIPromo);
-      Integer sumaPesosActividadIEntregaPromo = getMaximumOfWeigths(Constantes.NUMBER_1,
-          false, actividad.getId());
-      AuxActividadElem aux2 = new AuxActividadElem(Constantes.NUMBER_1, actividad.getId(),
-          true);
-      maxPuntuacionesPesosActividades.put(aux2, sumaPesosActividadIEntregaPromo);
-      Integer sumaPesosActividadIAgrupFunc = getMaximumOfWeigths(Constantes.NUMBER_2,
-          false, actividad.getId());
-      AuxActividadElem aux3 = new AuxActividadElem(Constantes.NUMBER_2, actividad.getId(),
-          false);
-      maxPuntuacionesPesosActividades.put(aux3, sumaPesosActividadIAgrupFunc);
-      Integer sumaPesosActividadIEntregaAgrupFunc = getMaximumOfWeigths(Constantes.NUMBER_2,
-          false, actividad.getId());
-      AuxActividadElem aux4 = new AuxActividadElem(Constantes.NUMBER_2, actividad.getId(),
-          true);
-      maxPuntuacionesPesosActividades.put(aux4, sumaPesosActividadIEntregaAgrupFunc);
-      Integer sumaPesosActividadIProyecto = getMaximumOfWeigths(Constantes.NUMBER_3,
-          false, actividad.getId());
-      AuxActividadElem aux5 = new AuxActividadElem(Constantes.NUMBER_3, actividad.getId(),
-          false);
-      maxPuntuacionesPesosActividades.put(aux5, sumaPesosActividadIProyecto);
-      Integer sumaPesosActividadIEntregaProyecto = getMaximumOfWeigths(Constantes.NUMBER_3,
-          false, actividad.getId());
-      AuxActividadElem aux6 = new AuxActividadElem(Constantes.NUMBER_3, actividad.getId(),
-          false);
-      maxPuntuacionesPesosActividades.put(aux6, sumaPesosActividadIEntregaProyecto);
-    }
-
-    Map<Map<Integer, Boolean>, Map<Integer, List<Umbral>>> elementsOfCatalogo =
-        new UmbralesIniciador().getElementsOfCatalogo();
-    int id = Constantes.NUMBER_1;
-    for (Map<Integer, Boolean> idElementWithIsDelivery : elementsOfCatalogo.keySet()) {
-      Integer idOfElement = idElementWithIsDelivery.keySet().iterator().next();
-      Boolean isDelivery = idElementWithIsDelivery.get(idOfElement);
-      Map<Integer, List<Umbral>> activitiesMap = elementsOfCatalogo.get(idElementWithIsDelivery);
-      for (Integer idOfActivitiy : activitiesMap.keySet()) {
-        String nombreActividad = this.actividadRepository.findByIdAndDeletedIsNull(idOfActivitiy)
-            .getName();
-        List<Umbral> listaUmbrales = activitiesMap.get(idOfActivitiy);
-        for (Umbral umbralObject : listaUmbrales) {
-          /*** creamos el umbral ***/
-          UmbralActividad umbralActividad = new UmbralActividad();
-          umbralActividad.setId(id++);
-          umbralActividad.setForDelivery(isDelivery);
-          umbralActividad.setElemenTypeId(idOfElement);
-          umbralActividad.setActivityId(idOfActivitiy);
-          umbralActividad.setThreshold(umbralObject.getThreshold());
-          umbralActividad.setHelp(
-              "Recomendación de % realización mínima de consecución en las tareas de calidad de la "
-                  + "actividad <<" + nombreActividad + ">>");
-          umbralActividad.setLowerLimit(umbralObject.getLowerRange());
-          umbralActividad.setUpperLimit(umbralObject.getUpperRange());
-          umbralActividad.setExcludeUnreachedThreshold(
-              umbralObject.isExcluded_unreached_threshold());
-          umbralActividad.setCreationDate(
-              new Timestamp(Calendar.getInstance().getTime().getTime()));
-          this.save(umbralActividad);
-          /** fin grabacion umbral ***/
-        }
-      }
-    }
   }
 
 }

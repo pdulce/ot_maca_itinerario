@@ -56,18 +56,10 @@ public class ItinerarioController {
     if (this.actividadQAService.getAll().isEmpty()) {
       this.etapaPruebasService.initializeDB();
       this.actividadQAService.initializeDB();
-      this.pesoService.initializeDB();
-      this.umbralActividadService.initializeDB();
     }
     return "Hello! I am the MACA Itinerary-db initializer, work well done!";
   }
 
-  @GetMapping("/genWeightsDb")
-  public String generarPesos() {
-    this.pesoService.initializeDB();
-    this.umbralActividadService.initializeDB();
-    return "Hello! I am the MACA Weigth&Threshold generator-db initializer, work well done!";
-  }
 
   @GetMapping("/QAStages/getAll")
   public Collection<EtapaPruebas> getEtapasPruebas() {
