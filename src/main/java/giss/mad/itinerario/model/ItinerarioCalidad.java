@@ -25,7 +25,7 @@ public class ItinerarioCalidad {
   private Integer catalogueId;
 
   @Column(name = "is_delivery")
-  private Boolean delivery;
+  private Integer delivery;
 
   @Column(name = "is_deleted")
   private Integer deleted;
@@ -59,11 +59,11 @@ public class ItinerarioCalidad {
     this.catalogueId = deliveryOrElementId;
   }
 
-  public Boolean getDelivery() {
+  public Integer getDelivery() {
     return delivery;
   }
 
-  public void setDelivery(final Boolean isDelivery) {
+  public void setDelivery(final Integer isDelivery) {
     this.delivery = isDelivery;
   }
 

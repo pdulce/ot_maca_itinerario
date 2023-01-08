@@ -12,7 +12,7 @@ public class ItinerarioPantalla {
 
   private Integer elementId;
 
-  private Boolean delivery;
+  private Integer delivery;
 
   private Timestamp creationDate;
 
@@ -50,11 +50,11 @@ public class ItinerarioPantalla {
     this.stages = stages;
   }
 
-  public Boolean getDelivery() {
+  public Integer getDelivery() {
     return delivery;
   }
 
-  public void setDelivery(final Boolean delivery) {
+  public void setDelivery(final Integer delivery) {
     this.delivery = delivery;
   }
 

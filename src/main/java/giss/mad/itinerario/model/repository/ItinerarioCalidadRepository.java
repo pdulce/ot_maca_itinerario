@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ItinerarioCalidadRepository extends JpaRepository<ItinerarioCalidad, Integer> {
 
   List<ItinerarioCalidad> findAllByCatalogueIdAndDelivery(Integer catalogueId,
-      Boolean delivery, Sort sort);
+      Integer delivery, Sort sort);
   ItinerarioCalidad findByIdAndDeletedIsNull(Integer id);
 
 }

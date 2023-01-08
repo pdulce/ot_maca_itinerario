@@ -10,10 +10,10 @@ public interface UmbralActividadRepository extends JpaRepository<UmbralActividad
   List<UmbralActividad> findAllByDeletedIsNull();
 
   List<UmbralActividad> findAllByDeletedIsNullAndElemenTypeIdAndForDeliveryAndActivityId(
-      Integer elemenTypeId, Boolean forDelivery, Integer activityId);
+      Integer elemenTypeId, Integer forDelivery, Integer activityId);
 
   List<UmbralActividad> findAllByDeletedIsNullAndElemenTypeIdAndForDelivery(
-      Integer elemenTypeId, Boolean forDelivery);
+      Integer elemenTypeId, Integer forDelivery);
 
   UmbralActividad findByIdAndDeletedIsNull(Integer id);
 

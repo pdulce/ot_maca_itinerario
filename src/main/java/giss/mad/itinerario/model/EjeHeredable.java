@@ -24,10 +24,10 @@ public class EjeHeredable {
   private Integer axisId;
 
   @Column(name = "for_delivery", nullable = false)
-  private Boolean forDelivery;
+  private Integer forDelivery;
 
   @Column(name = "writable", nullable = false)
-  private Boolean writable;
+  private Integer writable;
 
   @Column(name = "is_deleted")
   private Integer deleted;
@@ -65,11 +65,11 @@ public class EjeHeredable {
     this.axisId = axisId;
   }
 
-  public Boolean getForDelivery() {
+  public Integer getForDelivery() {
     return forDelivery;
   }
 
-  public void setForDelivery(final Boolean forDelivery) {
+  public void setForDelivery(final Integer forDelivery) {
     this.forDelivery = forDelivery;
   }
 
@@ -97,11 +97,11 @@ public class EjeHeredable {
     this.updateDate = updateDate;
   }
 
-  public Boolean getWritable() {
+  public Integer getWritable() {
     return writable;
   }
 
-  public void setWritable(final Boolean writable) {
+  public void setWritable(final Integer writable) {
     this.writable = writable;
   }
 }

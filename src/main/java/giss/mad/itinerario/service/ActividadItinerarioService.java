@@ -195,7 +195,7 @@ public class ActividadItinerarioService {
 
     Integer elementInstanceId = elemOrDelivery.getId();
     Integer elementTypeId = elemOrDelivery.getCatalogElementTypeId();
-    Boolean isDelivery = elemOrDelivery.getDelivery();
+    Integer isDelivery = elemOrDelivery.getDelivery();
     List<ValorEje> valoresAttrsYejes = elemOrDelivery.getAttributeValuesCollection();
     List<Integer> ejes = List.of(Constantes.NUMBER_1, Constantes.NUMBER_2,
         Constantes.NUMBER_3, Constantes.NUMBER_4, Constantes.NUMBER_5, Constantes.NUMBER_6,
@@ -235,7 +235,7 @@ public class ActividadItinerarioService {
           actividadQA.getTestingStageId()).getName();
       actividadItinerarioIesima.setHelp("Actividad--> " + etapa + " - " + actividadQA.getName());
       Integer acumuladorSumaPesosActividad = Constantes.NUMBER_0;
-      Boolean includedInItinerary = true;
+      Integer includedInItinerary = Constantes.NUMBER_1;
       for (Integer axisId : mapOfAxisWithValuesDomain.keySet()) {
         Integer valorDominioId = mapOfAxisWithValuesDomain.get(axisId);
         Collection<Peso> pesosFound =
@@ -248,16 +248,16 @@ public class ActividadItinerarioService {
               elementTypeId, axisId, isDelivery);
 
           if (ejeHeredable != null
-              && isDelivery) {
+              && isDelivery == Constantes.NUMBER_1) {
             pesosFound =
                 this.pesoRepository.
                     findAllByDeletedIsNullAndElementTypeIdAndForDeliveryAndActivityIdAndAxisAttributeId(
-                    elementTypeId, false, actividadQA.getId(), axisId);
+                    elementTypeId, Constantes.NUMBER_0, actividadQA.getId(), axisId);
           } else if (ejeHeredable != null && elementTypeId < Constantes.NUMBER_3) {
             pesosFound =
                 this.pesoRepository.
                     findAllByDeletedIsNullAndElementTypeIdAndForDeliveryAndActivityIdAndAxisAttributeId(
-                    elementTypeId + Constantes.NUMBER_1, false,
+                    elementTypeId + Constantes.NUMBER_1, Constantes.NUMBER_0,
                         actividadQA.getId(), axisId);
           }
         }
@@ -269,7 +269,7 @@ public class ActividadItinerarioService {
               observations =
                   "Esta actividad no se incluye en el itinerario; valor -1 (EXLUYE) para el eje "
                       + axisId + " para el valor de dominio existente";
-              includedInItinerary = false;
+              includedInItinerary = Constantes.NUMBER_0;
             } else {
               acumuladorSumaPesosActividad += peso.getWeightValue();
               sumWeightsAllActivities += acumuladorSumaPesosActividad;
@@ -284,7 +284,7 @@ public class ActividadItinerarioService {
               findAllByDeletedIsNullAndElemenTypeIdAndForDeliveryAndActivityId(
               elementTypeId, isDelivery, actividadQA.getId());
 
-      if (includedInItinerary) {
+      if (includedInItinerary == Constantes.NUMBER_1) {
         Boolean found = false;
         Iterator<UmbralActividad> umbralesIterator = umbralesActividad.iterator();
         while (umbralesIterator.hasNext() && !found) {
@@ -304,7 +304,7 @@ public class ActividadItinerarioService {
           }
         }
         if (!found) {
-          includedInItinerary = false;
+          includedInItinerary = Constantes.NUMBER_0;
           actividadItinerarioIesima.setInferredThreshold(
               "Actividad excluida, no alcanza el umbral de realización mínimo");
           observations =

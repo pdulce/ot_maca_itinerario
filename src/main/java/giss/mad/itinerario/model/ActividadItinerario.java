@@ -1,5 +1,6 @@
 package giss.mad.itinerario.model;
 
+import giss.mad.itinerario.service.Constantes;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,7 +37,7 @@ public class ActividadItinerario {
   private Integer activitSumOfAxes;
 
   @Column(name = "included_in_itinerary")
-  private Boolean includedInItinerary = true;
+  private Integer includedInItinerary = Constantes.NUMBER_1;
 
   @Column(name = "is_deleted")
   private Integer deleted;
@@ -99,11 +100,11 @@ public class ActividadItinerario {
     this.help = help;
   }
 
-  public Boolean getIncludedInItinerary() {
+  public Integer getIncludedInItinerary() {
     return includedInItinerary;
   }
 
-  public void setIncludedInItinerary(final Boolean includedInItinerary) {
+  public void setIncludedInItinerary(final Integer includedInItinerary) {
     this.includedInItinerary = includedInItinerary;
   }
 

@@ -33,7 +33,7 @@ public class Peso {
   private Integer weightValue;
 
   @Column(name = "is_for_delivery", nullable = false)
-  private Boolean forDelivery;
+  private Integer forDelivery;
 
   @Column(name = "is_deleted")
   private Integer deleted;
@@ -97,11 +97,11 @@ public class Peso {
     this.weightValue = weightValue;
   }
 
-  public Boolean getForDelivery() {
+  public Integer getForDelivery() {
     return forDelivery;
   }
 
-  public void setForDelivery(final Boolean forDelivery) {
+  public void setForDelivery(final Integer forDelivery) {
     this.forDelivery = forDelivery;
   }
 

@@ -18,7 +18,7 @@ public class ActividadQAPantalla {
   @JsonIgnore
   private String observations;
 
-  private Boolean included;
+  private Integer included;
 
   public Long getId() {
     return id;
@@ -52,11 +52,11 @@ public class ActividadQAPantalla {
     this.observations = observations;
   }
 
-  public Boolean getIncluded() {
+  public Integer getIncluded() {
     return included;
   }
 
-  public void setIncluded(final Boolean included) {
+  public void setIncluded(final Integer included) {
     this.included = included;
   }
 

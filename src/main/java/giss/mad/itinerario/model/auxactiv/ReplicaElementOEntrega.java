@@ -10,7 +10,7 @@ public class ReplicaElementOEntrega {
 
   private Integer catalogElementTypeId;
 
-  private Boolean delivery;
+  private Integer delivery;
 
   private List<ValorEje> attributeValuesCollection;
 
@@ -31,11 +31,11 @@ public class ReplicaElementOEntrega {
     this.catalogElementTypeId = catalogElementTypeId;
   }
 
-  public Boolean getDelivery() {
+  public Integer getDelivery() {
     return delivery;
   }
 
-  public void setDelivery(final Boolean delivery) {
+  public void setDelivery(final Integer delivery) {
     this.delivery = delivery;
   }
 

@@ -36,10 +36,10 @@ public class UmbralActividad {
   private String help;
 
   @Column(name = "is_for_delivery")
-  private boolean forDelivery;
+  private Integer forDelivery;
 
   @Column(name = "exclude_unreached_threshold")
-  private boolean excludeUnreachedThreshold;
+  private Integer excludeUnreachedThreshold;
 
   @Column(name = "is_deleted")
   private Integer deleted;
@@ -111,19 +111,19 @@ public class UmbralActividad {
     this.help = help;
   }
 
-  public boolean isForDelivery() {
+  public Integer isForDelivery() {
     return forDelivery;
   }
 
-  public void setForDelivery(final boolean isForDelivery) {
+  public void setForDelivery(final Integer isForDelivery) {
     this.forDelivery = isForDelivery;
   }
 
-  public boolean isExcludeUnreachedThreshold() {
+  public Integer isExcludeUnreachedThreshold() {
     return excludeUnreachedThreshold;
   }
 
-  public void setExcludeUnreachedThreshold(final boolean excludeUnreachedThreshold) {
+  public void setExcludeUnreachedThreshold(final Integer excludeUnreachedThreshold) {
     this.excludeUnreachedThreshold = excludeUnreachedThreshold;
   }
 

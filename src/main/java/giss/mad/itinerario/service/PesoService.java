@@ -36,7 +36,7 @@ public class PesoService {
     return this.pesoRepository.findAllByDeletedIsNull();
   }
 
-  public Collection<PesoGraph> getAllByElement(final Integer idElement, final Boolean isDelivery) {
+  public Collection<PesoGraph> getAllByElement(final Integer idElement, final Integer isDelivery) {
     Collection<Peso> c = this.pesoRepository.findAllByDeletedIsNullAndElementTypeIdAndForDelivery(
         idElement, isDelivery, Sort.by(Sort.Order.asc("id")));
     if (c == null) {

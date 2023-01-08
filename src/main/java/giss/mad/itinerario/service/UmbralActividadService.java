@@ -47,14 +47,14 @@ public class UmbralActividadService {
   }
 
   public Collection<UmbralActividad> getUmbralesByIdActividad(final Integer idElementType,
-      final Boolean isDelivery, final Integer idActividad) {
+      final Integer isDelivery, final Integer idActividad) {
     return this.umbralActividadRepository.
         findAllByDeletedIsNullAndElemenTypeIdAndForDeliveryAndActivityId(
         idElementType, isDelivery, idActividad);
   }
 
   public Collection<UmbralGraph> getUmbralesByTypeOfElement(final Integer idElementType,
-      final Boolean isDelivery) {
+      final Integer isDelivery) {
 
     Collection<UmbralActividad> c = this.umbralActividadRepository.
         findAllByDeletedIsNullAndElemenTypeIdAndForDelivery(idElementType, isDelivery);
@@ -78,7 +78,7 @@ public class UmbralActividadService {
 
 
   public Collection<StageBuble> getUmbralesByStage(final Integer idElementType,
-      final Boolean isDelivery) {
+      final Integer isDelivery) {
     Collection<UmbralActividad> c = this.umbralActividadRepository.
         findAllByDeletedIsNullAndElemenTypeIdAndForDelivery(idElementType, isDelivery);
     if (c == null) {
@@ -159,7 +159,7 @@ public class UmbralActividadService {
     return max;
   }
 
-  public final Integer getMaximumOfWeigths(final Integer elementType, final Boolean isDelivery,
+  public final Integer getMaximumOfWeigths(final Integer elementType, final Integer isDelivery,
       final Integer idActivity) {
     Integer sumaOfMaxAxisPesosForActivity = Constantes.NUMBER_0;
     for (int i = Constantes.NUMBER_1; i < AXE.length - Constantes.NUMBER_1; i++) {

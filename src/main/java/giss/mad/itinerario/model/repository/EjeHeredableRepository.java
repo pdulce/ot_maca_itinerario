@@ -8,7 +8,7 @@ public interface EjeHeredableRepository extends JpaRepository<EjeHeredable, Inte
   EjeHeredable findByIdAndDeletedIsNull(Integer id);
 
   EjeHeredable findByElementTypeIdAndAxisIdAndForDeliveryAndDeletedIsNull(
-      Integer elementTypeId, Integer axisId, Boolean forDelivery);
+      Integer elementTypeId, Integer axisId, Integer forDelivery);
 
 }
 

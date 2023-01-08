@@ -127,52 +127,52 @@ public final class ItinerarioController {
   @GetMapping("/pesosByElementCat/{idTypeOfCatalogo}")
   public Collection<PesoGraph> getPesosByElementCatalogo(
       final @PathVariable Integer idTypeOfCatalogo) {
-    return pesoService.getAllByElement(idTypeOfCatalogo, false);
+    return pesoService.getAllByElement(idTypeOfCatalogo, Constantes.NUMBER_0);
   }
 
   @GetMapping("/pesosByDeliveryOfElement/{idTypeOfCatalogo}")
   public Collection<PesoGraph> getPesosByDeliveryOfElement(
       final @PathVariable Integer idTypeOfCatalogo) {
-    return pesoService.getAllByElement(idTypeOfCatalogo, true);
+    return pesoService.getAllByElement(idTypeOfCatalogo, Constantes.NUMBER_1);
   }
 
 
   @GetMapping("/threshold/getByElementCat/{idTypeOfCatalogo}")
   public Collection<UmbralGraph> getUmbralesByElementCatalogo(
       final @PathVariable Integer idTypeOfCatalogo) {
-    return umbralActividadService.getUmbralesByTypeOfElement(idTypeOfCatalogo, false);
+    return umbralActividadService.getUmbralesByTypeOfElement(idTypeOfCatalogo, Constantes.NUMBER_0);
   }
 
   @GetMapping("/threshold/getByDeliveryOfElement/{idTypeOfCatalogo}")
   public Collection<UmbralGraph> getUmbralesByDeliveryOfElement(
       final @PathVariable Integer idTypeOfCatalogo) {
-    return umbralActividadService.getUmbralesByTypeOfElement(idTypeOfCatalogo, true);
+    return umbralActividadService.getUmbralesByTypeOfElement(idTypeOfCatalogo, Constantes.NUMBER_1);
   }
 
   @GetMapping("/threshold/getByDeliveryOfElementBubles/{idTypeOfCatalogo}")
   public Collection<StageBuble> getUmbralesByStageDelivery(
       final @PathVariable Integer idTypeOfCatalogo) {
-    return umbralActividadService.getUmbralesByStage(idTypeOfCatalogo, true);
+    return umbralActividadService.getUmbralesByStage(idTypeOfCatalogo, Constantes.NUMBER_1);
   }
 
   @GetMapping("/threshold/getByElementBubles/{idTypeOfCatalogo}")
   public Collection<StageBuble> getUmbralesByStageElement(
       final @PathVariable Integer idTypeOfCatalogo) {
-    return umbralActividadService.getUmbralesByStage(idTypeOfCatalogo, false);
+    return umbralActividadService.getUmbralesByStage(idTypeOfCatalogo, Constantes.NUMBER_0);
   }
 
   @GetMapping("/maxPesosOfActElemPromo/{idActivity}")
   public Integer getMaxSumOfPesosOfActElemPromo(
       final @PathVariable Integer idActivity) {
     int elementType = Constantes.NUMBER_1;
-    Boolean isDelivery = false;
+    Integer isDelivery = Constantes.NUMBER_0;
     return umbralActividadService.getMaximumOfWeigths(elementType, isDelivery, idActivity);
   }
 
   @GetMapping("/maxPesosOfActEntregaElemPromo/{idActivity}")
   public Integer getMaxSumOfPesosOfActEntregaElemPromo(final @PathVariable Integer idActivity) {
     int elementType = Constantes.NUMBER_1;
-    Boolean isDelivery = true;
+    Integer isDelivery = Constantes.NUMBER_1;
     return umbralActividadService.getMaximumOfWeigths(elementType, isDelivery, idActivity);
   }
 
@@ -200,7 +200,7 @@ public final class ItinerarioController {
   public Collection<ActividadQAPantalla> getActivitiesIncludedById(
       final @PathVariable Integer idItinerario) {
     Collection<ActividadQAPantalla> c = this.itinerarioCalidadService.getActivitiesByItineraryId(
-        idItinerario, true);
+        idItinerario, Constantes.NUMBER_1);
     if (c == null) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
@@ -211,7 +211,7 @@ public final class ItinerarioController {
   public Collection<ActividadQAPantalla> getActivitiesExcludedById(
       final @PathVariable Integer idItinerario) {
     Collection<ActividadQAPantalla> c = this.itinerarioCalidadService.getActivitiesByItineraryId(
-        idItinerario, false);
+        idItinerario, Constantes.NUMBER_0);
     if (c == null) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
@@ -244,7 +244,7 @@ public final class ItinerarioController {
   public ItinerarioCalidad getItinerarioMasRecienteByIdElementOrEntrega(
       final @PathVariable Integer idElementInstance) {
     ItinerarioCalidad c = this.itinerarioCalidadService.getItinerarioMasRecienteByIdElementOrEntrega(
-        idElementInstance, false);
+        idElementInstance, Constantes.NUMBER_0);
     if (c == null) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
@@ -255,7 +255,7 @@ public final class ItinerarioController {
   public Collection<ItinerarioCalidad> getAllItinerariosByIdElement(
       final @PathVariable Integer idElementInstance) {
     Collection<ItinerarioCalidad> c = this.itinerarioCalidadService.getAllItinerariosByIdElementOrEntrega(
-        idElementInstance, false);
+        idElementInstance, Constantes.NUMBER_0);
     if (c == null) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }

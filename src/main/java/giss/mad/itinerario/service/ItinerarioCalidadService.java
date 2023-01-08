@@ -38,13 +38,13 @@ public class ItinerarioCalidadService {
   }
 
   public Collection<ItinerarioCalidad> getAllItinerariosByIdElementOrEntrega(
-      final Integer idElementoOrEntrega, final Boolean isDelivery) {
+      final Integer idElementoOrEntrega, final Integer isDelivery) {
     return this.itinerarioCalidadRepository.findAllByCatalogueIdAndDelivery(idElementoOrEntrega,
         isDelivery, Sort.by(Sort.Order.desc("creationDate")));
   }
 
   public ItinerarioCalidad getItinerarioMasRecienteByIdElementOrEntrega(
-      final Integer idElementoOrEntrega, final Boolean isDelivery) {
+      final Integer idElementoOrEntrega, final Integer isDelivery) {
 
     List<ItinerarioCalidad> itList = new ArrayList<>(
         this.itinerarioCalidadRepository.findAllByCatalogueIdAndDelivery(idElementoOrEntrega,
@@ -58,7 +58,7 @@ public class ItinerarioCalidadService {
   }
 
   public Collection<ActividadQAPantalla> getActivitiesByItineraryId(final Integer idItinerario,
-      final Boolean included) {
+      final Integer included) {
     Collection<ActividadQAPantalla> actividadQAPantallaArrayList = new ArrayList<>();
     ItinerarioCalidad itinerarioCalidad = this.itinerarioCalidadRepository.findByIdAndDeletedIsNull(
         idItinerario);
@@ -109,7 +109,7 @@ public class ItinerarioCalidadService {
         idItinerario);
     List<StageBuble> stages4Bubles = new ArrayList<>();
     for (ActividadItinerario actividadItinerario : itinerarioCalidad.getActividadesDeItinerario()) {
-      if (!actividadItinerario.getIncludedInItinerary()) {
+      if (actividadItinerario.getIncludedInItinerary() != Constantes.NUMBER_0) {
         continue;
       }
       ActividadQA actividad = this.actividadQARepository.findByIdAndDeletedIsNull(
