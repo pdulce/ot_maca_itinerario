@@ -11,11 +11,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "EjeHeredable", schema = "MACA_ITINERARIO")
-public class EjeHeredable {
+public final class EjeHeredable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EJEHEREDABLE_SEQ")
-  @SequenceGenerator(sequenceName = "ejeheredable_seq", allocationSize = 1, name="EJEHEREDABLE_SEQ")
+  @SequenceGenerator(sequenceName = "ejeheredable_seq", allocationSize = 1, name = "EJEHEREDABLE_SEQ")
   @Column(name = "id", nullable = false)
   private Integer id;
 

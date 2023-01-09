@@ -15,11 +15,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "EtapaPruebas", schema = "MACA_ITINERARIO")
-public class EtapaPruebas {
+public final class EtapaPruebas {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ETAPA_SEQ")
-  @SequenceGenerator(sequenceName = "etapapruebas_seq", allocationSize = 1, name="ETAPA_SEQ")
+  @SequenceGenerator(sequenceName = "etapapruebas_seq", allocationSize = 1, name = "ETAPA_SEQ")
   @Column(name = "id", nullable = false)
   private Integer id;
   @Column(name = "name", unique = true, length = 50, nullable = false)

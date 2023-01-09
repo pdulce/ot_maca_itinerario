@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class ActividadQAService {
+public final class ActividadQAService {
 
   @Autowired
   private ActividadQARepository actividadQARepository;

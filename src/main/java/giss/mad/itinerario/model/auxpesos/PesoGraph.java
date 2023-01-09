@@ -3,7 +3,7 @@ package giss.mad.itinerario.model.auxpesos;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Id;
 
-public class PesoGraph {
+public final class PesoGraph {
 
   @Id
   @JsonIgnore

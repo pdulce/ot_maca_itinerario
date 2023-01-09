@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class KafkaConsumerService extends ConsumerService<String, Object> {
+public final class KafkaConsumerService extends ConsumerService<String, Object> {
 
   public KafkaConsumerService() {
     super((k, v) -> log.info("######################" + String.valueOf(v)));

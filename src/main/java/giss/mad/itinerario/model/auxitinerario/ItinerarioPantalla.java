@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 
-public class ItinerarioPantalla {
+public final class ItinerarioPantalla {
 
   @Id
   private Long id;

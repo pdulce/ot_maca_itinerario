@@ -15,11 +15,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "ItinerarioCalidad", schema = "MACA_ITINERARIO")
-public class ItinerarioCalidad {
+public final class ItinerarioCalidad {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ITINERARIO_SEQ")
-  @SequenceGenerator(sequenceName = "itinerariocalidad_seq", allocationSize = 1, name="ITINERARIO_SEQ")
+  @SequenceGenerator(sequenceName = "itinerariocalidad_seq", allocationSize = 1, name = "ITINERARIO_SEQ")
   @Column(name = "id", nullable = false)
   private Integer id;
 

@@ -1,6 +1,6 @@
 package giss.mad.itinerario.model.auxactiv;
 
-public class ActividadReduced {
+public final class ActividadReduced {
 
   private Integer num;
   private String actividad;

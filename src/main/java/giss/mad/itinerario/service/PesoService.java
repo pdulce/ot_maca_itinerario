@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
-public class PesoService {
+public final class PesoService {
 
   @Autowired
   private RestTemplate restTemplate;

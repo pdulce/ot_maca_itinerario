@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Id;
 
-public class ValorEje {
+public final class ValorEje {
 
   @Id
   @JsonIgnore

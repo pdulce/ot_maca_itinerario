@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EtapaPruebasService {
+public final class EtapaPruebasService {
 
   @Autowired
   private EtapaPruebasRepository etapaPruebasRepository;

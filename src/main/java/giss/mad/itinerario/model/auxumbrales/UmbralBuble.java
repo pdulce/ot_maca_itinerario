@@ -2,7 +2,7 @@ package giss.mad.itinerario.model.auxumbrales;
 
 import giss.mad.itinerario.service.Constantes;
 
-public class UmbralBuble {
+public final class UmbralBuble {
 
   private Integer value;
   private String actividad;

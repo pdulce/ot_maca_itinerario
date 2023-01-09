@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 @Service
-public class ItinerarioCalidadService {
+public final class ItinerarioCalidadService {
 
   @Autowired
   private ItinerarioCalidadRepository itinerarioCalidadRepository;

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Id;
 import java.util.List;
 
-public class StagePantalla {
+public final class StagePantalla {
 
   @Id
   @JsonIgnore

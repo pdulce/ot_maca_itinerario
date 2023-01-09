@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Id;
 
-public class ActividadQAPantalla {
+public final class ActividadQAPantalla {
 
   @Id
   @JsonIgnore

@@ -2,7 +2,7 @@ package giss.mad.itinerario.model.auxumbrales;
 
 import giss.mad.itinerario.service.Constantes;
 
-public class UmbralGraph {
+public final class UmbralGraph {
 
   private Integer x;
   private Integer y;

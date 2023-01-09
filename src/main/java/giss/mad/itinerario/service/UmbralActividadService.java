@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
-public class UmbralActividadService {
+public final class UmbralActividadService {
 
   public static final int[] AXE = {Constantes.NUMBER_0, Constantes.NUMBER_1, Constantes.NUMBER_2,
       Constantes.NUMBER_3, Constantes.NUMBER_4, Constantes.NUMBER_5, Constantes.NUMBER_6,
@@ -159,7 +159,7 @@ public class UmbralActividadService {
     return max;
   }
 
-  public final Integer getMaximumOfWeigths(final Integer elementType, final Integer isDelivery,
+  public Integer getMaximumOfWeigths(final Integer elementType, final Integer isDelivery,
       final Integer idActivity) {
     Integer sumaOfMaxAxisPesosForActivity = Constantes.NUMBER_0;
     for (int i = Constantes.NUMBER_1; i < AXE.length - Constantes.NUMBER_1; i++) {

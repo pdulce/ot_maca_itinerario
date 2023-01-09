@@ -3,7 +3,7 @@ package giss.mad.itinerario.model.auxactiv;
 import javax.persistence.Id;
 import java.util.List;
 
-public class ReplicaElementOEntrega {
+public final class ReplicaElementOEntrega {
 
   @Id
   private Integer id;

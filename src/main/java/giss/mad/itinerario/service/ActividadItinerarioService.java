@@ -35,7 +35,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Service
-public class ActividadItinerarioService {
+public final class ActividadItinerarioService {
 
   @Autowired
   private ActividadItinerarioRepository actividadItinerarioRepository;
