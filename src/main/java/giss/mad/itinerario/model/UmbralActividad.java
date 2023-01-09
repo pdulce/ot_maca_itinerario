@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -13,7 +14,8 @@ import javax.persistence.Table;
 public class UmbralActividad {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UMBRAL_SEQ")
+  @SequenceGenerator(sequenceName = "umbralactividad_seq", allocationSize = 1, name="UMBRAL_SEQ")
   @Column(name = "id", nullable = false)
   private Integer id;
 

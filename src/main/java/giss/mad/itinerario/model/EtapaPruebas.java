@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.List;
 
@@ -17,7 +18,8 @@ import java.util.List;
 public class EtapaPruebas {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ETAPA_SEQ")
+  @SequenceGenerator(sequenceName = "etapapruebas_seq", allocationSize = 1, name="ETAPA_SEQ")
   @Column(name = "id", nullable = false)
   private Integer id;
   @Column(name = "name", unique = true, length = 50, nullable = false)
