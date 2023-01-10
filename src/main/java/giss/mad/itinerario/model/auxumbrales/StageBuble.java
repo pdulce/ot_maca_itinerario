@@ -38,12 +38,13 @@ public final class StageBuble {
 
   public static StageBuble obtenerStageBuble(final String stageName,
       final Collection<StageBuble> lista) {
+    StageBuble retorno = null;
     for (StageBuble stage : lista) {
       if (stage.getName().contentEquals(stageName)) {
-        return stage;
+        retorno = stage;
       }
     }
-    return null;
+    return retorno;
   }
 }
 

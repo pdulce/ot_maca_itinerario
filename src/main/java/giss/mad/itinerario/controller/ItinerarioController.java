@@ -32,6 +32,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import giss.mad.itinerario.service.ActividadQAService;
 
 
@@ -68,7 +70,7 @@ public final class ItinerarioController {
   }
 
   @GetMapping("/QAStages/getById/{id}")
-  public EtapaPruebas getEtapaPruebas(final @PathVariable Integer id) {
+  public EtapaPruebas getEtapaPruebas(final @PathVariable @NotNull @NotEmpty Integer id) {
     EtapaPruebas c = this.etapaPruebasService.get(id);
     if (c == null) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -87,15 +89,11 @@ public final class ItinerarioController {
 
   @GetMapping("/QAactivities/getreduced")
   public Collection<ActividadReduced> getIdAndNameOfActivities() {
-    Collection<ActividadReduced> c = this.actividadQAService.getIdAndNameOfActivities();
-    if (c == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    }
-    return c;
+    return this.actividadQAService.getIdAndNameOfActivities();
   }
 
   @GetMapping("/QAactivities/getById/{id}")
-  public ActividadQA getActividadQA(final @PathVariable Integer id) {
+  public ActividadQA getActividadQA(final @PathVariable @NotNull @NotEmpty Integer id) {
     ActividadQA c = this.actividadQAService.get(id);
     if (c == null) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -104,7 +102,7 @@ public final class ItinerarioController {
   }
 
   @DeleteMapping("/QAactivities/delete/{id}")
-  public void deleteActividadQA(final @PathVariable Integer id) {
+  public void deleteActividadQA(final @PathVariable @NotEmpty @NotNull Integer id) {
     ActividadQA c = this.actividadQAService.remove(id);
     if (c == null) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -112,65 +110,68 @@ public final class ItinerarioController {
   }
 
   @PostMapping("/QAactivities/create")
-  public ResponseEntity<Object> createActividadQA(
-      final @RequestBody @NotEmpty ActividadQA atributoEje) {
-    ActividadQA actividadQASaved = this.actividadQAService.save(atributoEje);
-    if (this.actividadQAService.get(actividadQASaved.getId()) != null) {
-      return ResponseEntity.ok().body("ActividadQA created sucesfully");
-    } else {
-      return ResponseEntity.unprocessableEntity().body("Failed to create ActividadQA specified");
+  public ResponseEntity<Object> createActividadQA(final @RequestBody @NotEmpty @NotNull ActividadQA atributoEje) {
+    ResponseEntity<Object> retorno = ResponseEntity.ok().body("ActividadQA created sucesfully");
+    if (atributoEje.getName() == null || "".contentEquals(atributoEje.getName())){
+      retorno = ResponseEntity.unprocessableEntity().body("Forbidden invocation params in received object");
+    }else {
+      ActividadQA actividadQASaved = this.actividadQAService.save(atributoEje);
+      if (this.actividadQAService.get(actividadQASaved.getId()) == null) {
+        retorno = ResponseEntity.unprocessableEntity().body("Failed to create ActividadQA specified");
+      }
     }
+    return retorno;
   }
 
   /**** Mappings para operaciones de visualizacion grafica ***/
 
   @GetMapping("/pesosByElementCat/{idTypeOfCatalogo}")
   public Collection<PesoGraph> getPesosByElementCatalogo(
-      final @PathVariable Integer idTypeOfCatalogo) {
+      final @PathVariable @NotNull @NotEmpty Integer idTypeOfCatalogo) {
     return pesoService.getAllByElement(idTypeOfCatalogo, Constantes.NUMBER_0);
   }
 
   @GetMapping("/pesosByDeliveryOfElement/{idTypeOfCatalogo}")
   public Collection<PesoGraph> getPesosByDeliveryOfElement(
-      final @PathVariable Integer idTypeOfCatalogo) {
+      final @PathVariable @NotNull @NotEmpty Integer idTypeOfCatalogo) {
     return pesoService.getAllByElement(idTypeOfCatalogo, Constantes.NUMBER_1);
   }
 
 
   @GetMapping("/threshold/getByElementCat/{idTypeOfCatalogo}")
   public Collection<UmbralGraph> getUmbralesByElementCatalogo(
-      final @PathVariable Integer idTypeOfCatalogo) {
+      final @PathVariable @NotNull @NotEmpty Integer idTypeOfCatalogo) {
     return umbralActividadService.getUmbralesByTypeOfElement(idTypeOfCatalogo, Constantes.NUMBER_0);
   }
 
   @GetMapping("/threshold/getByDeliveryOfElement/{idTypeOfCatalogo}")
   public Collection<UmbralGraph> getUmbralesByDeliveryOfElement(
-      final @PathVariable Integer idTypeOfCatalogo) {
+      final @PathVariable @NotNull @NotEmpty Integer idTypeOfCatalogo) {
     return umbralActividadService.getUmbralesByTypeOfElement(idTypeOfCatalogo, Constantes.NUMBER_1);
   }
 
   @GetMapping("/threshold/getByDeliveryOfElementBubles/{idTypeOfCatalogo}")
   public Collection<StageBuble> getUmbralesByStageDelivery(
-      final @PathVariable Integer idTypeOfCatalogo) {
+      final @PathVariable @NotNull @NotEmpty Integer idTypeOfCatalogo) {
     return umbralActividadService.getUmbralesByStage(idTypeOfCatalogo, Constantes.NUMBER_1);
   }
 
   @GetMapping("/threshold/getByElementBubles/{idTypeOfCatalogo}")
   public Collection<StageBuble> getUmbralesByStageElement(
-      final @PathVariable Integer idTypeOfCatalogo) {
+      final @PathVariable @NotNull @NotEmpty Integer idTypeOfCatalogo) {
     return umbralActividadService.getUmbralesByStage(idTypeOfCatalogo, Constantes.NUMBER_0);
   }
 
   @GetMapping("/maxPesosOfActElemPromo/{idActivity}")
   public Integer getMaxSumOfPesosOfActElemPromo(
-      final @PathVariable Integer idActivity) {
+      final @PathVariable @NotNull @NotEmpty Integer idActivity) {
     int elementType = Constantes.NUMBER_1;
     Integer isDelivery = Constantes.NUMBER_0;
     return umbralActividadService.getMaximumOfWeigths(elementType, isDelivery, idActivity);
   }
 
   @GetMapping("/maxPesosOfActEntregaElemPromo/{idActivity}")
-  public Integer getMaxSumOfPesosOfActEntregaElemPromo(final @PathVariable Integer idActivity) {
+  public Integer getMaxSumOfPesosOfActEntregaElemPromo(final @PathVariable @NotNull @NotEmpty Integer idActivity) {
     int elementType = Constantes.NUMBER_1;
     Integer isDelivery = Constantes.NUMBER_1;
     return umbralActividadService.getMaximumOfWeigths(elementType, isDelivery, idActivity);
@@ -180,15 +181,11 @@ public final class ItinerarioController {
 
   @GetMapping("/getAll")
   public Collection<ItinerarioCalidad> getAllItinerary() {
-    Collection<ItinerarioCalidad> c = this.itinerarioCalidadService.getAll();
-    if (c == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    }
-    return c;
+    return this.itinerarioCalidadService.getAll();
   }
 
   @GetMapping("/getById/{idItinerario}")
-  public ItinerarioCalidad getItinerarioById(final @PathVariable Integer idItinerario) {
+  public ItinerarioCalidad getItinerarioById(final @PathVariable @NotNull @NotEmpty Integer idItinerario) {
     ItinerarioCalidad c = this.itinerarioCalidadService.getByIdItinerario(idItinerario);
     if (c == null) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -198,51 +195,34 @@ public final class ItinerarioController {
 
   @GetMapping("/getActivitiesIncludedById/{idItinerario}")
   public Collection<ActividadQAPantalla> getActivitiesIncludedById(
-      final @PathVariable Integer idItinerario) {
-    Collection<ActividadQAPantalla> c = this.itinerarioCalidadService.getActivitiesByItineraryId(
+      final @PathVariable @NotNull @NotEmpty Integer idItinerario) {
+    return this.itinerarioCalidadService.getActivitiesByItineraryId(
         idItinerario, Constantes.NUMBER_1);
-    if (c == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    }
-    return c;
   }
 
   @GetMapping("/getActivitiesExcludedById/{idItinerario}")
   public Collection<ActividadQAPantalla> getActivitiesExcludedById(
-      final @PathVariable Integer idItinerario) {
-    Collection<ActividadQAPantalla> c = this.itinerarioCalidadService.getActivitiesByItineraryId(
+      final @PathVariable @NotNull @NotEmpty Integer idItinerario) {
+    return this.itinerarioCalidadService.getActivitiesByItineraryId(
         idItinerario, Constantes.NUMBER_0);
-    if (c == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    }
-    return c;
   }
 
   @GetMapping("/getActivitiesById/{idItinerario}")
   public Collection<ActividadQAPantalla> getActivitiesByItineraryId(
-      final @PathVariable Integer idItinerario) {
-    Collection<ActividadQAPantalla> c = this.itinerarioCalidadService.getActivitiesByItineraryId(
+      final @PathVariable @NotNull @NotEmpty Integer idItinerario) {
+    return this.itinerarioCalidadService.getActivitiesByItineraryId(
         idItinerario);
-    if (c == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    }
-    return c;
   }
 
   @GetMapping("/getOnlyIncludedById/{idItinerario}")
-  public Collection<StageBuble> getOnlyIncludedById(final @PathVariable Integer idItinerario) {
-    Collection<StageBuble> c = this.itinerarioCalidadService.getByIdItinerarioOnlyIncluded(
+  public Collection<StageBuble> getOnlyIncludedById(final @PathVariable @NotNull @NotEmpty Integer idItinerario) {
+    return this.itinerarioCalidadService.getByIdItinerarioOnlyIncluded(
         idItinerario);
-    if (c == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    }
-    return c;
   }
-
 
   @GetMapping("/getMoreRecentByIdElement/{idElementInstance}")
   public ItinerarioCalidad getItinerarioMasRecienteByIdElementOrEntrega(
-      final @PathVariable Integer idElementInstance) {
+      final @PathVariable @NotNull @NotEmpty Integer idElementInstance) {
     ItinerarioCalidad c = this.itinerarioCalidadService.getItinerarioMasRecienteByIdElementOrEntrega(
         idElementInstance, Constantes.NUMBER_0);
     if (c == null) {
@@ -253,7 +233,7 @@ public final class ItinerarioController {
 
   @GetMapping("/getAllByIdElement/{idElementInstance}")
   public Collection<ItinerarioCalidad> getAllItinerariosByIdElement(
-      final @PathVariable Integer idElementInstance) {
+      final @PathVariable @NotNull @NotEmpty Integer idElementInstance) {
     Collection<ItinerarioCalidad> c = this.itinerarioCalidadService.getAllItinerariosByIdElementOrEntrega(
         idElementInstance, Constantes.NUMBER_0);
     if (c == null) {
@@ -264,13 +244,13 @@ public final class ItinerarioController {
 
   @PostMapping("/calculate")
   public ItinerarioCalidad calculateItineraryWithDetailednfoElemen(
-      final @RequestBody @NotEmpty ReplicaElementOEntrega elementCatalogue) {
+      final @RequestBody @NotNull @NotEmpty ReplicaElementOEntrega elementCatalogue) {
     return actividadItinerarioService.calcularActividadItinerarioWithDetailedInfo(elementCatalogue);
   }
 
   @PostMapping("/calculateItinerary")
   public ItinerarioPantalla
-  calculateItineraryElemen(final @RequestBody @NotEmpty ReplicaElementOEntrega elementCatalogue) {
+  calculateItineraryElemen(final @RequestBody @NotNull @NotEmpty ReplicaElementOEntrega elementCatalogue) {
     return actividadItinerarioService.calculateItinerary(elementCatalogue);
   }
 
