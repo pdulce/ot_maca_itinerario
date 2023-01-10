@@ -2,7 +2,7 @@ package giss.mad.itinerario.service;
 
 import giss.mad.itinerario.model.ActividadQA;
 import giss.mad.itinerario.model.auxactiv.ActividadReduced;
-import giss.mad.itinerario.model.repository.ActividadQARepository;
+import giss.mad.itinerario.repository.ActividadQARepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

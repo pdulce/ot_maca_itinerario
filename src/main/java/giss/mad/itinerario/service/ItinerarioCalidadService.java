@@ -7,9 +7,9 @@ import giss.mad.itinerario.model.ItinerarioCalidad;
 import giss.mad.itinerario.model.auxitinerario.ActividadQAPantalla;
 import giss.mad.itinerario.model.auxumbrales.StageBuble;
 import giss.mad.itinerario.model.auxumbrales.UmbralBuble;
-import giss.mad.itinerario.model.repository.ActividadQARepository;
-import giss.mad.itinerario.model.repository.EtapaPruebasRepository;
-import giss.mad.itinerario.model.repository.ItinerarioCalidadRepository;
+import giss.mad.itinerario.repository.ActividadQARepository;
+import giss.mad.itinerario.repository.EtapaPruebasRepository;
+import giss.mad.itinerario.repository.ItinerarioCalidadRepository;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

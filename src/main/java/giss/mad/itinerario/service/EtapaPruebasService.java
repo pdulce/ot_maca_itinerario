@@ -1,7 +1,7 @@
 package giss.mad.itinerario.service;
 
 import giss.mad.itinerario.model.EtapaPruebas;
-import giss.mad.itinerario.model.repository.EtapaPruebasRepository;
+import giss.mad.itinerario.repository.EtapaPruebasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

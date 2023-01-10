@@ -1,4 +1,4 @@
-package giss.mad.itinerario.model.repository;
+package giss.mad.itinerario.repository;
 
 import giss.mad.itinerario.model.Peso;
 import org.springframework.data.domain.Sort;

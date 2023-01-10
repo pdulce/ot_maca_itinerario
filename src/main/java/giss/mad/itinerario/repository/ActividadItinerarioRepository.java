@@ -1,4 +1,4 @@
-package giss.mad.itinerario.model.repository;
+package giss.mad.itinerario.repository;
 
 import giss.mad.itinerario.model.ActividadItinerario;
 import org.springframework.data.jpa.repository.JpaRepository;
