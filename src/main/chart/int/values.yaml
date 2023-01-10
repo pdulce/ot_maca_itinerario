@@ -25,18 +25,17 @@ virtualservice:
       route:
         port:
           number: 8080
-
 secretenv:
   - key: "SECRET_NAUA_USERNAME"
     value: "dXNlcg=="
   - key: "SECRET_NAUA_PASSWORD"
     value: "e25vb3B9cGFzc3dvcmQ="
   - key: "SECRET_MACA_DATASOURCE_URI"
-    value: encode_database_uri
+    value: jdbc:oracle:thin:@ldap://oraoid1.portal.ss:389/ds32,cn=OracleContext,dc=portal,dc=ss
   - key: "SECRET_MACA_DATASOURCE_USERNAME"
-    value: encode_database_user
+    value: MACA_ITINERARIO
   - key: "SECRET_MACA_DATASOURCE_PASSWORD"
-    value: encode_database_pwd
+    value: maca_itinerario
   - key: "SECRET_MACA_WEBCLIENT_USERNAME"
     value: "webclient-user"
   - key: "SECRET_MACA_WEBCLIENT_PASSWORD"
