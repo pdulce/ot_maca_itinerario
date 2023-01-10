@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 @Service
-public final class ItinerarioCalidadService {
+public class ItinerarioCalidadService {
 
   @Autowired
   private ItinerarioCalidadRepository itinerarioCalidadRepository;
@@ -37,17 +37,17 @@ public final class ItinerarioCalidadService {
   @Autowired
   private EtapaPruebasRepository etapaPruebasRepository;
 
-  public Collection<ItinerarioCalidad> getAll() {
+  public final Collection<ItinerarioCalidad> getAll() {
     return this.itinerarioCalidadRepository.findAll();
   }
 
-  public Collection<ItinerarioCalidad> getAllItinerariosByIdElementOrEntrega(
+  public final Collection<ItinerarioCalidad> getAllItinerariosByIdElementOrEntrega(
       final Integer idElementoOrEntrega, final Integer isDelivery) {
     return this.itinerarioCalidadRepository.findAllByCatalogueIdAndDelivery(idElementoOrEntrega,
         isDelivery, Sort.by(Sort.Order.desc("creationDate")));
   }
 
-  public ItinerarioCalidad getItinerarioMasRecienteByIdElementOrEntrega(
+  public final ItinerarioCalidad getItinerarioMasRecienteByIdElementOrEntrega(
       final Integer idElementoOrEntrega, final Integer isDelivery) {
     List<ItinerarioCalidad> itList = new ArrayList<>(
         this.itinerarioCalidadRepository.findAllByCatalogueIdAndDelivery(idElementoOrEntrega,
@@ -55,11 +55,11 @@ public final class ItinerarioCalidadService {
     return itList.get(0);
   }
 
-  public ItinerarioCalidad getByIdItinerario(final Integer idItinerario) {
+  public final ItinerarioCalidad getByIdItinerario(final Integer idItinerario) {
     return this.itinerarioCalidadRepository.findByIdAndDeletedIsNull(idItinerario);
   }
 
-  public Collection<ActividadQAPantalla> getActivitiesByItineraryId(final Integer idItinerario,
+  public final Collection<ActividadQAPantalla> getActivitiesByItineraryId(final Integer idItinerario,
       final Integer included) {
     Collection<ActividadQAPantalla> actividadQAPantallaArrayList = new ArrayList<>();
     ItinerarioCalidad itinerarioCalidad = this.itinerarioCalidadRepository.findByIdAndDeletedIsNull(
@@ -84,7 +84,7 @@ public final class ItinerarioCalidadService {
     return actividadQAPantallaArrayList;
   }
 
-  public Collection<ActividadQAPantalla> getActivitiesByItineraryId(final Integer idItinerario) {
+  public final Collection<ActividadQAPantalla> getActivitiesByItineraryId(final Integer idItinerario) {
     Collection<ActividadQAPantalla> actividadQAPantallaArrayList = new ArrayList<>();
     ItinerarioCalidad itinerarioCalidad = this.itinerarioCalidadRepository.findByIdAndDeletedIsNull(
         idItinerario);
@@ -106,7 +106,7 @@ public final class ItinerarioCalidadService {
     return actividadQAPantallaArrayList;
   }
 
-  public Collection<StageBuble> getByIdItinerarioOnlyIncluded(final Integer idItinerario) {
+  public final Collection<StageBuble> getByIdItinerarioOnlyIncluded(final Integer idItinerario) {
     ItinerarioCalidad itinerarioCalidad = this.itinerarioCalidadRepository.findByIdAndDeletedIsNull(
         idItinerario);
     List<StageBuble> stages4Bubles = new ArrayList<>();
@@ -150,7 +150,7 @@ public final class ItinerarioCalidadService {
   }
 
   @Transactional
-  public ItinerarioCalidad remove(final Integer idItinerarioCalidad) {
+  public final ItinerarioCalidad remove(final Integer idItinerarioCalidad) {
     ItinerarioCalidad removedObject = null;
     ItinerarioCalidad itiBBDD = this.itinerarioCalidadRepository.findByIdAndDeletedIsNull(idItinerarioCalidad);
     if (itiBBDD != null) {
@@ -163,12 +163,12 @@ public final class ItinerarioCalidadService {
   }
 
   @Transactional
-  public ItinerarioCalidad save(final ItinerarioCalidad itinerarioCalidad) {
+  public final ItinerarioCalidad save(final ItinerarioCalidad itinerarioCalidad) {
     return this.itinerarioCalidadRepository.save(itinerarioCalidad);
   }
 
   @Transactional
-  public ItinerarioCalidad update(final ItinerarioCalidad itinerarioCalidad) {
+  public final ItinerarioCalidad update(final ItinerarioCalidad itinerarioCalidad) {
     ItinerarioCalidad updatedObject = null;
     if (this.itinerarioCalidadRepository.findByIdAndDeletedIsNull(itinerarioCalidad.getId())
         != null) {

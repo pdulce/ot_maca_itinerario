@@ -26,7 +26,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
-public final class UmbralActividadService {
+public class UmbralActividadService {
 
   public static final int[] AXE = {Constantes.NUMBER_0, Constantes.NUMBER_1, Constantes.NUMBER_2,
       Constantes.NUMBER_3, Constantes.NUMBER_4, Constantes.NUMBER_5, Constantes.NUMBER_6,
@@ -45,18 +45,18 @@ public final class UmbralActividadService {
   @Autowired
   private PesoRepository pesoRepository;
 
-  public Collection<UmbralActividad> getAll() {
+  public final Collection<UmbralActividad> getAll() {
     return this.umbralActividadRepository.findAllByDeletedIsNull();
   }
 
-  public Collection<UmbralActividad> getUmbralesByIdActividad(final Integer idElementType,
+  public final Collection<UmbralActividad> getUmbralesByIdActividad(final Integer idElementType,
       final Integer isDelivery, final Integer idActividad) {
     return this.umbralActividadRepository.
         findAllByDeletedIsNullAndElemenTypeIdAndForDeliveryAndActivityId(
         idElementType, isDelivery, idActividad);
   }
 
-  public Collection<UmbralGraph> getUmbralesByTypeOfElement(final Integer idElementType,
+  public final Collection<UmbralGraph> getUmbralesByTypeOfElement(final Integer idElementType,
       final Integer isDelivery) {
     Collection<UmbralActividad> c = this.umbralActividadRepository.
         findAllByDeletedIsNullAndElemenTypeIdAndForDelivery(idElementType, isDelivery);
@@ -78,7 +78,7 @@ public final class UmbralActividadService {
     return umbrales;
   }
 
-  public Collection<StageBuble> getUmbralesByStage(final Integer idElementType,
+  public final Collection<StageBuble> getUmbralesByStage(final Integer idElementType,
       final Integer isDelivery) {
     Collection<UmbralActividad> c = this.umbralActividadRepository.
         findAllByDeletedIsNullAndElemenTypeIdAndForDelivery(idElementType, isDelivery);
@@ -122,12 +122,12 @@ public final class UmbralActividadService {
     return stages4Bubles;
   }
 
-  public UmbralActividad get(final Integer idUmbral) {
+  public final UmbralActividad get(final Integer idUmbral) {
     return this.umbralActividadRepository.findByIdAndDeletedIsNull(idUmbral);
   }
 
   @Transactional
-  public UmbralActividad remove(final Integer idUmbralActividad) {
+  public final UmbralActividad remove(final Integer idUmbralActividad) {
     UmbralActividad removedObject = null;
     UmbralActividad umbralBBDD = this.umbralActividadRepository.findByIdAndDeletedIsNull(idUmbralActividad);
     if (umbralBBDD != null) {
@@ -140,12 +140,12 @@ public final class UmbralActividadService {
   }
 
   @Transactional
-  public UmbralActividad save(final UmbralActividad umbralActividad) {
+  public final UmbralActividad save(final UmbralActividad umbralActividad) {
     return this.umbralActividadRepository.save(umbralActividad);
   }
 
   @Transactional
-  public UmbralActividad update(final UmbralActividad umbralActividad) {
+  public final UmbralActividad update(final UmbralActividad umbralActividad) {
     UmbralActividad updatedObject = null;
     if (this.umbralActividadRepository.findByIdAndDeletedIsNull(umbralActividad.getId()) != null) {
       updatedObject = this.umbralActividadRepository.save(umbralActividad);
@@ -163,7 +163,7 @@ public final class UmbralActividadService {
     return max;
   }
 
-  public Integer getMaximumOfWeigths(final Integer elementType, final Integer isDelivery,
+  public final Integer getMaximumOfWeigths(final Integer elementType, final Integer isDelivery,
       final Integer idActivity) {
     Integer sumaOfMaxAxisPesosForActivity = Constantes.NUMBER_0;
     for (int i = Constantes.NUMBER_1; i < AXE.length - Constantes.NUMBER_1; i++) {

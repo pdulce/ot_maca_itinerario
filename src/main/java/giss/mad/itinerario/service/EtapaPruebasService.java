@@ -11,21 +11,21 @@ import java.util.Calendar;
 import java.util.Collection;
 
 @Service
-public final class EtapaPruebasService {
+public class EtapaPruebasService {
 
   @Autowired
   private EtapaPruebasRepository etapaPruebasRepository;
 
-  public Collection<EtapaPruebas> getAll() {
+  public final Collection<EtapaPruebas> getAll() {
     return this.etapaPruebasRepository.findAllByDeletedIsNull();
   }
 
-  public EtapaPruebas get(final Integer idActividadQA) {
+  public final EtapaPruebas get(final Integer idActividadQA) {
     return this.etapaPruebasRepository.findByIdAndDeletedIsNull(idActividadQA);
   }
 
   @Transactional
-  public EtapaPruebas remove(final Integer idetapaPruebas) {
+  public final EtapaPruebas remove(final Integer idetapaPruebas) {
     EtapaPruebas removedObject = null;
     EtapaPruebas etapaBBDD = this.etapaPruebasRepository.findByIdAndDeletedIsNull(idetapaPruebas);
     if (etapaBBDD != null) {
@@ -38,12 +38,12 @@ public final class EtapaPruebasService {
   }
 
   @Transactional
-  public EtapaPruebas save(final EtapaPruebas actividadQA) {
+  public final EtapaPruebas save(final EtapaPruebas actividadQA) {
     return this.etapaPruebasRepository.save(actividadQA);
   }
 
   @Transactional
-  public EtapaPruebas update(final EtapaPruebas etapaPruebas) {
+  public final EtapaPruebas update(final EtapaPruebas etapaPruebas) {
     EtapaPruebas updatedObject = null;
     if (this.etapaPruebasRepository.findByIdAndDeletedIsNull(etapaPruebas.getId()) != null) {
       updatedObject = this.etapaPruebasRepository.save(etapaPruebas);

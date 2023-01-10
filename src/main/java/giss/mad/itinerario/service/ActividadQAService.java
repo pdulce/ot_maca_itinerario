@@ -15,22 +15,22 @@ import java.util.Collection;
 
 
 @Service
-public final class ActividadQAService {
+public class ActividadQAService {
 
   @Autowired
   private ActividadQARepository actividadQARepository;
 
-  public Collection<ActividadQA> getAll() {
+  public final Collection<ActividadQA> getAll() {
     return this.actividadQARepository.findAllByDeletedIsNull(
         Sort.by(Sort.Order.asc("testingStageId")));
   }
 
-  public ActividadQA get(final Integer idActividadQA) {
+  public final ActividadQA get(final Integer idActividadQA) {
     return this.actividadQARepository.findByIdAndDeletedIsNull(idActividadQA);
   }
 
   @Transactional
-  public ActividadQA remove(final Integer idActividadQA) {
+  public final ActividadQA remove(final Integer idActividadQA) {
     ActividadQA removedObject = null;
     ActividadQA actividadBBDD = this.actividadQARepository.findByIdAndDeletedIsNull(idActividadQA);
     if (actividadBBDD != null) {
@@ -43,12 +43,12 @@ public final class ActividadQAService {
   }
 
   @Transactional
-  public ActividadQA save(final ActividadQA actividadQA) {
+  public final ActividadQA save(final ActividadQA actividadQA) {
     return this.actividadQARepository.save(actividadQA);
   }
 
   @Transactional
-  public ActividadQA update(final ActividadQA actividadQA) {
+  public final ActividadQA update(final ActividadQA actividadQA) {
     ActividadQA updatedObject = null;
     if (this.actividadQARepository.findByIdAndDeletedIsNull(actividadQA.getId()) != null) {
       updatedObject = this.actividadQARepository.save(actividadQA);
@@ -56,7 +56,7 @@ public final class ActividadQAService {
     return updatedObject;
   }
 
-  public Collection<ActividadReduced> getIdAndNameOfActivities() {
+  public final Collection<ActividadReduced> getIdAndNameOfActivities() {
     Collection<ActividadReduced> listaActividadesReduced = new ArrayList<>();
     Collection<ActividadQA> all = getAll();
     for (ActividadQA actividadQA : all) {

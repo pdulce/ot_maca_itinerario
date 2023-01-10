@@ -35,7 +35,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Service
-public final class ActividadItinerarioService {
+public class ActividadItinerarioService {
 
   @Autowired
   private ActividadItinerarioRepository actividadItinerarioRepository;
@@ -56,18 +56,18 @@ public final class ActividadItinerarioService {
   @Autowired
   private ItinerarioCalidadRepository itinerarioCalidadRepo;
 
-  public Collection<ActividadItinerario> getByIdActividadesByItinerario(
+  public final Collection<ActividadItinerario> getByIdActividadesByItinerario(
       final Integer qualityItineraryId) {
     return this.actividadItinerarioRepository.findAllByQualityItineraryIdAndDeletedIsNull(
         qualityItineraryId);
   }
 
-  public ActividadItinerario getByIdActividadItinerario(final Integer idActividadItinerario) {
+  public final ActividadItinerario getByIdActividadItinerario(final Integer idActividadItinerario) {
     return this.actividadItinerarioRepository.findByIdAndDeletedIsNull(idActividadItinerario);
   }
 
   @Transactional
-  public ActividadItinerario remove(final Integer idActividadItinerario) {
+  public final ActividadItinerario remove(final Integer idActividadItinerario) {
     ActividadItinerario removedObject = null;
     ActividadItinerario actividadBBDD = this.actividadItinerarioRepository.
             findByIdAndDeletedIsNull(idActividadItinerario);
@@ -81,12 +81,12 @@ public final class ActividadItinerarioService {
   }
 
   @Transactional
-  public ActividadItinerario save(final ActividadItinerario actividadItinerario) {
+  public final ActividadItinerario save(final ActividadItinerario actividadItinerario) {
     return this.actividadItinerarioRepository.save(actividadItinerario);
   }
 
   @Transactional
-  public ActividadItinerario update(final ActividadItinerario actividadItinerario) {
+  public final ActividadItinerario update(final ActividadItinerario actividadItinerario) {
     ActividadItinerario updatedObject = null;
     if (this.actividadItinerarioRepository.findByIdAndDeletedIsNull(actividadItinerario.getId())
         != null) {
@@ -95,7 +95,7 @@ public final class ActividadItinerarioService {
     return updatedObject;
   }
 
-  public ItinerarioPantalla calculateItinerary(final ReplicaElementOEntrega elemOrDelivery) {
+  public final ItinerarioPantalla calculateItinerary(final ReplicaElementOEntrega elemOrDelivery) {
     ItinerarioCalidad itinerarioDetallado = calcularActividadItinerarioWithDetailedInfo(
         elemOrDelivery);
     ItinerarioPantalla itinerario = new ItinerarioPantalla();
@@ -187,7 +187,7 @@ public final class ActividadItinerarioService {
 
   /****** Implementamos el algoritmo ***/
   @Transactional
-  public ItinerarioCalidad calcularActividadItinerarioWithDetailedInfo(
+  public final ItinerarioCalidad calcularActividadItinerarioWithDetailedInfo(
       final ReplicaElementOEntrega elemOrDelivery) {
     Integer elementInstanceId = elemOrDelivery.getId();
     Integer elementTypeId = elemOrDelivery.getCatalogElementTypeId();
