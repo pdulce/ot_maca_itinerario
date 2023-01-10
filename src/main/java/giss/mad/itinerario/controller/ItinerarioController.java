@@ -112,9 +112,9 @@ public final class ItinerarioController {
   @PostMapping("/QAactivities/create")
   public ResponseEntity<Object> createActividadQA(final @RequestBody @NotEmpty @NotNull ActividadQA atributoEje) {
     ResponseEntity<Object> retorno = ResponseEntity.ok().body("ActividadQA created sucesfully");
-    if (atributoEje.getName() == null || "".contentEquals(atributoEje.getName())){
+    if (atributoEje.getName() == null || "".contentEquals(atributoEje.getName())) {
       retorno = ResponseEntity.unprocessableEntity().body("Forbidden invocation params in received object");
-    }else {
+    } else {
       ActividadQA actividadQASaved = this.actividadQAService.save(atributoEje);
       if (this.actividadQAService.get(actividadQASaved.getId()) == null) {
         retorno = ResponseEntity.unprocessableEntity().body("Failed to create ActividadQA specified");
@@ -251,6 +251,10 @@ public final class ItinerarioController {
   @PostMapping("/calculateItinerary")
   public ItinerarioPantalla
   calculateItineraryElemen(final @RequestBody @NotNull @NotEmpty ReplicaElementOEntrega elementCatalogue) {
+    if (elementCatalogue.getAttributeValuesCollection() == null
+            || elementCatalogue.getAttributeValuesCollection().isEmpty()) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+    }
     return actividadItinerarioService.calculateItinerary(elementCatalogue);
   }
 
