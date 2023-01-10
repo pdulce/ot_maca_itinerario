@@ -2,10 +2,13 @@ package giss.mad.itinerario.service;
 
 import giss.mad.itinerario.model.EtapaPruebas;
 import giss.mad.itinerario.model.repository.EtapaPruebasRepository;
-import java.util.Collection;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Collection;
 
 @Service
 public final class EtapaPruebasService {
@@ -23,12 +26,15 @@ public final class EtapaPruebasService {
 
   @Transactional
   public EtapaPruebas remove(final Integer idetapaPruebas) {
-    EtapaPruebas etapaPruebas = this.etapaPruebasRepository.findByIdAndDeletedIsNull(
-        idetapaPruebas);
-    if (this.etapaPruebasRepository.findByIdAndDeletedIsNull(etapaPruebas.getId()) != null) {
-      this.etapaPruebasRepository.delete(etapaPruebas);
+    EtapaPruebas removedObject = null;
+    EtapaPruebas etapaBBDD = this.etapaPruebasRepository.findByIdAndDeletedIsNull(idetapaPruebas);
+    if (etapaBBDD != null) {
+      Timestamp timeStamp = new Timestamp(Calendar.getInstance().getTime().getTime());
+      etapaBBDD.setUpdateDate(timeStamp);
+      etapaBBDD.setDeleted(1);
+      removedObject = this.etapaPruebasRepository.saveAndFlush(etapaBBDD);
     }
-    return etapaPruebas;
+    return removedObject;
   }
 
   @Transactional
@@ -38,10 +44,11 @@ public final class EtapaPruebasService {
 
   @Transactional
   public EtapaPruebas update(final EtapaPruebas etapaPruebas) {
+    EtapaPruebas updatedObject = null;
     if (this.etapaPruebasRepository.findByIdAndDeletedIsNull(etapaPruebas.getId()) != null) {
-      return this.etapaPruebasRepository.save(etapaPruebas);
+      updatedObject = this.etapaPruebasRepository.save(etapaPruebas);
     }
-    return null;
+    return updatedObject;
   }
 
 }

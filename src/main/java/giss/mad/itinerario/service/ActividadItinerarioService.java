@@ -68,13 +68,16 @@ public final class ActividadItinerarioService {
 
   @Transactional
   public ActividadItinerario remove(final Integer idActividadItinerario) {
-    ActividadItinerario actividadItinerario = this.actividadItinerarioRepository.findByIdAndDeletedIsNull(
-        idActividadItinerario);
-    if (this.actividadItinerarioRepository.findByIdAndDeletedIsNull(actividadItinerario.getId())
-        != null) {
-      this.actividadItinerarioRepository.delete(actividadItinerario);
+    ActividadItinerario removedObject = null;
+    ActividadItinerario actividadBBDD = this.actividadItinerarioRepository.
+            findByIdAndDeletedIsNull(idActividadItinerario);
+    if (actividadBBDD != null) {
+      Timestamp timeStamp = new Timestamp(Calendar.getInstance().getTime().getTime());
+      actividadBBDD.setUpdateDate(timeStamp);
+      actividadBBDD.setDeleted(1);
+      removedObject = this.actividadItinerarioRepository.saveAndFlush(actividadBBDD);
     }
-    return actividadItinerario;
+    return removedObject;
   }
 
   @Transactional
@@ -84,24 +87,22 @@ public final class ActividadItinerarioService {
 
   @Transactional
   public ActividadItinerario update(final ActividadItinerario actividadItinerario) {
+    ActividadItinerario updatedObject = null;
     if (this.actividadItinerarioRepository.findByIdAndDeletedIsNull(actividadItinerario.getId())
         != null) {
-      return this.actividadItinerarioRepository.save(actividadItinerario);
+      updatedObject = this.actividadItinerarioRepository.save(actividadItinerario);
     }
-    return null;
+    return updatedObject;
   }
 
   public ItinerarioPantalla calculateItinerary(final ReplicaElementOEntrega elemOrDelivery) {
-
     ItinerarioCalidad itinerarioDetallado = calcularActividadItinerarioWithDetailedInfo(
         elemOrDelivery);
-
     ItinerarioPantalla itinerario = new ItinerarioPantalla();
     itinerario.setId(Long.valueOf(itinerarioDetallado.getId()));
     itinerario.setCreationDate(itinerarioDetallado.getCreationDate());
     itinerario.setElementId(itinerarioDetallado.getCatalogueId());
     itinerario.setDelivery(elemOrDelivery.getDelivery());
-
     Map<String, List<ActividadQAPantalla>> stagesMap = new HashMap<>();
     for (ActividadItinerario actQA : itinerarioDetallado.getActividadesDeItinerario()) {
       ActividadQAPantalla actividadResult = new ActividadQAPantalla();
@@ -112,7 +113,6 @@ public final class ActividadItinerarioService {
       actividadResult.setObservations(actQA.getObservations());
       actividadResult.setRealization(actQA.getInferredThreshold());
       actividadResult.setIncluded(actQA.getIncludedInItinerary());
-
       String stageOfActivity = this.etapaPruebasRepository.findByIdAndDeletedIsNull(
           actividadObject.getTestingStageId()).getName();
       if (stagesMap.get(stageOfActivity) == null) {
@@ -125,7 +125,6 @@ public final class ActividadItinerarioService {
         stagesMap.put(stageOfActivity, listaSoloActividadesARealizar);
       }
     }
-
     List<StagePantalla> stageListForPantalla = new ArrayList<>();
     for (String stageKey : stagesMap.keySet()) {
       StagePantalla stage = new StagePantalla();
@@ -137,18 +136,16 @@ public final class ActividadItinerarioService {
     Collections.sort(stageListForPantalla, new Comparator<StagePantalla>() {
       @Override
       public int compare(final StagePantalla o1, final StagePantalla o2) {
+        int retorno = 0;
         if (o1.getIdStage() > o2.getIdStage()) {
-          return 1;
+          retorno = 1;
         } else if (o1.getIdStage() < o2.getIdStage()) {
-          return -1;
-        } else {
-          return 0;
+          retorno = -1;
         }
+        return retorno;
       }
     });
-
     itinerario.setStages(stageListForPantalla);
-
     return itinerario;
   }
 
@@ -192,7 +189,6 @@ public final class ActividadItinerarioService {
   @Transactional
   public ItinerarioCalidad calcularActividadItinerarioWithDetailedInfo(
       final ReplicaElementOEntrega elemOrDelivery) {
-
     Integer elementInstanceId = elemOrDelivery.getId();
     Integer elementTypeId = elemOrDelivery.getCatalogElementTypeId();
     Integer isDelivery = elemOrDelivery.getDelivery();
@@ -238,30 +234,29 @@ public final class ActividadItinerarioService {
       Integer includedInItinerary = Constantes.NUMBER_1;
       for (Integer axisId : mapOfAxisWithValuesDomain.keySet()) {
         Integer valorDominioId = mapOfAxisWithValuesDomain.get(axisId);
-        Collection<Peso> pesosFound =
-            this.pesoRepository.
+        Collection<Peso> pesosFound = this.pesoRepository.
                 findAllByDeletedIsNullAndElementTypeIdAndForDeliveryAndActivityIdAndAxisAttributeId(
                 elementTypeId, isDelivery, actividadQA.getId(), axisId);
         if (pesosFound.isEmpty()) {
           EjeHeredable ejeHeredable = this.ejeHeredableRepository.
               findByElementTypeIdAndAxisIdAndForDeliveryAndDeletedIsNull(
               elementTypeId, axisId, isDelivery);
-
           if (ejeHeredable != null
               && isDelivery == Constantes.NUMBER_1) {
-            pesosFound =
-                this.pesoRepository.
+            pesosFound = this.pesoRepository.
                     findAllByDeletedIsNullAndElementTypeIdAndForDeliveryAndActivityIdAndAxisAttributeId(
                     elementTypeId, Constantes.NUMBER_0, actividadQA.getId(), axisId);
           } else if (ejeHeredable != null && elementTypeId < Constantes.NUMBER_3) {
-            pesosFound =
-                this.pesoRepository.
+            pesosFound = this.pesoRepository.
                     findAllByDeletedIsNullAndElementTypeIdAndForDeliveryAndActivityIdAndAxisAttributeId(
                     elementTypeId + Constantes.NUMBER_1, Constantes.NUMBER_0,
                         actividadQA.getId(), axisId);
           }
         }
-        for (Peso peso : pesosFound) {
+        boolean foundPeso = false;
+        Iterator<Peso> itePesos = pesosFound.iterator();
+        while (itePesos.hasNext() && !foundPeso) {
+          Peso peso = itePesos.next();
           if (peso.getDomainValueId() == valorDominioId) {
             if (peso.getWeightValue() == Constantes.NUMBER_MINUS_ONE) {
               actividadItinerarioIesima.setInferredThreshold(
@@ -274,16 +269,14 @@ public final class ActividadItinerarioService {
               acumuladorSumaPesosActividad += peso.getWeightValue();
               sumWeightsAllActivities += acumuladorSumaPesosActividad;
             }
-            break;
+            foundPeso = true;
           }
         }
       }
       actividadItinerarioIesima.setActivitSumOfAxes(acumuladorSumaPesosActividad);
       Collection<UmbralActividad> umbralesActividad =
-          this.umbralActividadRepository.
-              findAllByDeletedIsNullAndElemenTypeIdAndForDeliveryAndActivityId(
+          this.umbralActividadRepository.findAllByDeletedIsNullAndElemenTypeIdAndForDeliveryAndActivityId(
               elementTypeId, isDelivery, actividadQA.getId());
-
       if (includedInItinerary == Constantes.NUMBER_1) {
         Boolean found = false;
         Iterator<UmbralActividad> umbralesIterator = umbralesActividad.iterator();
@@ -324,9 +317,7 @@ public final class ActividadItinerarioService {
       itinerarioCalidad.setActividadesDeItinerario(actividadesItinerario);
       this.itinerarioCalidadRepo.saveAndFlush(itinerarioCalidad);
     }
-
     return itinerarioCalidad;
-
   }
 
 }

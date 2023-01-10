@@ -11,16 +11,19 @@ import giss.mad.itinerario.model.repository.ActividadQARepository;
 import giss.mad.itinerario.model.repository.EtapaPruebasRepository;
 import giss.mad.itinerario.model.repository.PesoRepository;
 import giss.mad.itinerario.model.repository.UmbralActividadRepository;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.transaction.Transactional;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 @Service
 public final class UmbralActividadService {
@@ -55,7 +58,6 @@ public final class UmbralActividadService {
 
   public Collection<UmbralGraph> getUmbralesByTypeOfElement(final Integer idElementType,
       final Integer isDelivery) {
-
     Collection<UmbralActividad> c = this.umbralActividadRepository.
         findAllByDeletedIsNullAndElemenTypeIdAndForDelivery(idElementType, isDelivery);
     if (c == null) {
@@ -75,7 +77,6 @@ public final class UmbralActividadService {
     }
     return umbrales;
   }
-
 
   public Collection<StageBuble> getUmbralesByStage(final Integer idElementType,
       final Integer isDelivery) {
@@ -109,18 +110,17 @@ public final class UmbralActividadService {
     Collections.sort(stages4Bubles, new Comparator<StageBuble>() {
       @Override
       public int compare(final StageBuble o1, final StageBuble o2) {
+        int retorno = 0;
         if (o1.getId() > o2.getId()) {
-          return 1;
+          retorno = 1;
         } else if (o1.getId() < o2.getId()) {
-          return -1;
-        } else {
-          return 0;
+          retorno = -1;
         }
+        return retorno;
       }
     });
     return stages4Bubles;
   }
-
 
   public UmbralActividad get(final Integer idUmbral) {
     return this.umbralActividadRepository.findByIdAndDeletedIsNull(idUmbral);
@@ -128,12 +128,15 @@ public final class UmbralActividadService {
 
   @Transactional
   public UmbralActividad remove(final Integer idUmbralActividad) {
-    UmbralActividad umbralActividad = this.umbralActividadRepository.findByIdAndDeletedIsNull(
-        idUmbralActividad);
-    if (this.umbralActividadRepository.findByIdAndDeletedIsNull(umbralActividad.getId()) != null) {
-      this.umbralActividadRepository.delete(umbralActividad);
+    UmbralActividad removedObject = null;
+    UmbralActividad umbralBBDD = this.umbralActividadRepository.findByIdAndDeletedIsNull(idUmbralActividad);
+    if (umbralBBDD != null) {
+      Timestamp timeStamp = new Timestamp(Calendar.getInstance().getTime().getTime());
+      umbralBBDD.setUpdateDate(timeStamp);
+      umbralBBDD.setDeleted(1);
+      removedObject = this.umbralActividadRepository.saveAndFlush(umbralBBDD);
     }
-    return umbralActividad;
+    return removedObject;
   }
 
   @Transactional
@@ -143,10 +146,11 @@ public final class UmbralActividadService {
 
   @Transactional
   public UmbralActividad update(final UmbralActividad umbralActividad) {
+    UmbralActividad updatedObject = null;
     if (this.umbralActividadRepository.findByIdAndDeletedIsNull(umbralActividad.getId()) != null) {
-      return this.umbralActividadRepository.save(umbralActividad);
+      updatedObject = this.umbralActividadRepository.save(umbralActividad);
     }
-    return null;
+    return updatedObject;
   }
 
   private Integer maxOf(final List<Peso> pesosDeEje) {
@@ -164,8 +168,7 @@ public final class UmbralActividadService {
     Integer sumaOfMaxAxisPesosForActivity = Constantes.NUMBER_0;
     for (int i = Constantes.NUMBER_1; i < AXE.length - Constantes.NUMBER_1; i++) {
       sumaOfMaxAxisPesosForActivity += maxOf(
-          this.pesoRepository.
-              findAllByDeletedIsNullAndElementTypeIdAndForDeliveryAndActivityIdAndAxisAttributeId(
+          this.pesoRepository.findAllByDeletedIsNullAndElementTypeIdAndForDeliveryAndActivityIdAndAxisAttributeId(
               elementType, isDelivery, idActivity, AXE[i]));
     }
     return sumaOfMaxAxisPesosForActivity;

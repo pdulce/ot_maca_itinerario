@@ -4,10 +4,11 @@ import giss.mad.itinerario.model.Peso;
 import giss.mad.itinerario.model.auxpesos.PesoGraph;
 import giss.mad.itinerario.model.repository.EjeHeredableRepository;
 import giss.mad.itinerario.model.repository.PesoRepository;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -26,11 +27,6 @@ public final class PesoService {
 
   @Autowired
   private EjeHeredableRepository ejeHeredableRepository;
-
-  private final Map<Integer, List<Integer>> pesosHeredables = Map.of(Constantes.NUMBER_1,
-      List.of(5, 6, 7, 12, 15, 16, 20));
-  private final Map<Integer, List<Integer>> pesosHeredablesForDeliveries = Map.of(Constantes.NUMBER_1,
-      List.of(7, 15, 16, 20));
 
   public Collection<Peso> getAll() {
     return this.pesoRepository.findAllByDeletedIsNull();
@@ -59,11 +55,15 @@ public final class PesoService {
 
   @Transactional
   public Peso remove(final Integer idPeso) {
-    Peso actividadQA = this.pesoRepository.findByIdAndDeletedIsNull(idPeso);
-    if (this.pesoRepository.findByIdAndDeletedIsNull(actividadQA.getId()) != null) {
-      this.pesoRepository.delete(actividadQA);
+    Peso removedObject = null;
+    Peso pesoBBDD = this.pesoRepository.findByIdAndDeletedIsNull(idPeso);
+    if (pesoBBDD != null) {
+      Timestamp timeStamp = new Timestamp(Calendar.getInstance().getTime().getTime());
+      pesoBBDD.setUpdateDate(timeStamp);
+      pesoBBDD.setDeleted(1);
+      removedObject = this.pesoRepository.saveAndFlush(pesoBBDD);
     }
-    return actividadQA;
+    return removedObject;
   }
 
   @Transactional
@@ -73,10 +73,11 @@ public final class PesoService {
 
   @Transactional
   public Peso update(final Peso peso) {
+    Peso updatedObject = null;
     if (this.pesoRepository.findById(peso.getId()).isPresent()) {
-      return this.pesoRepository.save(peso);
+      updatedObject = this.pesoRepository.save(peso);
     }
-    return null;
+    return updatedObject;
   }
 
 
