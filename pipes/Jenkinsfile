@@ -7,6 +7,6 @@ FwDevOps("java17", "https://gitlab.pro.portal.ss/ot/mad/ot_maca_itinerario.git",
 	"HELM_DEPLOY":"true",
 	"CODE_REVIEW":"true",
 	"UNIT_TEST":"true",
-	"CD": "true"
+	"CD": "false"
     ]
 )

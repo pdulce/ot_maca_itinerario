@@ -35,7 +35,7 @@ mvn spring-boot:run -Dspring.profiles.active=local
 
 También se puede lanzar directamente el artefacto con java
 ```bash
-java -jar  .\target\mac1-1.0.0-SNAPSHOT.jar
+java -jar  .\target\ot_maca_itinerario-1.0.0-SNAPSHOT.jar
 ```
 
 

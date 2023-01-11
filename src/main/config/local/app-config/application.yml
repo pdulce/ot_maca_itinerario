@@ -50,9 +50,15 @@ giss:
       user: test
       password: test
 
-  kafka:
+    kafka:
     #en local se desactiva la seguridad de kafka
-    default-config:
-      secured-connection:
-        enabled: false
+      default-config:
+        secured-connection:
+      enabled: false
 
+  monitoring:
+    environment: local
+
+  opentracing:
+      jaeger:
+        enabled: false

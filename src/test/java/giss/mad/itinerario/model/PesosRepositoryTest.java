@@ -1,9 +1,9 @@
-package giss.mad.itinerario.repository;
+package giss.mad.itinerario.model;
 
 
 import giss.mad.itinerario.Application;
-import giss.mad.itinerario.model.ActividadQA;
-import giss.mad.itinerario.model.Peso;
+import giss.mad.itinerario.repository.ActividadQARepository;
+import giss.mad.itinerario.repository.PesoRepository;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
