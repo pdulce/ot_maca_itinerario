@@ -42,3 +42,7 @@ giss:
     default-config:
       secured-connection:
         enabled: false
+
+  monitoring:
+    #entorno
+    environment: local

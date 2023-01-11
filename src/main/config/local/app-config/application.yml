@@ -18,7 +18,8 @@ spring:
     url: jdbc:oracle:thin:@ldap://oraoid1.portal.ss:389/ds32,cn=OracleContext,dc=portal,dc=ss
     username: MACA_ITINERARIO
     password: maca_itinerario
-
+  web:
+    ignoreAutoConfiguredSkipPatterns: true
   jpa:
     database-platform: org.hibernate.dialect.Oracle12cDialect
     hibernate:
@@ -56,9 +57,8 @@ giss:
         secured-connection:
       enabled: false
 
-  monitoring:
-    environment: local
+    monitoring:
+    #entorno
+      environment: local
 
-  opentracing:
-      jaeger:
-        enabled: false
+
