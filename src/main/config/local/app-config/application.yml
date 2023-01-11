@@ -51,17 +51,14 @@ giss:
       user: test
       password: test
 
-    kafka:
-    #en local se desactiva la seguridad de kafka
-      ssl:
-        truststore:
-          location: C:\\Users\\99GU3997
-      default-config:
-        secured-connection:
-          enabled: false
+  #en local se desactiva la seguridad de kafka
+  kafka:
+    default-config:
+      secured-connection:
+        enabled: false
 
-    monitoring:
-    #entorno
-      environment: local
+  monitoring:
+  #entorno
+    environment: local
 
 
