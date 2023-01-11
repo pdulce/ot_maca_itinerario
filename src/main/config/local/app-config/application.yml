@@ -53,6 +53,9 @@ giss:
 
     kafka:
     #en local se desactiva la seguridad de kafka
+      ssl:
+        truststore:
+          location: C:\\Users\\99GU3997
       default-config:
         secured-connection:
           enabled: false
