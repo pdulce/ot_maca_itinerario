@@ -29,7 +29,7 @@ artifact: Cada uno de lso artefactos generados por este proyecto
 			oc_namespace_suffix="ot-maca"
 			chart_version="1.7.0"/>
 
-	<deploy artifact="ot_mac0"
+	<deploy artifact="ot_mac1"
 			path_config="src/main"
 			nombre_release="ot_mac1"/>
 </helm>

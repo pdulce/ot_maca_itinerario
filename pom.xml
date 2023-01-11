@@ -40,7 +40,16 @@
   <build>
 
     <plugins>
-
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <configuration>
+          <arguments combine.children="append">
+            <argument>${project.basedir}/target/generated-sources</argument>
+            <argument>giss.mad.catalogo</argument>
+          </arguments>
+        </configuration>
+      </plugin>
 
 
 

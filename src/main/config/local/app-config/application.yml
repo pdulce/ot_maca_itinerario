@@ -9,8 +9,7 @@ logging:
     es.giss.arch: DEBUG
 
 spring:
-  kafka:
-    bootstrap-servers: localhost:29092
+
   server:
     port: 8080
   datasource:
@@ -27,8 +26,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
-
+kafka:
+  bootstrap:
+    servers: localhost
 
 # ===================================================================
 # Giss framework properties
@@ -55,7 +55,7 @@ giss:
     #en local se desactiva la seguridad de kafka
       default-config:
         secured-connection:
-      enabled: false
+          enabled: false
 
     monitoring:
     #entorno
