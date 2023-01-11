@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Application {
 
     public static void main(final String[] args) {
+        //setProperty("SPRING_PROFILES_ACTIVE", "local");
         SpringApplication.run(Application.class, args);
     }
 
