@@ -17,19 +17,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = {Application.class},
-        webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,
-        properties = {"server.port:8080",
-                "jpa.database-platform:org.hibernate.dialect.Oracle12cDialect",
-                "spring.datasource.driverClassName:oracle.jdbc.OracleDriver",
-                "spring.datasource.url:jdbc:oracle:thin:@ldap://oraoid1.portal.ss:389/ds32,cn=OracleContext,dc=portal,dc=ss",
-                "spring.datasource.username:MACA_ITINERARIO", "spring.datasource.password:maca_itinerario"})
+@SpringBootTest(classes = {Application.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @ActiveProfiles("test")
 public class ActividadQARepositoryTest {
     private static Logger logger = (Logger) LoggerFactory.getLogger(ActividadQARepositoryTest.class);
-    private static final String SPRING_BANNER = "spring.main.banner_mode";
-    private static final String SERVER_PORT = "server.port";
 
     @Autowired
     private ActividadQARepository actividadQARepository;

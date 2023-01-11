@@ -15,20 +15,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
-//@ContextConfiguration(locations={"/app-config.xml", "/test-config.xml"})
-@SpringBootTest(classes = {Application.class},
-        webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,
-        properties = {"server.port:8080",
-                "jpa.database-platform:org.hibernate.dialect.Oracle12cDialect",
-                "spring.datasource.driverClassName:oracle.jdbc.OracleDriver",
-                "spring.datasource.url:jdbc:oracle:thin:@ldap://oraoid1.portal.ss:389/ds32,cn=OracleContext,dc=portal,dc=ss",
-                "spring.datasource.username:MACA_ITINERARIO", "spring.datasource.password:maca_itinerario"})
+@SpringBootTest(classes = {Application.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @ActiveProfiles("test")
 public class PesosRepositoryTest {
