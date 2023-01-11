@@ -6,6 +6,7 @@ import giss.mad.itinerario.repository.ActividadQARepository;
 import giss.mad.itinerario.repository.PesoRepository;
 import giss.mad.itinerario.repository.UmbralActividadRepository;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -52,5 +53,12 @@ public class UmbralesTest {
                 contains(actividadQA_10.get().getId());
         org.assertj.core.api.Assertions.assertThat(umbrales).extracting(UmbralActividad::getActivityId).
                 contains(actividadQA_15.get().getId());
+
+        if (umbralActividadRepository.findById(451).isPresent()) {
+            UmbralActividad umbral = umbralActividadRepository.findById(451).get();
+            Assertions.assertEquals(umbral.getId(), 451);
+            Assertions.assertEquals(umbral.getThreshold(), "Cobertura del 75 % de funcionalidades críticas y " +
+                    "del 50 % en el resto");
+        }
 	}
 }
