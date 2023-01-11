@@ -47,10 +47,10 @@ giss:
     
     
   springdoc:
-    title: "my api title"
-    description: "my description"
+    title: "API Itinerario de Maca"
+    description: "API de Maca para generar itinerarios de Calidad"
     version: "v1"
-    group-name: "my group-name"
+    group-name: "mad.maca"
     company-name: giss-framework
     company-email: ODT-CORE.GISS-SSCC.DED@seg-social.es
     base-package: giss.mad.itinerario

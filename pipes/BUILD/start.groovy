@@ -17,7 +17,7 @@ def start() {
 		sh "mvn package -s  $MAVEN_SETTINGS"
 	}
 	sh "ls -la ${WORKSPACE}/target"
-	sh "cp ${WORKSPACE}/target/*.jar a/mac1.jar"
+	sh "cp ${WORKSPACE}/target/*.jar a/ot_mac1.jar"
 
 	log.info("[BACKEND/build] Inicio de proceso helm")
 	Helm.generarArtefactoByArtifactsHelm_Xml()

@@ -29,12 +29,12 @@ artifact: Cada uno de lso artefactos generados por este proyecto
 			oc_namespace_suffix="ot-maca"
 			chart_version="1.7.0"/>
 
-	<deploy artifact="mac1"
+	<deploy artifact="ot_mac0"
 			path_config="src/main"
-			nombre_release="mac1"/>
+			nombre_release="ot_mac1"/>
 </helm>
 
-<artifact name="mac1">
-	<nexus_file>mac1.jar</nexus_file>
+<artifact name="ot_mac1">
+	<nexus_file>ot_mac1.jar</nexus_file>
 </artifact>
 </artifacts>

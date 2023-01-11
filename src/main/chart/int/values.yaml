@@ -25,6 +25,7 @@ virtualservice:
       route:
         port:
           number: 8080
+
 secretenv:
   - key: "SECRET_NAUA_USERNAME"
     value: "dXNlcg=="
@@ -45,9 +46,9 @@ configenv:
   - key: "SPRING_CONFIG_LOCATION"
     value: "/opt/app/app-config/application.yml"
   - key: "GISS_NAMESPACE"
-    value: "gint-ed-maca"
+    value: "gint-ot-maca"
   - key: "KEYCLOACK_AUTH_SERVER_URL"
-    value: "http://Localhost:8080"
+    value: "http://localhost:8080"
   - key: "KEYCLOACK_REALM"
     value: "eidas"
   
