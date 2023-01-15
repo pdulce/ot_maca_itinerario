@@ -72,7 +72,7 @@ public class PesoService {
   }
 
   @Transactional
-  public final Peso removePhysical(final Integer idPeso){
+  public final Peso removePhysical(final Integer idPeso) {
     Peso peso = this.get(idPeso);
     this.pesoRepository.delete(peso);
     return peso;

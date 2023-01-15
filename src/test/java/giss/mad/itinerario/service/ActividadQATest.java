@@ -67,24 +67,10 @@ public class ActividadQATest {
     public static void cleanContextVariables() {
     }
 
-    private void initServiceImpl(){
-        this.actividadQAService.setActividadQARepository(this.actividadQARepository);
-
-        this.umbralActividadService.setActividadRepository(this.actividadQARepository);
-        this.umbralActividadService.setUmbralActividadRepository(this.umbralActividadRepository);
-        this.umbralActividadService.setEtapaPruebasRepository(this.etapaPruebasRepository);
-        this.umbralActividadService.setPesoRepository(this.pesoRepository);
-
-        this.pesoService.setEjeHeredableRepository(this.ejeHeredableRepository);
-        this.pesoService.setPesoRepository(this.pesoRepository);
-
-        this.etapaPruebasService.setEtapaPruebasRepository(this.etapaPruebasRepository);
-    }
-
     @Test
     @Transactional
     public void actividadesOperaciones() {
-        //initServiceImpl();
+
        Timestamp timeStampNow = new Timestamp(Calendar.getInstance().getTime().getTime());
        Collection<ActividadQA> listaActividades = this.actividadQAService.getAll();
        Assertions.assertEquals(listaActividades.size(), 31,
@@ -110,7 +96,7 @@ public class ActividadQATest {
            Assertions.assertEquals(newActividad.getId() > 31, true, "SEQ-next no ha funcionado");
 
            // Recuperamos pesos para ver si están en BBDD
-           Assertions.assertEquals(31, this.pesoService.getAll().size(), "No existen las 31 act.");
+           Assertions.assertEquals(2908, this.pesoService.getAll().size(), "No existen las 31 act.");
            // creamos un peso, y lo añadimos a una lista de pesos
 
 

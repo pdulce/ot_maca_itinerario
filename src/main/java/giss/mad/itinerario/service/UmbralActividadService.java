@@ -95,7 +95,7 @@ public class UmbralActividadService {
   }
 
   @Transactional
-  public final UmbralActividad removePhysical(final Integer idUmbral){
+  public final UmbralActividad removePhysical(final Integer idUmbral) {
     UmbralActividad umbral = this.get(idUmbral);
     this.umbralActividadRepository.delete(umbral);
     return umbral;
