@@ -1,7 +1,7 @@
 spring:
 
   server:
-    port: 8080
+    port: 8081
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@ldap://oraoid1.portal.ss:389/ds32,cn=OracleContext,dc=portal,dc=ss
@@ -15,18 +15,17 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
 kafka:
   bootstrap:
     servers: localhost
-
+    
 giss:
 
   application:
     name: mac1
     capp-code: MACA
     development-center: ced
-
+    
   audit:
     enabled: false
 
@@ -42,7 +41,7 @@ giss:
     default-config:
       secured-connection:
         enabled: false
-
+  
   monitoring:
     #entorno
     environment: local

@@ -39,16 +39,16 @@ giss:
         KafkaConsumerService:
           topics: tp.maca.topic1
           group-id: tp.maca.consumer-1
-
+    
   webclient:
     basic-auth-config:
       user: ${SECRET_MACA_WEBCLIENT_USER}
       password: ${SECRET_MACA_WEBCLIENT_PASSWORD}
-
-
+    
+    
   springdoc:
     title: "API Itinerario de Maca"
-    description: "API de Maca para crear itinerarios del catalogo de artefactos de aplicaciones en GISS"
+    description: "API de Maca para gestionar el itinerario de artefactos de aplicaciones en GISS"
     version: "v1"
     group-name: "mad.maca"
     company-name: giss-framework

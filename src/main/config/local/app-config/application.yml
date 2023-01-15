@@ -9,16 +9,14 @@ logging:
     es.giss.arch: DEBUG
 
 spring:
-
   server:
-    port: 8080
+    port: 8081
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@ldap://oraoid1.portal.ss:389/ds32,cn=OracleContext,dc=portal,dc=ss
     username: MACA_ITINERARIO
     password: maca_itinerario
-  web:
-    ignoreAutoConfiguredSkipPatterns: true
+
   jpa:
     database-platform: org.hibernate.dialect.Oracle12cDialect
     hibernate:
@@ -51,14 +49,9 @@ giss:
       user: test
       password: test
 
-  #en local se desactiva la seguridad de kafka
   kafka:
+    #en local se desactiva la seguridad de kafka
     default-config:
       secured-connection:
         enabled: false
-
-  monitoring:
-  #entorno
-    environment: local
-
 

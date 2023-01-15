@@ -31,7 +31,7 @@ artifact: Cada uno de lso artefactos generados por este proyecto
 
 	<deploy artifact="ot_mac1"
 			path_config="src/main"
-			nombre_release="ot_mac1"/>
+			nombre_release="ot-mac1"/>
 </helm>
 
 <artifact name="ot_mac1">

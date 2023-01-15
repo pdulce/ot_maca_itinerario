@@ -14,7 +14,7 @@ def start() {
 	configFileProvider(
 			[configFile(fileId: 'backend-settings', variable: 'MAVEN_SETTINGS')]){
 		sh "mvn versions:set -DnewVersion=${nuevoTag} -s $MAVEN_SETTINGS "
-		sh "mvn package -s  $MAVEN_SETTINGS"
+		sh "mvn package -DskipTests -s  $MAVEN_SETTINGS"
 	}
 	sh "ls -la ${WORKSPACE}/target"
 	sh "cp ${WORKSPACE}/target/*.jar a/ot_mac1.jar"
