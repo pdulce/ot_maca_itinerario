@@ -93,27 +93,53 @@ public class ActividadQATest {
            newActividad = this.actividadQAService.save(newActividad);
            Assertions.assertEquals(newActividad.getName(), "actividad ficticia de test",
                    "Act. recuperada no es la expected");
-           Assertions.assertEquals(newActividad.getId() > 31, true, "SEQ-next no ha funcionado");
+           Assertions.assertEquals(newActividad.getId() > 31, true,
+                   "SEQ-next actividadQA no ha funcionado");
 
            // Recuperamos pesos para ver si están en BBDD
-           Assertions.assertEquals(2908, this.pesoService.getAll().size(), "No existen las 31 act.");
+           Assertions.assertEquals(2908, this.pesoService.getAll().size(), "No existen las 2908 pesos");
            // creamos un peso, y lo añadimos a una lista de pesos
-
+           newPeso.setCreationDate(timeStampNow);
+           newPeso.setActivityId(newActividad.getId());
+           newPeso.setForDelivery(0);
+           newPeso.setAxisAttributeId(1);
+           newPeso.setDomainValueId(55);
+           newPeso.setElementTypeId(1);
+           newPeso.setWeightValue(120);
+           newPeso = this.pesoService.save(newPeso);
+           Assertions.assertEquals(newPeso.getId() > 2908, true,
+                   "SEQ-next Pesos no ha funcionado");
 
            // Recuperamos umbrales para ver si están en BBDD
            Assertions.assertEquals(330, this.umbralActividadService.getAll().size(),
                    "No existen los 330 umbrales de act.");
+           newUmbral.setCreationDate(timeStampNow);
+           newUmbral.setHelp("help new umbral");
+           newUmbral.setActivityId(newActividad.getId());
+           newUmbral.setElemenTypeId(1);
+           newUmbral.setExcludeUnreachedThreshold(0);
+           newUmbral.setThreshold("Umbral test");
+           newUmbral.setForDelivery(0);
+           newUmbral.setLowerLimit(30);
+           newUmbral.setUpperLimit(80);
+           newUmbral = this.umbralActividadService.save(newUmbral);
+           Assertions.assertEquals(newUmbral.getId() > 330, true,
+                   "SEQ-next Umbral no ha funcionado");
 
-
-       }catch (Exception exc){
+       }catch (Exception exc) {
             Assertions.assertEquals(0, 1, "Error en alguna operación con actividadQA");
        }finally{
            // borrar actividadQA, y sus dependencias
-            if (newActividad.getId() != null){
-                //this.umbralActividadService.removePhysical(newUmbral.getId());
-                //this.pesoService.removePhysical(newPeso.getId());
-                this.actividadQAService.removePhysical(newActividad.getId());
-            }
+           if (newPeso.getId() != null) {
+               this.pesoService.removePhysical(newPeso.getId());
+           }
+           if (newUmbral.getId() != null) {
+               this.umbralActividadService.removePhysical(newUmbral.getId());
+           }
+           if (newActividad.getId() != null) {
+               this.actividadQAService.removePhysical(newActividad.getId());
+           }
+
        }
     }
 }
