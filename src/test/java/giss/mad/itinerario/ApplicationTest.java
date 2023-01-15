@@ -47,10 +47,8 @@ public class ApplicationTest {
         String msg = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
                 + "/itinerario/QAactivities/getAll", String.class);
         logger.info("RECIBIDO: " + msg);
-        Assertions.assertEquals(1, 1, "Error al invocar al MS");
-        /**
-         * boolean appearsAutenticacionAttr = msg.contains("Autenticación") && msg.contains("EJE04");
-         *         Assertions.assertEquals(appearsAutenticacionAttr, true, "No figura atributo Autenticación ATTR4");
-         */
+
+        boolean appearsActividad3 = msg.contains("Diseño planes prueba Funcional");
+        Assertions.assertEquals(appearsActividad3, true, "No figura actividad 3");
     }
 }

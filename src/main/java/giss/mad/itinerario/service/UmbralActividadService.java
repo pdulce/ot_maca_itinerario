@@ -94,6 +94,13 @@ public class UmbralActividadService {
     return umbrales;
   }
 
+  @Transactional
+  public final UmbralActividad removePhysical(final Integer idUmbral){
+    UmbralActividad umbral = this.get(idUmbral);
+    this.umbralActividadRepository.delete(umbral);
+    return umbral;
+  }
+
   public final Collection<StageBuble> getUmbralesByStage(final Integer idElementType,
       final Integer isDelivery) {
     Collection<UmbralActividad> c = this.umbralActividadRepository.

@@ -45,6 +45,12 @@ public class ActividadQAService {
     }
     return removedObject;
   }
+  @Transactional
+  public final ActividadQA removePhysical(final Integer idActividadQA){
+    ActividadQA actividad = this.get(idActividadQA);
+    this.actividadQARepository.delete(actividad);
+    return actividad;
+  }
 
   @Transactional
   public final ActividadQA save(final ActividadQA actividadQA) {
