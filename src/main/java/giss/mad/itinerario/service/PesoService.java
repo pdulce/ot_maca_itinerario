@@ -25,6 +25,14 @@ public class PesoService {
   @Autowired
   private EjeHeredableRepository ejeHeredableRepository;
 
+  public final void setPesoRepository(final PesoRepository pesoRepository) {
+    this.pesoRepository = pesoRepository;
+  }
+
+  public final void setEjeHeredableRepository(final EjeHeredableRepository ejeHeredableRepository) {
+    this.ejeHeredableRepository = ejeHeredableRepository;
+  }
+
   public final Collection<Peso> getAll() {
     return this.pesoRepository.findAllByDeletedIsNull();
   }

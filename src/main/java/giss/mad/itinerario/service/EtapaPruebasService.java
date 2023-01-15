@@ -16,6 +16,10 @@ public class EtapaPruebasService {
   @Autowired
   private EtapaPruebasRepository etapaPruebasRepository;
 
+  public final void setEtapaPruebasRepository(final EtapaPruebasRepository etapaPruebasRepository) {
+    this.etapaPruebasRepository = etapaPruebasRepository;
+  }
+
   public final Collection<EtapaPruebas> getAll() {
     return this.etapaPruebasRepository.findAllByDeletedIsNull();
   }

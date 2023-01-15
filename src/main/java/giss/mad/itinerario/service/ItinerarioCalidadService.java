@@ -37,6 +37,18 @@ public class ItinerarioCalidadService {
   @Autowired
   private EtapaPruebasRepository etapaPruebasRepository;
 
+  public final void setItinerarioCalidadRepository(final ItinerarioCalidadRepository itinerarioCalidadRepository) {
+    this.itinerarioCalidadRepository = itinerarioCalidadRepository;
+  }
+
+  public final void setActividadQARepository(final ActividadQARepository actividadQARepository) {
+    this.actividadQARepository = actividadQARepository;
+  }
+
+  public final void setEtapaPruebasRepository(final EtapaPruebasRepository etapaPruebasRepository) {
+    this.etapaPruebasRepository = etapaPruebasRepository;
+  }
+
   public final Collection<ItinerarioCalidad> getAll() {
     return this.itinerarioCalidadRepository.findAll();
   }

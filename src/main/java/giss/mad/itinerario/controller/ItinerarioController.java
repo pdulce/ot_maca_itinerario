@@ -10,6 +10,7 @@ import giss.mad.itinerario.model.auxitinerario.ItinerarioPantalla;
 import giss.mad.itinerario.model.auxpesos.PesoGraph;
 import giss.mad.itinerario.model.auxumbrales.StageBuble;
 import giss.mad.itinerario.model.auxumbrales.UmbralGraph;
+import giss.mad.itinerario.repository.*;
 import giss.mad.itinerario.service.ActividadItinerarioService;
 import giss.mad.itinerario.service.Constantes;
 import giss.mad.itinerario.service.EtapaPruebasService;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.annotation.PostConstruct;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -42,6 +44,27 @@ import giss.mad.itinerario.service.ActividadQAService;
     RequestMethod.DELETE})
 @RequestMapping("/itinerario")
 public final class ItinerarioController {
+
+  @Autowired
+  private ActividadItinerarioRepository actividadItinerarioRepository;
+
+  @Autowired
+  private ActividadQARepository actividadQARepository;
+
+  @Autowired
+  private EjeHeredableRepository ejeHeredableRepository;
+
+  @Autowired
+  private EtapaPruebasRepository etapaPruebasRepository;
+
+  @Autowired
+  private ItinerarioCalidadRepository itinerarioCalidadRepository;
+
+  @Autowired
+  private PesoRepository pesoRepository;
+
+  @Autowired
+  private UmbralActividadRepository umbralActividadRepository;
 
   @Autowired
   private ActividadQAService actividadQAService;
@@ -59,6 +82,32 @@ public final class ItinerarioController {
 
   @Autowired
   private ItinerarioCalidadService itinerarioCalidadService;
+
+  @PostConstruct
+  public void initRepositories(){
+    this.actividadItinerarioService.setActividadItinerarioRepository(this.actividadItinerarioRepository);
+    this.actividadItinerarioService.setEtapaPruebasRepository(this.etapaPruebasRepository);
+    this.actividadItinerarioService.setItinerarioCalidadRepo(this.itinerarioCalidadRepository);
+    this.actividadItinerarioService.setPesoRepository(this.pesoRepository);
+    this.actividadItinerarioService.setUmbralActividadRepository(this.umbralActividadRepository);
+    this.actividadItinerarioService.setEjeHeredableRepository(this.ejeHeredableRepository);
+    this.actividadItinerarioService.setActividadQARepositoryRepository(this.actividadQARepository);
+    this.actividadQAService.setActividadQARepository(this.actividadQARepository);
+
+    this.etapaPruebasService.setEtapaPruebasRepository(this.etapaPruebasRepository);
+
+    this.itinerarioCalidadService.setItinerarioCalidadRepository(this.itinerarioCalidadRepository);
+    this.itinerarioCalidadService.setActividadQARepository(this.actividadQARepository);
+    this.itinerarioCalidadService.setEtapaPruebasRepository(this.etapaPruebasRepository);
+
+    this.pesoService.setPesoRepository(this.pesoRepository);
+    this.pesoService.setEjeHeredableRepository(this.ejeHeredableRepository);
+
+    this.umbralActividadService.setUmbralActividadRepository(this.umbralActividadRepository);
+    this.umbralActividadService.setActividadRepository(this.actividadQARepository);
+    this.umbralActividadService.setEtapaPruebasRepository(this.etapaPruebasRepository);
+    this.umbralActividadService.setPesoRepository(this.pesoRepository);
+  }
 
   @GetMapping("/QAStages/getAll")
   public Collection<EtapaPruebas> getEtapasPruebas() {

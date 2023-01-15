@@ -45,6 +45,22 @@ public class UmbralActividadService {
   @Autowired
   private PesoRepository pesoRepository;
 
+  public final void setUmbralActividadRepository(final UmbralActividadRepository umbralActividadRepository) {
+    this.umbralActividadRepository = umbralActividadRepository;
+  }
+
+  public final void setEtapaPruebasRepository(final EtapaPruebasRepository etapaPruebasRepository) {
+    this.etapaPruebasRepository = etapaPruebasRepository;
+  }
+
+  public final void setActividadRepository(final ActividadQARepository actividadRepository) {
+    this.actividadRepository = actividadRepository;
+  }
+
+  public final void setPesoRepository(final PesoRepository pesoRepository) {
+    this.pesoRepository = pesoRepository;
+  }
+
   public final Collection<UmbralActividad> getAll() {
     return this.umbralActividadRepository.findAllByDeletedIsNull();
   }

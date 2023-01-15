@@ -20,6 +20,10 @@ public class ActividadQAService {
   @Autowired
   private ActividadQARepository actividadQARepository;
 
+  public final void setActividadQARepository(final ActividadQARepository actividadQARepository) {
+    this.actividadQARepository = actividadQARepository;
+  }
+
   public final Collection<ActividadQA> getAll() {
     return this.actividadQARepository.findAllByDeletedIsNull(
         Sort.by(Sort.Order.asc("testingStageId")));

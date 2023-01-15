@@ -41,7 +41,7 @@ public class ActividadItinerarioService {
   private ActividadItinerarioRepository actividadItinerarioRepository;
 
   @Autowired
-  private ActividadQARepository qAactividadRepository;
+  private ActividadQARepository actividadQARepository;
 
   @Autowired
   private EtapaPruebasRepository etapaPruebasRepository;
@@ -55,6 +55,35 @@ public class ActividadItinerarioService {
 
   @Autowired
   private ItinerarioCalidadRepository itinerarioCalidadRepo;
+
+  public final void setActividadItinerarioRepository(
+          final ActividadItinerarioRepository actividadItinerarioRepository) {
+    this.actividadItinerarioRepository = actividadItinerarioRepository;
+  }
+
+  public final void setActividadQARepositoryRepository(final ActividadQARepository actividadRepository) {
+    this.actividadQARepository = actividadRepository;
+  }
+
+  public final void setEtapaPruebasRepository(final EtapaPruebasRepository etapaPruebasRepository) {
+    this.etapaPruebasRepository = etapaPruebasRepository;
+  }
+
+  public final void setPesoRepository(final PesoRepository pesoRepository) {
+    this.pesoRepository = pesoRepository;
+  }
+
+  public final void setEjeHeredableRepository(final EjeHeredableRepository ejeHeredableRepository) {
+    this.ejeHeredableRepository = ejeHeredableRepository;
+  }
+
+  public final void setUmbralActividadRepository(final UmbralActividadRepository umbralActividadRepository) {
+    this.umbralActividadRepository = umbralActividadRepository;
+  }
+
+  public final void setItinerarioCalidadRepo(final ItinerarioCalidadRepository itinerarioCalidadRepo) {
+    this.itinerarioCalidadRepo = itinerarioCalidadRepo;
+  }
 
   public final Collection<ActividadItinerario> getByIdActividadesByItinerario(
       final Integer qualityItineraryId) {
@@ -107,7 +136,7 @@ public class ActividadItinerarioService {
     for (ActividadItinerario actQA : itinerarioDetallado.getActividadesDeItinerario()) {
       ActividadQAPantalla actividadResult = new ActividadQAPantalla();
       actividadResult.setId(Long.valueOf(actQA.getId()));
-      ActividadQA actividadObject = this.qAactividadRepository.findByIdAndDeletedIsNull(
+      ActividadQA actividadObject = this.actividadQARepository.findByIdAndDeletedIsNull(
           actQA.getActivityId());
       actividadResult.setActivity(actividadObject.getName());
       actividadResult.setObservations(actQA.getObservations());
@@ -216,7 +245,7 @@ public class ActividadItinerarioService {
     itinerarioCalidad.setCreationDate(fecCreacion);
     itinerarioCalidad = this.itinerarioCalidadRepo.save(itinerarioCalidad);
     List<ActividadItinerario> actividadesItinerario = new ArrayList<>();
-    List<ActividadQA> actividadesQA = this.qAactividadRepository.findAllByDeletedIsNull(
+    List<ActividadQA> actividadesQA = this.actividadQARepository.findAllByDeletedIsNull(
         Sort.by(Sort.Order.asc("testingStageId")));
     Integer sumWeightsAllActivities = Constantes.NUMBER_0;
     for (ActividadQA actividadQA : actividadesQA) {
