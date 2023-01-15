@@ -10,7 +10,13 @@ import giss.mad.itinerario.model.auxitinerario.ItinerarioPantalla;
 import giss.mad.itinerario.model.auxpesos.PesoGraph;
 import giss.mad.itinerario.model.auxumbrales.StageBuble;
 import giss.mad.itinerario.model.auxumbrales.UmbralGraph;
-import giss.mad.itinerario.repository.*;
+import giss.mad.itinerario.repository.ActividadItinerarioRepository;
+import giss.mad.itinerario.repository.ActividadQARepository;
+import giss.mad.itinerario.repository.EjeHeredableRepository;
+import giss.mad.itinerario.repository.EtapaPruebasRepository;
+import giss.mad.itinerario.repository.ItinerarioCalidadRepository;
+import giss.mad.itinerario.repository.PesoRepository;
+import giss.mad.itinerario.repository.UmbralActividadRepository;
 import giss.mad.itinerario.service.ActividadItinerarioService;
 import giss.mad.itinerario.service.Constantes;
 import giss.mad.itinerario.service.EtapaPruebasService;
@@ -84,7 +90,7 @@ public final class ItinerarioController {
   private ItinerarioCalidadService itinerarioCalidadService;
 
   @PostConstruct
-  public void initRepositories(){
+  public void initRepositories() {
     this.actividadItinerarioService.setActividadItinerarioRepository(this.actividadItinerarioRepository);
     this.actividadItinerarioService.setEtapaPruebasRepository(this.etapaPruebasRepository);
     this.actividadItinerarioService.setItinerarioCalidadRepo(this.itinerarioCalidadRepository);
