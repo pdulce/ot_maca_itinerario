@@ -8,9 +8,10 @@ logging:
   level:
     es.giss.arch: DEBUG
 
+server:
+    port: 8085
+
 spring:
-  server:
-    port: 8080
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@ldap://oraoid1.portal.ss:389/ds32,cn=OracleContext,dc=portal,dc=ss
