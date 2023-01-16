@@ -46,7 +46,7 @@ public class ApplicationTest {
         logger.info("TESTING SI ESTA LEVANTADO EL SERVIDOR...");
         String msg = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
                 + "/itinerario/QAactivities/getAll", String.class);
-        logger.info("RECIBIDO: " + msg);
+        logger.info("RECIBIDO JSON Response: " + msg);
 
         boolean appearsActividad3 = msg.contains("Diseño planes prueba Funcional");
         Assertions.assertEquals(appearsActividad3, true, "No figura actividad 3");
