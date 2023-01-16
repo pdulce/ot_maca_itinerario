@@ -5,11 +5,6 @@ import giss.mad.itinerario.model.ActividadQA;
 import giss.mad.itinerario.model.EtapaPruebas;
 import giss.mad.itinerario.model.Peso;
 import giss.mad.itinerario.model.UmbralActividad;
-import giss.mad.itinerario.repository.ActividadQARepository;
-import giss.mad.itinerario.repository.EjeHeredableRepository;
-import giss.mad.itinerario.repository.EtapaPruebasRepository;
-import giss.mad.itinerario.repository.PesoRepository;
-import giss.mad.itinerario.repository.UmbralActividadRepository;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -37,24 +32,14 @@ import java.util.Collection;
 @ActiveProfiles("test")
 public class ActividadQATest {
     private static Logger logger = (Logger) LoggerFactory.getLogger(ActividadQATest.class);
-    @Autowired
-    private ActividadQARepository actividadQARepository;
+
     @Autowired
     private ActividadQAService actividadQAService;
 
     @Autowired
-    private UmbralActividadRepository umbralActividadRepository;
-    @Autowired
-    private EtapaPruebasRepository etapaPruebasRepository;
-    @Autowired
-    private PesoRepository pesoRepository;
-    @Autowired
     private UmbralActividadService umbralActividadService;
     @Autowired
     private EtapaPruebasService etapaPruebasService;
-
-    @Autowired
-    private EjeHeredableRepository ejeHeredableRepository;
 
     @Autowired
     private PesoService pesoService;
