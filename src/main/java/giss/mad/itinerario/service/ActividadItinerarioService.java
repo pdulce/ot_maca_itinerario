@@ -85,11 +85,11 @@ public class ActividadItinerarioService {
     this.itinerarioCalidadRepo = itinerarioCalidadRepo;
   }
 
-  public final Collection<ActividadItinerario> getByIdActividadesByItinerario(
+  /*public final Collection<ActividadItinerario> getByIdActividadesByItinerario(
       final Integer qualityItineraryId) {
     return this.actividadItinerarioRepository.findAllByQualityItineraryIdAndDeletedIsNull(
         qualityItineraryId);
-  }
+  }*/
 
   public final ActividadItinerario getByIdActividadItinerario(final Integer idActividadItinerario) {
     return this.actividadItinerarioRepository.findByIdAndDeletedIsNull(idActividadItinerario);
