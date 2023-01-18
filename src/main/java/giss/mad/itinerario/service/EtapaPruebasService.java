@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Collection;
 
 @Service
@@ -26,24 +24,6 @@ public class EtapaPruebasService {
 
   public final EtapaPruebas get(final Integer idActividadQA) {
     return this.etapaPruebasRepository.findByIdAndDeletedIsNull(idActividadQA);
-  }
-
-  @Transactional
-  public final EtapaPruebas remove(final Integer idetapaPruebas) {
-    EtapaPruebas removedObject = null;
-    EtapaPruebas etapaBBDD = this.etapaPruebasRepository.findByIdAndDeletedIsNull(idetapaPruebas);
-    if (etapaBBDD != null) {
-      Timestamp timeStamp = new Timestamp(Calendar.getInstance().getTime().getTime());
-      etapaBBDD.setUpdateDate(timeStamp);
-      etapaBBDD.setDeleted(1);
-      removedObject = this.etapaPruebasRepository.saveAndFlush(etapaBBDD);
-    }
-    return removedObject;
-  }
-
-  @Transactional
-  public final EtapaPruebas save(final EtapaPruebas actividadQA) {
-    return this.etapaPruebasRepository.save(actividadQA);
   }
 
   @Transactional

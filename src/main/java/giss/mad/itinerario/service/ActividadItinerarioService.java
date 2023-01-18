@@ -85,35 +85,6 @@ public class ActividadItinerarioService {
     this.itinerarioCalidadRepo = itinerarioCalidadRepo;
   }
 
-  /*public final Collection<ActividadItinerario> getByIdActividadesByItinerario(
-      final Integer qualityItineraryId) {
-    return this.actividadItinerarioRepository.findAllByQualityItineraryIdAndDeletedIsNull(
-        qualityItineraryId);
-  }*/
-
-  public final ActividadItinerario getByIdActividadItinerario(final Integer idActividadItinerario) {
-    return this.actividadItinerarioRepository.findByIdAndDeletedIsNull(idActividadItinerario);
-  }
-
-  @Transactional
-  public final ActividadItinerario remove(final Integer idActividadItinerario) {
-    ActividadItinerario removedObject = null;
-    ActividadItinerario actividadBBDD = this.actividadItinerarioRepository.
-            findByIdAndDeletedIsNull(idActividadItinerario);
-    if (actividadBBDD != null) {
-      Timestamp timeStamp = new Timestamp(Calendar.getInstance().getTime().getTime());
-      actividadBBDD.setUpdateDate(timeStamp);
-      actividadBBDD.setDeleted(1);
-      removedObject = this.actividadItinerarioRepository.saveAndFlush(actividadBBDD);
-    }
-    return removedObject;
-  }
-
-  @Transactional
-  public final ActividadItinerario save(final ActividadItinerario actividadItinerario) {
-    return this.actividadItinerarioRepository.save(actividadItinerario);
-  }
-
   @Transactional
   public final ActividadItinerario update(final ActividadItinerario actividadItinerario) {
     ActividadItinerario updatedObject = null;

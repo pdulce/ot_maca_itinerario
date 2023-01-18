@@ -8,9 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 
 
@@ -33,7 +31,7 @@ public class ActividadQAService {
     return this.actividadQARepository.findByIdAndDeletedIsNull(idActividadQA);
   }
 
-  @Transactional
+  /*@Transactional
   public final ActividadQA remove(final Integer idActividadQA) {
     ActividadQA removedObject = null;
     ActividadQA actividadBBDD = this.actividadQARepository.findByIdAndDeletedIsNull(idActividadQA);
@@ -44,7 +42,8 @@ public class ActividadQAService {
       removedObject = this.actividadQARepository.saveAndFlush(actividadBBDD);
     }
     return removedObject;
-  }
+  }*/
+
   @Transactional
   public final ActividadQA removePhysical(final Integer idActividadQA) {
     ActividadQA actividad = this.get(idActividadQA);

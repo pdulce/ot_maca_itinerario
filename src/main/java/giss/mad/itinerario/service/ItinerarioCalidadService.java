@@ -11,9 +11,7 @@ import giss.mad.itinerario.repository.ActividadQARepository;
 import giss.mad.itinerario.repository.EtapaPruebasRepository;
 import giss.mad.itinerario.repository.ItinerarioCalidadRepository;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -159,24 +157,6 @@ public class ItinerarioCalidadService {
       }
     });
     return stages4Bubles;
-  }
-
-  @Transactional
-  public final ItinerarioCalidad remove(final Integer idItinerarioCalidad) {
-    ItinerarioCalidad removedObject = null;
-    ItinerarioCalidad itiBBDD = this.itinerarioCalidadRepository.findByIdAndDeletedIsNull(idItinerarioCalidad);
-    if (itiBBDD != null) {
-      Timestamp timeStamp = new Timestamp(Calendar.getInstance().getTime().getTime());
-      itiBBDD.setUpdateDate(timeStamp);
-      itiBBDD.setDeleted(1);
-      removedObject = this.itinerarioCalidadRepository.saveAndFlush(itiBBDD);
-    }
-    return removedObject;
-  }
-
-  @Transactional
-  public final ItinerarioCalidad save(final ItinerarioCalidad itinerarioCalidad) {
-    return this.itinerarioCalidadRepository.save(itinerarioCalidad);
   }
 
   @Transactional

@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 
 @Service
@@ -56,19 +54,6 @@ public class PesoService {
 
   public final Peso get(final Integer idPeso) {
     return this.pesoRepository.findByIdAndDeletedIsNull(idPeso);
-  }
-
-  @Transactional
-  public final Peso remove(final Integer idPeso) {
-    Peso removedObject = null;
-    Peso pesoBBDD = this.pesoRepository.findByIdAndDeletedIsNull(idPeso);
-    if (pesoBBDD != null) {
-      Timestamp timeStamp = new Timestamp(Calendar.getInstance().getTime().getTime());
-      pesoBBDD.setUpdateDate(timeStamp);
-      pesoBBDD.setDeleted(1);
-      removedObject = this.pesoRepository.saveAndFlush(pesoBBDD);
-    }
-    return removedObject;
   }
 
   @Transactional

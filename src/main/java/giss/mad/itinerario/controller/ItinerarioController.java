@@ -26,9 +26,7 @@ import giss.mad.itinerario.service.UmbralActividadService;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -156,15 +154,15 @@ public final class ItinerarioController {
     return c;
   }
 
-  @DeleteMapping("/QAactivities/delete/{id}")
+  /*@DeleteMapping("/QAactivities/delete/{id}")
   public void deleteActividadQA(final @PathVariable @NotEmpty @NotNull Integer id) {
     ActividadQA c = this.actividadQAService.remove(id);
     if (c == null) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
-  }
+  }*/
 
-  @PostMapping("/QAactivities/create")
+  /*@PostMapping("/QAactivities/create")
   public ResponseEntity<Object> createActividadQA(final @RequestBody @NotEmpty @NotNull ActividadQA atributoEje) {
     ResponseEntity<Object> retorno = ResponseEntity.ok().body("ActividadQA created sucesfully");
     if (atributoEje.getName() == null || "".contentEquals(atributoEje.getName())) {
@@ -176,7 +174,7 @@ public final class ItinerarioController {
       }
     }
     return retorno;
-  }
+  }*/
 
   /**** Mappings para operaciones de visualizacion grafica ***/
 

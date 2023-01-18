@@ -41,14 +41,91 @@ public class ApplicationTest {
         logger.info(">>>>>>>>>>>>>>>>>>>>>>> ApplicationTest COMPLETADO");
     }
 
-	@Test
-	void contextLoads() {
-        logger.info("TESTING SI ESTA LEVANTADO EL SERVIDOR...");
-        String msg = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
-                + "/itinerario/QAactivities/getAll", String.class);
-        logger.info("RECIBIDO: " + msg);
 
-        boolean appearsActividad3 = msg.contains("Diseño planes prueba Funcional");
-        Assertions.assertEquals(appearsActividad3, true, "No figura actividad 3");
+    @Test
+    void testActivitiesStages() {
+        String responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario//QAStages/getAll", String.class);
+        //logger.info("RECIBIDO: " + msg);
+
+        boolean appearsActividadStage = responseTxt.contains("Análisis de código estático");
+        Assertions.assertEquals(appearsActividadStage, true, "No figura etapa 2");
+
+        final Integer idStage = 4;
+        responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario/QAStages/getById/"+ idStage, String.class);
+
+        appearsActividadStage = responseTxt.contains("Integración");
+        Assertions.assertEquals(appearsActividadStage, true, "No figura etapa 4");
+
     }
+
+    @Test
+    void testActivities() {
+        String responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario/QAactivities/getAll", String.class);
+
+        boolean appearsActividad3 = responseTxt.contains("Diseño planes prueba Funcional");
+        Assertions.assertEquals(appearsActividad3, true, "No figura actividad 3");
+
+        responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario/QAactivities/getreduced/", String.class);
+
+        appearsActividad3 = responseTxt.contains("Diseño planes prueba Funcional");
+        Assertions.assertEquals(appearsActividad3, true, "No figura actividad 3");
+
+        final Integer idActividad = 28;
+        responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario/QAactivities/getById/" + idActividad, String.class);
+
+        appearsActividad3 = responseTxt.contains("OmniaUsability");
+        Assertions.assertEquals(appearsActividad3, true, "No figura actividad 28");
+
+    }
+
+    @Test
+    void testPesos() {
+        int idTypeOfCatalogo = 1;
+        String responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario/pesosByElementCat/" + idTypeOfCatalogo, String.class);
+
+        boolean appearsActividad1Eje1 = responseTxt.contains("{\"activityId\":1,\"axisAttributeId\":1");
+        Assertions.assertEquals(appearsActividad1Eje1, true, "No figura peso para activdad 21 y eje 1");
+
+        responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario/pesosByDeliveryOfElement/" + idTypeOfCatalogo, String.class);
+        appearsActividad1Eje1 = responseTxt.contains("{\"activityId\":1,\"axisAttributeId\":1");
+        Assertions.assertEquals(appearsActividad1Eje1, true, "No figura peso para activdad 21 y eje 1");
+
+    }
+
+    @Test
+    void testUmbrales() {
+        int idTypeOfCatalogo = 1;
+        String responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario/threshold/getByElementCat/" + idTypeOfCatalogo, String.class);
+
+        boolean appearsActividad1Eje1 = responseTxt.contains("\"actividad\":\"Diseño - Revisión Requisitos\"");
+        Assertions.assertEquals(appearsActividad1Eje1, true, "No figura peso para activdad 21 y eje 1");
+
+        responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario/threshold/getByDeliveryOfElement/" + idTypeOfCatalogo, String.class);
+        appearsActividad1Eje1 = responseTxt.contains("\"actividad\":\"Diseño - Revisión Requisitos\"");
+        Assertions.assertEquals(appearsActividad1Eje1, true, "No figura peso para activdad 21 y eje 1");
+
+        responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario/threshold/getByDeliveryOfElementBubles/" + idTypeOfCatalogo, String.class);
+        appearsActividad1Eje1 = responseTxt.contains("\"actividad\":\"Revisión Requisitos\"");
+        Assertions.assertEquals(appearsActividad1Eje1, true, "No figura peso para activdad 21 y eje 1");
+
+        responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario/threshold/getByElementBubles/" + idTypeOfCatalogo, String.class);
+        appearsActividad1Eje1 = responseTxt.contains("\"actividad\":\"Revisión Requisitos\"");
+        Assertions.assertEquals(appearsActividad1Eje1, true, "No figura peso para activdad 21 y eje 1");
+
+    }
+
+
+
+
 }
