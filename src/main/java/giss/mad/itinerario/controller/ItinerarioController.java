@@ -154,28 +154,6 @@ public final class ItinerarioController {
     return c;
   }
 
-  /*@DeleteMapping("/QAactivities/delete/{id}")
-  public void deleteActividadQA(final @PathVariable @NotEmpty @NotNull Integer id) {
-    ActividadQA c = this.actividadQAService.remove(id);
-    if (c == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    }
-  }*/
-
-  /*@PostMapping("/QAactivities/create")
-  public ResponseEntity<Object> createActividadQA(final @RequestBody @NotEmpty @NotNull ActividadQA atributoEje) {
-    ResponseEntity<Object> retorno = ResponseEntity.ok().body("ActividadQA created sucesfully");
-    if (atributoEje.getName() == null || "".contentEquals(atributoEje.getName())) {
-      retorno = ResponseEntity.unprocessableEntity().body("Forbidden invocation params in received object");
-    } else {
-      ActividadQA actividadQASaved = this.actividadQAService.save(atributoEje);
-      if (this.actividadQAService.get(actividadQASaved.getId()) == null) {
-        retorno = ResponseEntity.unprocessableEntity().body("Failed to create ActividadQA specified");
-      }
-    }
-    return retorno;
-  }*/
-
   /**** Mappings para operaciones de visualizacion grafica ***/
 
   @GetMapping("/pesosByElementCat/{idTypeOfCatalogo}")

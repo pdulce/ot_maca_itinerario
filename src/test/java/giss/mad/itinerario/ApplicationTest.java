@@ -90,12 +90,12 @@ public class ApplicationTest {
                 + "/itinerario/pesosByElementCat/" + idTypeOfCatalogo, String.class);
 
         boolean appearsActividad1Eje1 = responseTxt.contains("{\"activityId\":1,\"axisAttributeId\":1");
-        Assertions.assertEquals(appearsActividad1Eje1, true, "No figura peso para activdad 21 y eje 1");
+        Assertions.assertEquals(appearsActividad1Eje1, true, "No figura peso para activdad 1 y eje 1");
 
         responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
                 + "/itinerario/pesosByDeliveryOfElement/" + idTypeOfCatalogo, String.class);
         appearsActividad1Eje1 = responseTxt.contains("{\"activityId\":1,\"axisAttributeId\":1");
-        Assertions.assertEquals(appearsActividad1Eje1, true, "No figura peso para activdad 21 y eje 1");
+        Assertions.assertEquals(appearsActividad1Eje1, true, "No figura peso para activdad 1 y eje 1");
 
     }
 
@@ -106,26 +106,53 @@ public class ApplicationTest {
                 + "/itinerario/threshold/getByElementCat/" + idTypeOfCatalogo, String.class);
 
         boolean appearsActividad1Eje1 = responseTxt.contains("\"actividad\":\"Diseño - Revisión Requisitos\"");
-        Assertions.assertEquals(appearsActividad1Eje1, true, "No figura peso para activdad 21 y eje 1");
+        Assertions.assertEquals(appearsActividad1Eje1, true, "No existe pesos de ac.Revisión Requisitos");
 
         responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
                 + "/itinerario/threshold/getByDeliveryOfElement/" + idTypeOfCatalogo, String.class);
         appearsActividad1Eje1 = responseTxt.contains("\"actividad\":\"Diseño - Revisión Requisitos\"");
-        Assertions.assertEquals(appearsActividad1Eje1, true, "No figura peso para activdad 21 y eje 1");
+        Assertions.assertEquals(appearsActividad1Eje1, true, "No existe pesos de ac.Revisión Requisitos");
 
         responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
                 + "/itinerario/threshold/getByDeliveryOfElementBubles/" + idTypeOfCatalogo, String.class);
         appearsActividad1Eje1 = responseTxt.contains("\"actividad\":\"Revisión Requisitos\"");
-        Assertions.assertEquals(appearsActividad1Eje1, true, "No figura peso para activdad 21 y eje 1");
+        Assertions.assertEquals(appearsActividad1Eje1, true, "No existe pesos de ac.Revisión Requisitos");
 
         responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
                 + "/itinerario/threshold/getByElementBubles/" + idTypeOfCatalogo, String.class);
         appearsActividad1Eje1 = responseTxt.contains("\"actividad\":\"Revisión Requisitos\"");
-        Assertions.assertEquals(appearsActividad1Eje1, true, "No figura peso para activdad 21 y eje 1");
+        Assertions.assertEquals(appearsActividad1Eje1, true, "No existe pesos de ac.Revisión Requisitos");
+    }
+
+    @Test
+    void testMaxPesos() {
+        int idActivity = 10;
+        String responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario/maxPesosOfActElemPromo/" + idActivity, String.class);
+        boolean appearsActividad1Eje1 = responseTxt.contains("90");
+        Assertions.assertEquals(appearsActividad1Eje1, true, "Suma de pesos de actividad <> 90");
+
+        responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario/maxPesosOfActEntregaElemPromo/" + idActivity, String.class);
+        appearsActividad1Eje1 = responseTxt.contains("30");
+        Assertions.assertEquals(appearsActividad1Eje1, true, "Suma de pesos de actividad <> 30");
 
     }
 
+    @Test
+    void testItinerarios() {
+
+        String responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario/getAll", String.class);
+        boolean appearsActividad1Eje1 = responseTxt.contains("[]") || responseTxt.length() > 10;
+        Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerarios no responde");
+
+        int idItinerario = 10;
+        responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario/getById/" + idItinerario, String.class);
+        appearsActividad1Eje1 = responseTxt.contains("[]") || responseTxt.length() > 10;
+        Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerarios no responde");
+    }
 
 
-
-}
+    }
