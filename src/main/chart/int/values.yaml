@@ -32,15 +32,15 @@ secretenv:
   - key: "SECRET_NAUA_PASSWORD"
     value: "e25vb3B9cGFzc3dvcmQ="
   - key: "SECRET_MACA_DATASOURCE_URI"
-    value: jdbc:oracle:thin:@ldap://oraoid1.portal.ss:389/ds32,cn=OracleContext,dc=portal,dc=ss
+    value: "amRiYzpvcmFjbGU6dGhpbjpAbGRhcDovL29yYW9pZDEucG9ydGFsLnNzOjM4OS9kczMyLGNuPU9yYWNsZUNvbnRleHQsZGM9cG9ydGFsLGRjPXNz"
   - key: "SECRET_MACA_DATASOURCE_USERNAME"
-    value: MACA_ITINERARIO
+    value: "TUFDQV9JVElORVJBUklP"
   - key: "SECRET_MACA_DATASOURCE_PASSWORD"
-    value: maca_itinerario
+    value: "bWFjYV9pdGluZXJhcmlv"
   - key: "SECRET_MACA_WEBCLIENT_USERNAME"
-    value: "webclient-user"
+    value: "d2ViY2xpZW50LXVzZXI="
   - key: "SECRET_MACA_WEBCLIENT_PASSWORD"
-    value: "webclient-pwd"
+    value: "d2ViY2xpZW50LXB3ZA=="
 
 configenv:
   - key: "SPRING_CONFIG_LOCATION"
