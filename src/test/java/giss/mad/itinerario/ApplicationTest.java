@@ -1,5 +1,7 @@
 package giss.mad.itinerario;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -10,10 +12,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.testcontainers.shaded.com.fasterxml.jackson.databind.JsonNode;
+
+import java.io.IOException;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {Application.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -26,6 +34,7 @@ public class ApplicationTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
+    private TestRestTemplate restTemplatePost;
 
     @BeforeAll
     public static void setContextVariables() {
@@ -140,7 +149,28 @@ public class ApplicationTest {
     }
 
     @Test
-    void testItinerarios() {
+    void testItinerarios() throws IOException, JSONException {
+
+        // crear itinerario para :idElement
+        //TODO
+        HttpHeaders headersPost = new HttpHeaders();
+        headersPost.setContentType(MediaType.APPLICATION_JSON);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("..", "");
+       
+
+        int idElement = 1;
+
+        String urlCalculateRest = "http://localhost:" + System.getProperty(SERVER_PORT) + "/itinerario/calculate";
+
+        //Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerario no creado/calculado");
+
+        /*HttpEntity<String> request = new HttpEntity<>(jsonObject.toString(), headersPost);
+        String itinerarioResultAsJsonStr = restTemplate.postForObject(urlCalculateRest, request, String.class);
+        JsonNode root = objectMapper.readTree(personResultAsJsonStr);
+        Assertions.assertNotNull(personResultAsJsonStr);
+        Assertions.assertNotNull(root);
+        Assertions.assertNotNull(root.path("name").asText());*/
 
         String responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
                 + "/itinerario/getAll", String.class);
@@ -151,7 +181,46 @@ public class ApplicationTest {
         responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
                 + "/itinerario/getById/" + idItinerario, String.class);
         appearsActividad1Eje1 = responseTxt.contains("[]") || responseTxt.length() > 10;
-        Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerarios no responde");
+        Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerario no encontrado");
+
+        //consultar todos los itinerarios creados de ese :idElement
+        responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario/getAllByIdElement/" + idElement, String.class);
+        appearsActividad1Eje1 = responseTxt.contains("[]") || responseTxt.length() > 10;
+        Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerarios no encontrados");
+
+        // consultar last itineario creado de ese :idElement
+        responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario/getMoreRecentByIdElement/" + idElement, String.class);
+        appearsActividad1Eje1 = responseTxt.contains("[]") || responseTxt.length() > 10;
+        Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerario no encontrado");
+
+        // consultar sus actividades
+        responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario/getOnlyIncludedById/" + idItinerario, String.class);
+        appearsActividad1Eje1 = responseTxt.contains("[]") || responseTxt.length() > 10;
+        Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerario no encontrado");
+
+        responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario/getActivitiesById/" + idItinerario, String.class);
+        appearsActividad1Eje1 = responseTxt.contains("[]") || responseTxt.length() > 10;
+        Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerario no encontrado");
+
+        // consultar las actividades incluidas en el itinerario
+        responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario/getActivitiesIncludedById/" + idItinerario, String.class);
+        appearsActividad1Eje1 = responseTxt.contains("[]") || responseTxt.length() > 10;
+        Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerario no encontrado");
+
+
+        // consultar las actividades excluidas en itinerario
+        responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
+                + "/itinerario/getActivitiesExcludedById/" + idItinerario, String.class);
+        appearsActividad1Eje1 = responseTxt.contains("[]") || responseTxt.length() > 10;
+        Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerario no encontrado");
+
+
+
     }
 
 
