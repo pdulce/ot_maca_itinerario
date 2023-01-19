@@ -15,6 +15,15 @@ spring:
 # ===================================================================
 giss:
 
+  audit:
+    enabled: false
 
+  security:
+    web:
+      fake:
+        enabled: true
+        roles: ROLE_GISS_ACTUATOR
+        authorities: READ_FAKE, WRITE_FAKE
+        type-of-user: INTRANET
 
 
