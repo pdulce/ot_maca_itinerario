@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import giss.mad.itinerario.mapper.Samples;
 import giss.mad.itinerario.model.ItinerarioCalidad;
+import giss.mad.itinerario.model.auxactiv.ActividadReduced;
 import giss.mad.itinerario.model.auxactiv.ReplicaElementOEntrega;
 import giss.mad.itinerario.model.auxitinerario.ItinerarioPantalla;
 import giss.mad.itinerario.model.auxpesos.PesoGraph;
@@ -79,7 +80,7 @@ public class ApplicationTest {
     }
 
     @Test
-    void testActivities() {
+    void testActivities() throws JsonProcessingException {
         String baseUriItinerarioMS = "http://localhost:" + System.getProperty(SERVER_PORT)
                 + "/itinerario/";
         String responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "QAactivities/getAll", String.class);
@@ -88,6 +89,15 @@ public class ApplicationTest {
         Assertions.assertEquals(appearsActividad3, true, "No figura actividad 3");
 
         responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "QAactivities/getreduced/", String.class);
+
+        Collection<LinkedHashMap> actsBubleLinkedMap = objectMapper.readValue(responseTxt, Collection.class);
+        for (LinkedHashMap actividadBubleLinkedMap: actsBubleLinkedMap){
+            ActividadReduced actReduced = new ActividadReduced();
+            actReduced.setActividad(actividadBubleLinkedMap.get("actividad").toString());
+            actReduced.setNum(Integer.valueOf(actividadBubleLinkedMap.get("num").toString()));
+            Assertions.assertNotNull(actReduced.getActividad());
+            Assertions.assertNotNull(actReduced.getNum());
+        }
 
         appearsActividad3 = responseTxt.contains("Diseño planes prueba Funcional");
         Assertions.assertEquals(appearsActividad3, true, "No figura actividad 3");
@@ -175,32 +185,31 @@ public class ApplicationTest {
         responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "threshold/getByDeliveryOfElementBubles/"
                 + idTypeOfCatalogo, String.class);
 
-        /*Collection<LinkedHashMap> stagesBubleLinkedMap = objectMapper.readValue(responseTxt, Collection.class);
+        Collection<LinkedHashMap> stagesBubleLinkedMap = objectMapper.readValue(responseTxt, Collection.class);
         for (LinkedHashMap stageBubleLinkedMap: stagesBubleLinkedMap){
-            StageBuble stageBuble = new StageBuble();
-            String data = stageBubleLinkedMap.get("data").toString().replaceAll(">=", " mayor igual a ");
-            data = data.replaceAll("Rango \\[", " Rango  ");
-            data = data.replaceAll("\\]\"", " ");
-            data = data.replaceAll(", ", "\", \"");
-            data = data.replaceAll("=", "\"=\"");
-            data = data.replaceAll("\\{", "\\{\"");
 
-            Collection<LinkedHashMap> dataList = objectMapper.readValue(data, Collection.class);
-            List<UmbralBuble> umbralesItem = new ArrayList<>();
-            for (LinkedHashMap dataElement: dataList) {
-                UmbralBuble umbralBuble = new UmbralBuble();
-                umbralBuble.setActividad(dataElement.get("actividad").toString());
-                umbralBuble.setName(dataElement.get("name").toString());
-                umbralBuble.setRecomen(dataElement.get("recomen").toString());;
-                umbralBuble.setValue(Integer.valueOf(dataElement.get("value").toString()));
-                umbralesItem.add(umbralBuble);
-            }
-            stageBuble.setData(umbralesItem);
+            appearsActividad1Eje1 = responseTxt.contains("\"actividad\":\"Automatización de Pruebas Funcionales\"");
+            Assertions.assertEquals(appearsActividad1Eje1, true);
+            appearsActividad1Eje1 = responseTxt.contains("\"name\":\"Rango >=0\"");
+            Assertions.assertEquals(appearsActividad1Eje1, true);
+            appearsActividad1Eje1 = responseTxt.contains("\"recomen\":\"Realizar siempre\"");
+            Assertions.assertEquals(appearsActividad1Eje1, true);
+
+            UmbralBuble umbralBuble = new UmbralBuble();
+            umbralBuble.setActividad("Revisión Requisitos");
+            umbralBuble.setName("Rango  mayor igual a 0");
+            umbralBuble.setRecomen("Se debe acometer");
+            umbralBuble.setValue(22);
+            Assertions.assertNotNull(umbralBuble.getRecomen());
+            Assertions.assertNotNull(umbralBuble.getValue());
+            Assertions.assertNotNull(umbralBuble.getActividad());
+            Assertions.assertNotNull(umbralBuble.getName());
+            StageBuble stageBuble = new StageBuble();
+            stageBuble.setData(new ArrayList<>());
             stageBuble.setName(stageBubleLinkedMap.get("name").toString());
             Assertions.assertNotNull(stageBuble.getData());
             Assertions.assertNotNull(stageBuble.getName());
-        }*/
-
+        }
         appearsActividad1Eje1 = responseTxt.contains("\"actividad\":\"Revisión Requisitos\"");
         Assertions.assertEquals(appearsActividad1Eje1, true, "No existe pesos de ac.Revisión Requisitos");
 
