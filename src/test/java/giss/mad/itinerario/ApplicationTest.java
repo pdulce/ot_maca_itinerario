@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import giss.mad.itinerario.mapper.Samples;
 import giss.mad.itinerario.model.ItinerarioCalidad;
 import giss.mad.itinerario.model.auxactiv.ReplicaElementOEntrega;
+import giss.mad.itinerario.model.auxitinerario.ItinerarioPantalla;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.AfterAll;
@@ -158,73 +159,75 @@ public class ApplicationTest {
     @Test
     void testItinerarios() throws IOException, JSONException {
 
-        // crear itinerario para :idElement
-        //TODO
         HttpHeaders headersPost = new HttpHeaders();
         headersPost.setContentType(MediaType.APPLICATION_JSON);
-        ReplicaElementOEntrega replica = objectMapper.readValue(Samples.JSON_FOR_TESTCALC_ITINERARY, ReplicaElementOEntrega.class);
-
-        String urlCalculateRest = "http://localhost:" + System.getProperty(SERVER_PORT) + "/itinerario/calculate";
+        ReplicaElementOEntrega replica = objectMapper.readValue(Samples.JSON_FOR_TESTCALC_ITINERARY,
+                ReplicaElementOEntrega.class);
+        String baseUrlCalculateRest = "http://localhost:" + System.getProperty(SERVER_PORT) + "/itinerario/";
         HttpEntity<String> request = new HttpEntity<>(Samples.JSON_FOR_TESTCALC_ITINERARY, headersPost);
-        String itiResultAsJsonStr = restTemplate.postForObject(urlCalculateRest, request, String.class);
+        String itiResultAsJsonStr = restTemplate.postForObject(baseUrlCalculateRest +  "calculate",
+                request, String.class);
         Assertions.assertNotNull(itiResultAsJsonStr);
-
         ItinerarioCalidad itinerarioCalidad = objectMapper.readValue(itiResultAsJsonStr, ItinerarioCalidad.class);
         Assertions.assertEquals(itinerarioCalidad.getActividadesDeItinerario().isEmpty(), false);
         Assertions.assertEquals(itinerarioCalidad.getDelivery() , replica.getDelivery());
         Assertions.assertEquals(itinerarioCalidad.getCatalogueId() , replica.getId());
 
-        logger.info(">>>>>>>>>>>>>>>>>>>>> Itinerario creado/calculado! >>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        request = new HttpEntity<>(Samples.JSON_FOR_TESTCALC_ITINERARY, headersPost);
+        itiResultAsJsonStr = restTemplate.postForObject( baseUrlCalculateRest + "calculateItinerary",
+                request, String.class);
+        Assertions.assertNotNull(itiResultAsJsonStr);
+        ItinerarioPantalla itinerarioPantalla = objectMapper.readValue(itiResultAsJsonStr, ItinerarioPantalla.class);
+        Assertions.assertEquals(itinerarioPantalla.getElementId(), replica.getId());
+        Assertions.assertEquals(itinerarioPantalla.getDelivery() , replica.getDelivery());
+        Assertions.assertEquals(itinerarioPantalla.getStages().isEmpty(), false);
+
+        //logger.info(">>>>>>>>>>>>>>>>>>>>> Itinerarios creados/calculados! >>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
         String responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
                 + "/itinerario/getAll", String.class);
-        boolean appearsActividad1Eje1 = responseTxt.contains("[]") || responseTxt.length() > 10;
-        Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerarios no responde");
+        boolean appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
+        Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerarios no responde");
 
-        int idItinerario = 10;
-        int idElement = 1;
         responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
-                + "/itinerario/getById/" + idItinerario, String.class);
-        appearsActividad1Eje1 = responseTxt.contains("[]") || responseTxt.length() > 10;
-        Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerario no encontrado");
+                + "/itinerario/getById/" + itinerarioCalidad.getId(), String.class);
+        appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
+        Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
 
         //consultar todos los itinerarios creados de ese :idElement
         responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
-                + "/itinerario/getAllByIdElement/" + idElement, String.class);
-        appearsActividad1Eje1 = responseTxt.contains("[]") || responseTxt.length() > 10;
-        Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerarios no encontrados");
+                + "/itinerario/getAllByIdElement/" + itinerarioPantalla.getElementId(), String.class);
+        appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
+        Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerarios no encontrados");
 
         // consultar last itineario creado de ese :idElement
         responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
-                + "/itinerario/getMoreRecentByIdElement/" + idElement, String.class);
-        appearsActividad1Eje1 = responseTxt.contains("[]") || responseTxt.length() > 10;
-        Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerario no encontrado");
+                + "/itinerario/getMoreRecentByIdElement/" + itinerarioPantalla.getElementId(), String.class);
+        appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
+        Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
 
         // consultar sus actividades
         responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
-                + "/itinerario/getOnlyIncludedById/" + idItinerario, String.class);
-        appearsActividad1Eje1 = responseTxt.contains("[]") || responseTxt.length() > 10;
-        Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerario no encontrado");
+                + "/itinerario/getOnlyIncludedById/" + itinerarioCalidad.getId(), String.class);
+        appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
+        Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
 
         responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
-                + "/itinerario/getActivitiesById/" + idItinerario, String.class);
-        appearsActividad1Eje1 = responseTxt.contains("[]") || responseTxt.length() > 10;
-        Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerario no encontrado");
+                + "/itinerario/getActivitiesById/" + itinerarioCalidad.getId(), String.class);
+        appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
+        Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
 
         // consultar las actividades incluidas en el itinerario
         responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
-                + "/itinerario/getActivitiesIncludedById/" + idItinerario, String.class);
-        appearsActividad1Eje1 = responseTxt.contains("[]") || responseTxt.length() > 10;
-        Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerario no encontrado");
-
+                + "/itinerario/getActivitiesIncludedById/" + itinerarioCalidad.getId(), String.class);
+        appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
+        Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
 
         // consultar las actividades excluidas en itinerario
         responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
-                + "/itinerario/getActivitiesExcludedById/" + idItinerario, String.class);
-        appearsActividad1Eje1 = responseTxt.contains("[]") || responseTxt.length() > 10;
-        Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerario no encontrado");
-
-
+                + "/itinerario/getActivitiesExcludedById/" + itinerarioCalidad.getId(), String.class);
+        appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
+        Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
 
     }
 
