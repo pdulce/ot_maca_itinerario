@@ -68,9 +68,6 @@ public class ApplicationTest {
         String baseUriItinerarioMS = "http://localhost:" + System.getProperty(SERVER_PORT)
                 + "/itinerario/";
         String responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "QAStages/getAll", String.class);
-        //logger.info("RECIBIDO: " + msg);
-
-        //Collection<EtapaPruebas>
         Collection<LinkedHashMap> etapasLinkedMap = objectMapper.readValue(responseTxt, Collection.class);
         for (LinkedHashMap etapaBubleLinkedMap: etapasLinkedMap){
             EtapaPruebas etapa = new EtapaPruebas();
