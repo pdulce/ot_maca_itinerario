@@ -3,18 +3,18 @@ package giss.mad.itinerario;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import giss.mad.itinerario.mapper.Samples;
+import giss.mad.itinerario.model.EjeHeredable;
 import giss.mad.itinerario.model.EtapaPruebas;
 import giss.mad.itinerario.model.ItinerarioCalidad;
-import giss.mad.itinerario.model.UmbralActividad;
-import giss.mad.itinerario.model.auxactiv.ActividadReduced;
-import giss.mad.itinerario.model.auxactiv.ReplicaElementOEntrega;
-import giss.mad.itinerario.model.auxactiv.ValorEje;
-import giss.mad.itinerario.model.auxitinerario.ActividadQAPantalla;
-import giss.mad.itinerario.model.auxitinerario.ItinerarioPantalla;
-import giss.mad.itinerario.model.auxpesos.PesoGraph;
-import giss.mad.itinerario.model.auxumbrales.StageBuble;
-import giss.mad.itinerario.model.auxumbrales.UmbralBuble;
-import giss.mad.itinerario.model.auxumbrales.UmbralGraph;
+import giss.mad.itinerario.model.volatilentities.ActividadReduced;
+import giss.mad.itinerario.model.volatilentities.ReplicaElementOEntrega;
+import giss.mad.itinerario.model.volatilentities.ValorEje;
+import giss.mad.itinerario.model.volatilentities.ActividadQAPantalla;
+import giss.mad.itinerario.model.volatilentities.ItinerarioPantalla;
+import giss.mad.itinerario.model.PesoGraph;
+import giss.mad.itinerario.model.volatilentities.StageBuble;
+import giss.mad.itinerario.model.volatilentities.UmbralBuble;
+import giss.mad.itinerario.model.volatilentities.UmbralGraph;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -33,6 +33,7 @@ import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 @ExtendWith(SpringExtension.class)
@@ -194,6 +195,13 @@ public class ApplicationTest {
             Assertions.assertNotNull(umbralGraph.getZ());
             max++;
         }
+        Timestamp timeStampNow = new Timestamp(Calendar.getInstance().getTime().getTime());
+        EjeHeredable ejeHeredable = new EjeHeredable();
+        ejeHeredable.setCreationDate(timeStampNow);
+        ejeHeredable.setForDelivery(1);
+        ejeHeredable.setElementTypeId(1);
+        ejeHeredable.setAxisId(1);
+        ejeHeredable.setWritable(0);
 
         responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "threshold/getByDeliveryOfElement/"
                 + idTypeOfCatalogo, String.class);

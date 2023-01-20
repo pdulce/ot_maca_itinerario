@@ -1,4 +1,4 @@
-package giss.mad.itinerario.model.auxactiv;
+package giss.mad.itinerario.model.volatilentities;
 
 import javax.persistence.Id;
 import java.util.List;

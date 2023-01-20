@@ -1,4 +1,4 @@
-package giss.mad.itinerario.model.auxitinerario;
+package giss.mad.itinerario.model.volatilentities;
 
 import javax.persistence.Id;
 import java.sql.Timestamp;

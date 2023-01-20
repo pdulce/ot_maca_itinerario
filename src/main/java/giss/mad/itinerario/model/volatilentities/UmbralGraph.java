@@ -1,4 +1,4 @@
-package giss.mad.itinerario.model.auxumbrales;
+package giss.mad.itinerario.model.volatilentities;
 
 import giss.mad.itinerario.service.Constantes;
 

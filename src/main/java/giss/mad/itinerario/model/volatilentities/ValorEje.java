@@ -1,16 +1,17 @@
-package giss.mad.itinerario.model.auxpesos;
+package giss.mad.itinerario.model.volatilentities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Id;
 
-public final class PesoGraph {
+public final class ValorEje {
 
   @Id
   @JsonIgnore
   private Long id;
-  private Integer activityId;
+
   private Integer axisAttributeId;
-  private Integer weightValue;
+  private Integer domainValueId;
 
   public Long getId() {
     return id;
@@ -18,14 +19,6 @@ public final class PesoGraph {
 
   public void setId(final Long id) {
     this.id = id;
-  }
-
-  public Integer getActivityId() {
-    return activityId;
-  }
-
-  public void setActivityId(final Integer activityId) {
-    this.activityId = activityId;
   }
 
   public Integer getAxisAttributeId() {
@@ -36,12 +29,11 @@ public final class PesoGraph {
     this.axisAttributeId = axisAttributeId;
   }
 
-  public Integer getWeightValue() {
-    return weightValue;
+  public Integer getDomainValueId() {
+    return domainValueId;
   }
 
-  public void setWeightValue(final Integer weightValue) {
-    this.weightValue = weightValue;
+  public void setDomainValueId(final Integer domainValueId) {
+    this.domainValueId = domainValueId;
   }
-
 }

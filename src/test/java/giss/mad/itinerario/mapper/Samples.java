@@ -1,11 +1,5 @@
 package giss.mad.itinerario.mapper;
 
-import giss.mad.itinerario.model.auxactiv.ReplicaElementOEntrega;
-import giss.mad.itinerario.model.auxactiv.ValorEje;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public final class Samples {
     public static final String JSON_FOR_TESTCALC_ITINERARY = "{\n" +
             "    \"id\": 3,   \n" +

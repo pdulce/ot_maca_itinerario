@@ -1,7 +1,7 @@
 package giss.mad.itinerario.service;
 
 import giss.mad.itinerario.model.Peso;
-import giss.mad.itinerario.model.auxpesos.PesoGraph;
+import giss.mad.itinerario.model.PesoGraph;
 import giss.mad.itinerario.repository.EjeHeredableRepository;
 import giss.mad.itinerario.repository.PesoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
