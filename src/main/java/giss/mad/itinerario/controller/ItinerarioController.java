@@ -49,6 +49,7 @@ import giss.mad.itinerario.service.ActividadQAService;
 @RequestMapping("/itinerario")
 public final class ItinerarioController {
 
+
   @Autowired
   private ActividadItinerarioRepository actividadItinerarioRepository;
 

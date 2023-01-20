@@ -1,5 +1,9 @@
 package giss.mad.itinerario;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import giss.mad.itinerario.mapper.Samples;
+import giss.mad.itinerario.model.ItinerarioCalidad;
+import giss.mad.itinerario.model.auxactiv.ReplicaElementOEntrega;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.AfterAll;
@@ -19,7 +23,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
@@ -32,9 +35,13 @@ public class ApplicationTest {
     private static final String SPRING_BANNER = "spring.main.banner_mode";
     private static final String SERVER_PORT = "server.port";
 
+
+
+    @Autowired
+    public ObjectMapper objectMapper;
+
     @Autowired
     private TestRestTemplate restTemplate;
-    private TestRestTemplate restTemplatePost;
 
     @BeforeAll
     public static void setContextVariables() {
@@ -155,22 +162,19 @@ public class ApplicationTest {
         //TODO
         HttpHeaders headersPost = new HttpHeaders();
         headersPost.setContentType(MediaType.APPLICATION_JSON);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("..", "");
-       
-
-        int idElement = 1;
+        ReplicaElementOEntrega replica = objectMapper.readValue(Samples.JSON_FOR_TESTCALC_ITINERARY, ReplicaElementOEntrega.class);
 
         String urlCalculateRest = "http://localhost:" + System.getProperty(SERVER_PORT) + "/itinerario/calculate";
+        HttpEntity<String> request = new HttpEntity<>(Samples.JSON_FOR_TESTCALC_ITINERARY, headersPost);
+        String itiResultAsJsonStr = restTemplate.postForObject(urlCalculateRest, request, String.class);
+        Assertions.assertNotNull(itiResultAsJsonStr);
 
-        //Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerario no creado/calculado");
+        ItinerarioCalidad itinerarioCalidad = objectMapper.readValue(itiResultAsJsonStr, ItinerarioCalidad.class);
+        Assertions.assertEquals(itinerarioCalidad.getActividadesDeItinerario().isEmpty(), false);
+        Assertions.assertEquals(itinerarioCalidad.getDelivery() , replica.getDelivery());
+        Assertions.assertEquals(itinerarioCalidad.getCatalogueId() , replica.getId());
 
-        /*HttpEntity<String> request = new HttpEntity<>(jsonObject.toString(), headersPost);
-        String itinerarioResultAsJsonStr = restTemplate.postForObject(urlCalculateRest, request, String.class);
-        JsonNode root = objectMapper.readTree(personResultAsJsonStr);
-        Assertions.assertNotNull(personResultAsJsonStr);
-        Assertions.assertNotNull(root);
-        Assertions.assertNotNull(root.path("name").asText());*/
+        logger.info(">>>>>>>>>>>>>>>>>>>>> Itinerario creado/calculado! >>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
         String responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
                 + "/itinerario/getAll", String.class);
@@ -178,6 +182,7 @@ public class ApplicationTest {
         Assertions.assertEquals(appearsActividad1Eje1, true, "Itinerarios no responde");
 
         int idItinerario = 10;
+        int idElement = 1;
         responseTxt = restTemplate.getForObject("http://localhost:" + System.getProperty(SERVER_PORT)
                 + "/itinerario/getById/" + idItinerario, String.class);
         appearsActividad1Eje1 = responseTxt.contains("[]") || responseTxt.length() > 10;
