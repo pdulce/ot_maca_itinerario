@@ -1,7 +1,8 @@
-package giss.mad.itinerario;
+package giss.mad.itinerario.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import giss.mad.itinerario.Application;
 import giss.mad.itinerario.mapper.Samples;
 import giss.mad.itinerario.model.EjeHeredable;
 import giss.mad.itinerario.model.EtapaPruebas;
