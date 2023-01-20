@@ -6,6 +6,7 @@ import giss.mad.itinerario.mapper.Samples;
 import giss.mad.itinerario.model.ItinerarioCalidad;
 import giss.mad.itinerario.model.auxactiv.ActividadReduced;
 import giss.mad.itinerario.model.auxactiv.ReplicaElementOEntrega;
+import giss.mad.itinerario.model.auxactiv.ValorEje;
 import giss.mad.itinerario.model.auxitinerario.ItinerarioPantalla;
 import giss.mad.itinerario.model.auxpesos.PesoGraph;
 import giss.mad.itinerario.model.auxumbrales.StageBuble;
@@ -108,7 +109,13 @@ public class ApplicationTest {
 
         appearsActividad3 = responseTxt.contains("OmniaUsability");
         Assertions.assertEquals(appearsActividad3, true, "No figura actividad 28");
-
+        ValorEje valorEje = new ValorEje();
+        valorEje.setId(Long.valueOf("22"));
+        valorEje.setAxisAttributeId(2);
+        valorEje.setDomainValueId(1);
+        Assertions.assertNotNull(valorEje.getId());
+        Assertions.assertNotNull(valorEje.getAxisAttributeId());
+        Assertions.assertNotNull(valorEje.getDomainValueId());
     }
 
     @Test
