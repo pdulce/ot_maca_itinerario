@@ -5,9 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import giss.mad.itinerario.mapper.Samples;
 import giss.mad.itinerario.model.EtapaPruebas;
 import giss.mad.itinerario.model.ItinerarioCalidad;
+import giss.mad.itinerario.model.UmbralActividad;
 import giss.mad.itinerario.model.auxactiv.ActividadReduced;
 import giss.mad.itinerario.model.auxactiv.ReplicaElementOEntrega;
 import giss.mad.itinerario.model.auxactiv.ValorEje;
+import giss.mad.itinerario.model.auxitinerario.ActividadQAPantalla;
 import giss.mad.itinerario.model.auxitinerario.ItinerarioPantalla;
 import giss.mad.itinerario.model.auxpesos.PesoGraph;
 import giss.mad.itinerario.model.auxumbrales.StageBuble;
@@ -328,6 +330,24 @@ public class ApplicationTest {
         // consultar las actividades excluidas en itinerario
         responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "getActivitiesExcludedById/"
                 + itinerarioCalidad.getId(), String.class);
+        Collection<LinkedHashMap> actividadesLinkedMap = objectMapper.readValue(responseTxt, Collection.class);
+        for (LinkedHashMap actividadLinkedMap: actividadesLinkedMap) {
+
+            ActividadQAPantalla actividadQAPantalla = new ActividadQAPantalla();
+            actividadQAPantalla.setActivity(actividadLinkedMap.get("activity").toString());
+            if (actividadLinkedMap.get("observations") != null) {
+                actividadQAPantalla.setObservations(actividadLinkedMap.get("observations").toString());
+                Assertions.assertNotNull(actividadQAPantalla.getObservations());
+            }else{
+                Assertions.assertNull(actividadQAPantalla.getObservations());
+            }
+            actividadQAPantalla.setStage(actividadLinkedMap.get("stage").toString());
+            actividadQAPantalla.setRealization(actividadLinkedMap.get("realization").toString());
+            Assertions.assertNotNull(actividadQAPantalla.getActivity());
+            Assertions.assertNotNull(actividadQAPantalla.getStage());
+            Assertions.assertNotNull(actividadQAPantalla.getRealization());
+            Assertions.assertNull(actividadQAPantalla.getId());
+        }
         appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
         Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
 
