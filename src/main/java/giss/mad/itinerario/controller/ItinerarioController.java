@@ -157,19 +157,6 @@ public final class ItinerarioController {
 
   /**** Mappings para operaciones de visualizacion grafica ***/
 
-  @GetMapping("/pesosByElementCat/{idTypeOfCatalogo}")
-  public Collection<PesoGraph> getPesosByElementCatalogo(
-      final @PathVariable @NotNull @NotEmpty Integer idTypeOfCatalogo) {
-    return pesoService.getAllByElement(idTypeOfCatalogo, Constantes.NUMBER_0);
-  }
-
-  @GetMapping("/pesosByDeliveryOfElement/{idTypeOfCatalogo}")
-  public Collection<PesoGraph> getPesosByDeliveryOfElement(
-      final @PathVariable @NotNull @NotEmpty Integer idTypeOfCatalogo) {
-    return pesoService.getAllByElement(idTypeOfCatalogo, Constantes.NUMBER_1);
-  }
-
-
   @GetMapping("/threshold/getByElementCat/{idTypeOfCatalogo}")
   public Collection<UmbralGraph> getUmbralesByElementCatalogo(
       final @PathVariable @NotNull @NotEmpty Integer idTypeOfCatalogo) {
@@ -194,6 +181,20 @@ public final class ItinerarioController {
     return umbralActividadService.getUmbralesByStage(idTypeOfCatalogo, Constantes.NUMBER_0);
   }
 
+
+  @GetMapping("/pesosByElementCat/{idTypeOfCatalogo}")
+  public Collection<PesoGraph> getPesosByElementCatalogo(
+          final @PathVariable @NotNull @NotEmpty Integer idTypeOfCatalogo) {
+    return pesoService.getAllByElement(idTypeOfCatalogo, Constantes.NUMBER_0);
+  }
+
+  @GetMapping("/pesosByDeliveryOfElement/{idTypeOfCatalogo}")
+  public Collection<PesoGraph> getPesosByDeliveryOfElement(
+          final @PathVariable @NotNull @NotEmpty Integer idTypeOfCatalogo) {
+    return pesoService.getAllByElement(idTypeOfCatalogo, Constantes.NUMBER_1);
+  }
+
+
   @GetMapping("/maxPesosOfActElemPromo/{idActivity}")
   public Integer getMaxSumOfPesosOfActElemPromo(
       final @PathVariable @NotNull @NotEmpty Integer idActivity) {
@@ -209,8 +210,6 @@ public final class ItinerarioController {
     return umbralActividadService.getMaximumOfWeigths(elementType, isDelivery, idActivity);
   }
 
-  /*** Mapping operations for itinerary **/
-
   @GetMapping("/getAll")
   public Collection<ItinerarioCalidad> getAllItinerary() {
     return this.itinerarioCalidadService.getAll();
@@ -224,7 +223,6 @@ public final class ItinerarioController {
     }
     return c;
   }
-
   @GetMapping("/getActivitiesIncludedById/{idItinerario}")
   public Collection<ActividadQAPantalla> getActivitiesIncludedById(
       final @PathVariable @NotNull @NotEmpty Integer idItinerario) {
