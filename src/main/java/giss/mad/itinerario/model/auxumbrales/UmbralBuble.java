@@ -9,6 +9,9 @@ public final class UmbralBuble {
   private String name;
   private String recomen;
 
+  public UmbralBuble() {
+
+  }
   public UmbralBuble(final String nameOfActividad, final Integer lowerRange,
       final Integer upperRange, final String recomendacion) {
     this.actividad = nameOfActividad;

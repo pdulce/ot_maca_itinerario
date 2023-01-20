@@ -11,7 +11,7 @@ public final class UmbralGraph {
   private String name;
   private String recomen;
 
-  public UmbralGraph(){
+  public UmbralGraph() {
 
   }
   public UmbralGraph(final String nameOfactividad, final Integer idActividad,

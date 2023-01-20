@@ -7,6 +7,8 @@ import giss.mad.itinerario.model.ItinerarioCalidad;
 import giss.mad.itinerario.model.auxactiv.ReplicaElementOEntrega;
 import giss.mad.itinerario.model.auxitinerario.ItinerarioPantalla;
 import giss.mad.itinerario.model.auxpesos.PesoGraph;
+import giss.mad.itinerario.model.auxumbrales.StageBuble;
+import giss.mad.itinerario.model.auxumbrales.UmbralBuble;
 import giss.mad.itinerario.model.auxumbrales.UmbralGraph;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
@@ -26,8 +28,7 @@ import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Collection;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {Application.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -109,7 +110,10 @@ public class ApplicationTest {
                 + idTypeOfCatalogo, String.class);
 
         Collection<LinkedHashMap> pesos = objectMapper.readValue(responseTxt, Collection.class);
-        for (LinkedHashMap pesoHashmap: pesos){
+        int max = 0;
+        Iterator<LinkedHashMap> itePesos = pesos.iterator();
+        while (itePesos.hasNext() && max < 10){
+            LinkedHashMap pesoHashmap = itePesos.next();
             PesoGraph peso = new PesoGraph();
             peso.setActivityId(Integer.valueOf(pesoHashmap.get("activityId").toString()));
             peso.setAxisAttributeId(Integer.valueOf(pesoHashmap.get("axisAttributeId").toString()));
@@ -117,6 +121,7 @@ public class ApplicationTest {
             Assertions.assertNotNull(peso.getActivityId());
             Assertions.assertNotNull(peso.getWeightValue());
             Assertions.assertNotNull(peso.getAxisAttributeId());
+            max++;
         }
 
         boolean appearsActividad1Eje1 = responseTxt.contains("{\"activityId\":1,\"axisAttributeId\":1");
@@ -141,8 +146,11 @@ public class ApplicationTest {
         boolean appearsActividad1Eje1 = responseTxt.contains("\"actividad\":\"Diseño - Revisión Requisitos\"");
         Assertions.assertEquals(appearsActividad1Eje1, true, "No existe pesos de ac.Revisión Requisitos");
 
+        int max = 0;
         Collection<LinkedHashMap> umbrales = objectMapper.readValue(responseTxt, Collection.class);
-        for (LinkedHashMap umbralLinkedMap: umbrales){
+        Iterator<LinkedHashMap> iteUmbrales = umbrales.iterator();
+        while (iteUmbrales.hasNext() && max < 10){
+            LinkedHashMap umbralLinkedMap = iteUmbrales.next();
             UmbralGraph umbralGraph = new UmbralGraph();
             umbralGraph.setActividad(umbralLinkedMap.get("actividad").toString());
             umbralGraph.setName(umbralLinkedMap.get("name").toString());
@@ -156,6 +164,7 @@ public class ApplicationTest {
             Assertions.assertNotNull(umbralGraph.getX());
             Assertions.assertNotNull(umbralGraph.getY());
             Assertions.assertNotNull(umbralGraph.getZ());
+            max++;
         }
 
         responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "threshold/getByDeliveryOfElement/"
@@ -165,6 +174,27 @@ public class ApplicationTest {
 
         responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "threshold/getByDeliveryOfElementBubles/"
                 + idTypeOfCatalogo, String.class);
+
+        Collection<LinkedHashMap> stagesBubleLinkedMap = objectMapper.readValue(responseTxt, Collection.class);
+        for (LinkedHashMap stageBubleLinkedMap: stagesBubleLinkedMap){
+            StageBuble stageBuble = new StageBuble();
+            Collection<LinkedHashMap> dataList = objectMapper.readValue(stageBubleLinkedMap.get("data").toString(),
+                    Collection.class);
+            List<UmbralBuble> umbralesItem = new ArrayList<>();
+            for (LinkedHashMap dataElement: dataList) {
+                UmbralBuble umbralBuble = new UmbralBuble();
+                umbralBuble.setActividad(dataElement.get("actividad").toString());
+                umbralBuble.setName(dataElement.get("name").toString());
+                umbralBuble.setRecomen(dataElement.get("recomen").toString());;
+                umbralBuble.setValue(Integer.valueOf(dataElement.get("value").toString()));
+                umbralesItem.add(umbralBuble);
+            }
+            stageBuble.setData(umbralesItem);
+            stageBuble.setName(stageBubleLinkedMap.get("name").toString());
+            Assertions.assertNotNull(stageBuble.getData());
+            Assertions.assertNotNull(stageBuble.getName());
+        }
+
         appearsActividad1Eje1 = responseTxt.contains("\"actividad\":\"Revisión Requisitos\"");
         Assertions.assertEquals(appearsActividad1Eje1, true, "No existe pesos de ac.Revisión Requisitos");
 
