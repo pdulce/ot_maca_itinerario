@@ -65,13 +65,6 @@ public class UmbralActividadService {
     return this.umbralActividadRepository.findAllByDeletedIsNull();
   }
 
-  public final Collection<UmbralActividad> getUmbralesByIdActividad(final Integer idElementType,
-      final Integer isDelivery, final Integer idActividad) {
-    return this.umbralActividadRepository.
-        findAllByDeletedIsNullAndElemenTypeIdAndForDeliveryAndActivityId(
-        idElementType, isDelivery, idActividad);
-  }
-
   public final Collection<UmbralGraph> getUmbralesByTypeOfElement(final Integer idElementType,
       final Integer isDelivery) {
     Collection<UmbralActividad> c = this.umbralActividadRepository.
@@ -148,20 +141,6 @@ public class UmbralActividadService {
   public final UmbralActividad get(final Integer idUmbral) {
     return this.umbralActividadRepository.findByIdAndDeletedIsNull(idUmbral);
   }
-
-  @Transactional
-  public final UmbralActividad remove(final Integer idUmbralActividad) {
-    UmbralActividad removedObject = null;
-    UmbralActividad umbralBBDD = this.umbralActividadRepository.findByIdAndDeletedIsNull(idUmbralActividad);
-    if (umbralBBDD != null) {
-      Timestamp timeStamp = new Timestamp(Calendar.getInstance().getTime().getTime());
-      umbralBBDD.setUpdateDate(timeStamp);
-      umbralBBDD.setDeleted(1);
-      removedObject = this.umbralActividadRepository.saveAndFlush(umbralBBDD);
-    }
-    return removedObject;
-  }
-
   @Transactional
   public final UmbralActividad save(final UmbralActividad umbralActividad) {
     return this.umbralActividadRepository.save(umbralActividad);

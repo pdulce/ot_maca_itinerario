@@ -31,19 +31,6 @@ public class ActividadQAService {
     return this.actividadQARepository.findByIdAndDeletedIsNull(idActividadQA);
   }
 
-  /*@Transactional
-  public final ActividadQA remove(final Integer idActividadQA) {
-    ActividadQA removedObject = null;
-    ActividadQA actividadBBDD = this.actividadQARepository.findByIdAndDeletedIsNull(idActividadQA);
-    if (actividadBBDD != null) {
-      Timestamp timeStamp = new Timestamp(Calendar.getInstance().getTime().getTime());
-      actividadBBDD.setUpdateDate(timeStamp);
-      actividadBBDD.setDeleted(1);
-      removedObject = this.actividadQARepository.saveAndFlush(actividadBBDD);
-    }
-    return removedObject;
-  }*/
-
   @Transactional
   public final ActividadQA removePhysical(final Integer idActividadQA) {
     ActividadQA actividad = this.get(idActividadQA);

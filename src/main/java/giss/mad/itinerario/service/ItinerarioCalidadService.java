@@ -69,6 +69,13 @@ public class ItinerarioCalidadService {
     return this.itinerarioCalidadRepository.findByIdAndDeletedIsNull(idItinerario);
   }
 
+  public final ItinerarioCalidad delete(final Integer idItinerario) {
+    ItinerarioCalidad itinerarioCalidad = this.itinerarioCalidadRepository.findByIdAndDeletedIsNull(idItinerario);
+    this.itinerarioCalidadRepository.delete(itinerarioCalidad);
+    return itinerarioCalidad;
+  }
+
+
   public final Collection<ActividadQAPantalla> getActivitiesByItineraryId(final Integer idItinerario,
       final Integer included) {
     Collection<ActividadQAPantalla> actividadQAPantallaArrayList = new ArrayList<>();

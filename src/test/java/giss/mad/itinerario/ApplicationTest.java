@@ -331,6 +331,16 @@ public class ApplicationTest {
         appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
         Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
 
+        responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "/borrarItinerarioById/"
+              + itinerarioCalidad.getId(), String.class);
+        appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
+        Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
+
+        responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "/borrarItinerarioById/"
+                + itinerarioPantalla.getId(), String.class);
+        appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
+        Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
+
     }
 
 
