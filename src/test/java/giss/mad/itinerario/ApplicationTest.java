@@ -3,6 +3,7 @@ package giss.mad.itinerario;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import giss.mad.itinerario.mapper.Samples;
+import giss.mad.itinerario.model.EtapaPruebas;
 import giss.mad.itinerario.model.ItinerarioCalidad;
 import giss.mad.itinerario.model.auxactiv.ActividadReduced;
 import giss.mad.itinerario.model.auxactiv.ReplicaElementOEntrega;
@@ -63,11 +64,22 @@ public class ApplicationTest {
 
 
     @Test
-    void testActivitiesStages() {
+    void testActivitiesStages() throws JsonProcessingException {
         String baseUriItinerarioMS = "http://localhost:" + System.getProperty(SERVER_PORT)
                 + "/itinerario/";
         String responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "QAStages/getAll", String.class);
         //logger.info("RECIBIDO: " + msg);
+
+        //Collection<EtapaPruebas>
+        Collection<LinkedHashMap> etapasLinkedMap = objectMapper.readValue(responseTxt, Collection.class);
+        for (LinkedHashMap etapaBubleLinkedMap: etapasLinkedMap){
+            EtapaPruebas etapa = new EtapaPruebas();
+            etapa.setName(etapaBubleLinkedMap.get("name").toString());
+            etapa.setDescription(etapaBubleLinkedMap.get("description").toString());
+            etapa.setId(Integer.valueOf(etapaBubleLinkedMap.get("id").toString()));
+            Assertions.assertNotNull(etapa.getDescription());
+            Assertions.assertNotNull(etapa.getDescription());
+        }
 
         boolean appearsActividadStage = responseTxt.contains("Análisis de código estático");
         Assertions.assertEquals(appearsActividadStage, true, "No figura etapa 2");
