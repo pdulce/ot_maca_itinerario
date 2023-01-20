@@ -111,6 +111,17 @@ public class ActividadQATest {
            Assertions.assertEquals(newUmbral.getId() > 330, true,
                    "SEQ-next Umbral no ha funcionado");
 
+           EtapaPruebas second= new EtapaPruebas();
+           second.setName("borrar");
+           second.setDescription("description");
+           second.setCreationDate(timeStampNow);
+           second = this.etapaPruebasService.alta(second);
+           Assertions.assertEquals(second.getId() > 0, true);
+           second = this.etapaPruebasService.update(second);
+           Assertions.assertEquals(second.getUpdateDate() != null, true);
+           second = this.etapaPruebasService.borrar(second.getId());
+           Assertions.assertEquals(second.getUpdateDate() != null, true);
+
        }catch (Exception exc) {
             Assertions.assertEquals(0, 1, "Error en alguna operación con actividadQA");
        }finally{

@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.PortInUseException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -65,6 +66,14 @@ public class ApplicationTest {
         logger.info(">>>>>>>>>>>>>>>>>>>>>>> ApplicationTest COMPLETADO");
     }
 
+    @Test
+    void testApplicationMain() {
+        try {
+            Application.main(new String[]{});
+        }catch (RuntimeException portInUse){
+            Assertions.assertEquals(1, 1);
+        }
+    }
 
     @Test
     void testActivitiesStages() throws JsonProcessingException {

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Collection;
 
 @Service
@@ -27,12 +29,32 @@ public class EtapaPruebasService {
   }
 
   @Transactional
-  public final EtapaPruebas update(final EtapaPruebas etapaPruebas) {
+  public final EtapaPruebas alta(final EtapaPruebas etapaPruebas) {
     EtapaPruebas updatedObject = null;
-    if (this.etapaPruebasRepository.findByIdAndDeletedIsNull(etapaPruebas.getId()) != null) {
+    if (this.etapaPruebasRepository.findByIdAndDeletedIsNull(etapaPruebas.getId()) == null) {
       updatedObject = this.etapaPruebasRepository.save(etapaPruebas);
     }
     return updatedObject;
+  }
+
+  @Transactional
+  public final EtapaPruebas update(final EtapaPruebas etapaPruebas) {
+    EtapaPruebas updatedObject = null;
+    if (this.etapaPruebasRepository.findByIdAndDeletedIsNull(etapaPruebas.getId()) != null) {
+      Timestamp timeStampNow = new Timestamp(Calendar.getInstance().getTime().getTime());
+      etapaPruebas.setUpdateDate(timeStampNow);
+      updatedObject = this.etapaPruebasRepository.save(etapaPruebas);
+    }
+    return updatedObject;
+  }
+
+  @Transactional
+  public final EtapaPruebas borrar(final int idEtapaPruebas) {
+    EtapaPruebas deletedObject = this.etapaPruebasRepository.findByIdAndDeletedIsNull(idEtapaPruebas);
+    if (deletedObject != null) {
+      this.etapaPruebasRepository.delete(deletedObject);
+    }
+    return deletedObject;
   }
 
 }
