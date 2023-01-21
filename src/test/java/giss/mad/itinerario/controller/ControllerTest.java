@@ -57,7 +57,7 @@ public class ControllerTest {
     @BeforeAll
     public static void setContextVariables() {
         System.setProperty(SPRING_BANNER, "off");
-        System.setProperty(SERVER_PORT, "8080");
+        System.setProperty(SERVER_PORT, "8084");
     }
 
     @AfterAll
