@@ -46,6 +46,8 @@ public class ControllerTest {
     private static final String SPRING_BANNER = "spring.main.banner_mode";
     private static final String SERVER_PORT = "server.port";
 
+    private static final String BASE_URI_ITINERARIO = "/itinerario/";
+
     @Autowired
     public ObjectMapper objectMapper;
 
@@ -68,9 +70,7 @@ public class ControllerTest {
 
     @Test
     void testActivitiesStages() throws JsonProcessingException {
-        String baseUriItinerarioMS = "http://localhost:" + System.getProperty(SERVER_PORT)
-                + "/itinerario/";
-        String responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "QAStages/getAll", String.class);
+        String responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "QAStages/getAll", String.class);
         Collection<LinkedHashMap> etapasLinkedMap = objectMapper.readValue(responseTxt, Collection.class);
         for (LinkedHashMap etapaBubleLinkedMap: etapasLinkedMap){
             EtapaPruebas etapa = new EtapaPruebas();
@@ -85,7 +85,7 @@ public class ControllerTest {
         Assertions.assertEquals(appearsActividadStage, true, "No figura etapa 2");
 
         final Integer idStage = 4;
-        responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "QAStages/getById/"+ idStage, String.class);
+        responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "QAStages/getById/"+ idStage, String.class);
 
         appearsActividadStage = responseTxt.contains("Integración");
         Assertions.assertEquals(appearsActividadStage, true, "No figura etapa 4");
@@ -94,14 +94,12 @@ public class ControllerTest {
 
     @Test
     void testActivities() throws JsonProcessingException {
-        String baseUriItinerarioMS = "http://localhost:" + System.getProperty(SERVER_PORT)
-                + "/itinerario/";
-        String responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "QAactivities/getAll", String.class);
+        String responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "QAactivities/getAll", String.class);
 
         boolean appearsActividad3 = responseTxt.contains("Diseño planes prueba Funcional");
         Assertions.assertEquals(appearsActividad3, true, "No figura actividad 3");
 
-        responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "QAactivities/getreduced/", String.class);
+        responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "QAactivities/getreduced/", String.class);
 
         Collection<LinkedHashMap> actsBubleLinkedMap = objectMapper.readValue(responseTxt, Collection.class);
         for (LinkedHashMap actividadBubleLinkedMap: actsBubleLinkedMap){
@@ -116,7 +114,7 @@ public class ControllerTest {
         Assertions.assertEquals(appearsActividad3, true, "No figura actividad 3");
 
         final Integer idActividad = 28;
-        responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "QAactivities/getById/" + idActividad,
+        responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "QAactivities/getById/" + idActividad,
                 String.class);
 
         appearsActividad3 = responseTxt.contains("OmniaUsability");
@@ -132,10 +130,8 @@ public class ControllerTest {
 
     @Test
     void testPesos() throws JsonProcessingException {
-        String baseUriItinerarioMS = "http://localhost:" + System.getProperty(SERVER_PORT)
-                + "/itinerario/";
         int idTypeOfCatalogo = 1;
-        String responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "pesosByElementCat/"
+        String responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "pesosByElementCat/"
                 + idTypeOfCatalogo, String.class);
 
         Collection<LinkedHashMap> pesos = objectMapper.readValue(responseTxt, Collection.class);
@@ -156,7 +152,7 @@ public class ControllerTest {
         boolean appearsActividad1Eje1 = responseTxt.contains("{\"activityId\":1,\"axisAttributeId\":1");
         Assertions.assertEquals(appearsActividad1Eje1, true, "No figura peso para activdad 1 y eje 1");
 
-        responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "pesosByDeliveryOfElement/"
+        responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "pesosByDeliveryOfElement/"
                 + idTypeOfCatalogo, String.class);
         appearsActividad1Eje1 = responseTxt.contains("{\"activityId\":1,\"axisAttributeId\":1");
         Assertions.assertEquals(appearsActividad1Eje1, true, "No figura peso para activdad 1 y eje 1");
@@ -166,10 +162,8 @@ public class ControllerTest {
 
     @Test
     void testUmbrales() throws JsonProcessingException {
-        String baseUriItinerarioMS = "http://localhost:" + System.getProperty(SERVER_PORT)
-                + "/itinerario/";
         int idTypeOfCatalogo = 1;
-        String responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "threshold/getByElementCat/"
+        String responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "threshold/getByElementCat/"
                 + idTypeOfCatalogo, String.class);
 
         boolean appearsActividad1Eje1 = responseTxt.contains("\"actividad\":\"Diseño - Revisión Requisitos\"");
@@ -203,12 +197,12 @@ public class ControllerTest {
         ejeHeredable.setAxisId(1);
         ejeHeredable.setWritable(0);
 
-        responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "threshold/getByDeliveryOfElement/"
+        responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "threshold/getByDeliveryOfElement/"
                 + idTypeOfCatalogo, String.class);
         appearsActividad1Eje1 = responseTxt.contains("\"actividad\":\"Diseño - Revisión Requisitos\"");
         Assertions.assertEquals(appearsActividad1Eje1, true, "No existe pesos de ac.Revisión Requisitos");
 
-        responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "threshold/getByDeliveryOfElementBubles/"
+        responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "threshold/getByDeliveryOfElementBubles/"
                 + idTypeOfCatalogo, String.class);
 
         Collection<LinkedHashMap> stagesBubleLinkedMap = objectMapper.readValue(responseTxt, Collection.class);
@@ -239,7 +233,7 @@ public class ControllerTest {
         appearsActividad1Eje1 = responseTxt.contains("\"actividad\":\"Revisión Requisitos\"");
         Assertions.assertEquals(appearsActividad1Eje1, true, "No existe pesos de ac.Revisión Requisitos");
 
-        responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "threshold/getByElementBubles/"
+        responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "threshold/getByElementBubles/"
                 + idTypeOfCatalogo, String.class);
         appearsActividad1Eje1 = responseTxt.contains("\"actividad\":\"Revisión Requisitos\"");
         Assertions.assertEquals(appearsActividad1Eje1, true, "No existe pesos de ac.Revisión Requisitos");
@@ -247,15 +241,13 @@ public class ControllerTest {
 
     @Test
     void testMaxPesos() {
-        String baseUriItinerarioMS = "http://localhost:" + System.getProperty(SERVER_PORT)
-                + "/itinerario/";
         int idActivity = 10;
-        String responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "maxPesosOfActElemPromo/" + idActivity,
+        String responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "maxPesosOfActElemPromo/" + idActivity,
                 String.class);
         boolean appearsActividad1Eje1 = responseTxt.contains("90");
         Assertions.assertEquals(appearsActividad1Eje1, true, "Suma de pesos de actividad <> 90");
 
-        responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "maxPesosOfActEntregaElemPromo/" + idActivity,
+        responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "maxPesosOfActEntregaElemPromo/" + idActivity,
                 String.class);
         appearsActividad1Eje1 = responseTxt.contains("30");
         Assertions.assertEquals(appearsActividad1Eje1, true, "Suma de pesos de actividad <> 30");
@@ -264,15 +256,13 @@ public class ControllerTest {
 
     @Test
     void testItinerarios() throws JsonProcessingException {
-        String baseUriItinerarioMS = "http://localhost:" + System.getProperty(SERVER_PORT)
-                + "/itinerario/";
         HttpHeaders headersPost = new HttpHeaders();
         headersPost.setContentType(MediaType.APPLICATION_JSON);
         ReplicaElementOEntrega replica = objectMapper.readValue(Samples.JSON_FOR_TESTCALC_ITINERARY,
                 ReplicaElementOEntrega.class);
 
         HttpEntity<String> request = new HttpEntity<>(Samples.JSON_FOR_TESTCALC_ITINERARY, headersPost);
-        String itiResultAsJsonStr = restTemplate.postForObject(baseUriItinerarioMS +  "calculate",
+        String itiResultAsJsonStr = restTemplate.postForObject(BASE_URI_ITINERARIO +  "calculate",
                 request, String.class);
         Assertions.assertNotNull(itiResultAsJsonStr);
         ItinerarioCalidad itinerarioCalidad = objectMapper.readValue(itiResultAsJsonStr, ItinerarioCalidad.class);
@@ -283,7 +273,7 @@ public class ControllerTest {
         Assertions.assertNotNull(itinerarioCalidad.getId());
 
         request = new HttpEntity<>(Samples.JSON_FOR_TESTCALC_ITINERARY, headersPost);
-        itiResultAsJsonStr = restTemplate.postForObject( baseUriItinerarioMS + "calculateItinerary",
+        itiResultAsJsonStr = restTemplate.postForObject( BASE_URI_ITINERARIO + "calculateItinerary",
                 request, String.class);
         Assertions.assertNotNull(itiResultAsJsonStr);
         ItinerarioPantalla itinerarioPantalla = objectMapper.readValue(itiResultAsJsonStr, ItinerarioPantalla.class);
@@ -295,11 +285,11 @@ public class ControllerTest {
 
         //logger.info(">>>>>>>>>>>>>>>>>>>>> Itinerarios creados/calculados! >>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-        String responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "getAll", String.class);
+        String responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "getAll", String.class);
         boolean appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
         Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerarios no responde");
 
-        responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "getById/" + itinerarioCalidad.getId(),
+        responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "getById/" + itinerarioCalidad.getId(),
                 String.class);
         ItinerarioCalidad itinerario = objectMapper.readValue(responseTxt, ItinerarioCalidad.class);
         appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
@@ -307,36 +297,36 @@ public class ControllerTest {
         Assertions.assertNotNull(itinerario.getId());
 
         //consultar todos los itinerarios creados de ese :idElement
-        responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "getAllByIdElement/"
+        responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "getAllByIdElement/"
                 + itinerarioPantalla.getElementId(), String.class);
         appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
         Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerarios no encontrados");
 
         // consultar last itineario creado de ese :idElement
-        responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "getMoreRecentByIdElement/"
+        responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "getMoreRecentByIdElement/"
                 + itinerarioPantalla.getElementId(), String.class);
         appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
         Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
 
         // consultar sus actividades
-        responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "getOnlyIncludedById/"
+        responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "getOnlyIncludedById/"
                 + itinerarioCalidad.getId(), String.class);
         appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
         Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
 
-        responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "getActivitiesById/"
+        responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "getActivitiesById/"
                 + itinerarioCalidad.getId(), String.class);
         appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
         Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
 
         // consultar las actividades incluidas en el itinerario
-        responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "getActivitiesIncludedById/"
+        responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "getActivitiesIncludedById/"
                 + itinerarioCalidad.getId(), String.class);
         appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
         Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
 
         // consultar las actividades excluidas en itinerario
-        responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "getActivitiesExcludedById/"
+        responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "getActivitiesExcludedById/"
                 + itinerarioCalidad.getId(), String.class);
         Collection<LinkedHashMap> actividadesLinkedMap = objectMapper.readValue(responseTxt, Collection.class);
         for (LinkedHashMap actividadLinkedMap: actividadesLinkedMap) {
@@ -359,12 +349,12 @@ public class ControllerTest {
         appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
         Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
 
-        responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "/borrarItinerarioById/"
+        responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "/borrarItinerarioById/"
               + itinerarioCalidad.getId(), String.class);
         appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
         Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
 
-        responseTxt = restTemplate.getForObject(baseUriItinerarioMS + "/borrarItinerarioById/"
+        responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "/borrarItinerarioById/"
                 + itinerarioPantalla.getId(), String.class);
         appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
         Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
