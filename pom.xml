@@ -36,11 +36,30 @@
       <scope>test</scope>
     </dependency>
 
+
   </dependencies>
   <build>
 
     <plugins>
-
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.7</version>
+        <configuration>
+          <excludes>
+            <exclude>**/Application.*</exclude>
+            <!--<exclude>**/*Dev.*</exclude>-->
+          </excludes>
+        </configuration>
+        <executions>
+          <execution>
+            <id>jacoco-report</id>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 
     </plugins>
 
