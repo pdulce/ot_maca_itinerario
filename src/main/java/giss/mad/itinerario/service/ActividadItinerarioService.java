@@ -99,7 +99,7 @@ public class ActividadItinerarioService {
   @Transactional
   public final ActividadItinerario remove(final Integer idActividadItinerario) {
     ActividadItinerario removedObject = this.actividadItinerarioRepository.
-            findByIdAndDeletedIsNull(idActividadItinerario) ;
+            findByIdAndDeletedIsNull(idActividadItinerario);
     if (removedObject != null) {
       this.actividadItinerarioRepository.deleteById(removedObject.getId());
     }
@@ -109,7 +109,10 @@ public class ActividadItinerarioService {
   public final Collection<ActividadItinerario> getItineraryActivitiesByParent(final Integer idItinerario) {
     ActividadItinerario actividadItinerario = new ActividadItinerario();
     actividadItinerario.setQualityItineraryId(idItinerario);
-    return this.actividadItinerarioRepository.findAll(Example.of(actividadItinerario));
+    Collection<ActividadItinerario> l1 = this.itinerarioCalidadRepo.findByIdAndDeletedIsNull(idItinerario).
+            getActividadesDeItinerario();
+    Collection<ActividadItinerario> l = this.actividadItinerarioRepository.findAll(Example.of(actividadItinerario));
+    return l;
   }
 
   public final ItinerarioPantalla calculateItinerary(final ReplicaElementOEntrega elemOrDelivery) {

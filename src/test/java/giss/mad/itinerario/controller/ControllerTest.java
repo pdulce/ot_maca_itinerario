@@ -355,9 +355,9 @@ public class ControllerTest {
         appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
         Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
 
-        restTemplate.delete(BASE_URI_ITINERARIO + "borrarItinerarioById/", itinerarioCalidad.getId());
+        restTemplate.delete(BASE_URI_ITINERARIO + "borrarItinerarioById/" + itinerarioCalidad.getId());
 
-        restTemplate.delete(BASE_URI_ITINERARIO + "borrarItinerarioById/", itinerarioPantalla.getId());
+        restTemplate.delete(BASE_URI_ITINERARIO + "borrarItinerarioById/" +  itinerarioPantalla.getId());
 
     }
 
