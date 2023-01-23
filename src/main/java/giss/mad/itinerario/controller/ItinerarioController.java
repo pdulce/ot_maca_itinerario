@@ -1,13 +1,10 @@
 package giss.mad.itinerario.controller;
 
-import giss.mad.itinerario.model.ActividadQA;
-import giss.mad.itinerario.model.EtapaPruebas;
-import giss.mad.itinerario.model.ItinerarioCalidad;
+import giss.mad.itinerario.model.*;
 import giss.mad.itinerario.model.volatilentities.ActividadReduced;
 import giss.mad.itinerario.model.volatilentities.ReplicaElementOEntrega;
 import giss.mad.itinerario.model.volatilentities.ActividadQAPantalla;
 import giss.mad.itinerario.model.volatilentities.ItinerarioPantalla;
-import giss.mad.itinerario.model.PesoGraph;
 import giss.mad.itinerario.model.volatilentities.StageBuble;
 import giss.mad.itinerario.model.volatilentities.UmbralGraph;
 import giss.mad.itinerario.repository.ActividadItinerarioRepository;
@@ -291,7 +288,13 @@ public final class ItinerarioController {
 
   @DeleteMapping("/borrarItinerarioById/{idOfItinerary}")
   public ItinerarioCalidad deleteItinerary(final @PathVariable @NotEmpty @NotNull Integer idOfItinerary) {
+    Collection<ActividadItinerario> actQAList = this.actividadItinerarioService.
+            getItineraryActivitiesByParent(idOfItinerary);
+    for (ActividadItinerario actItinerario: actQAList){
+      this.actividadItinerarioService.remove(actItinerario.getId());
+    }
     return itinerarioCalidadService.delete(idOfItinerary);
+
   }
 
 

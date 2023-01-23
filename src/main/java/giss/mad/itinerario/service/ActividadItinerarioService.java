@@ -101,7 +101,7 @@ public class ActividadItinerarioService {
     ActividadItinerario removedObject = this.actividadItinerarioRepository.
             findByIdAndDeletedIsNull(idActividadItinerario) ;
     if (removedObject != null) {
-      this.actividadItinerarioRepository.delete(removedObject);
+      this.actividadItinerarioRepository.deleteById(removedObject.getId());
     }
     return removedObject;
   }

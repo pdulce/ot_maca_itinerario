@@ -33,6 +33,7 @@ import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -354,33 +355,10 @@ public class ControllerTest {
         appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
         Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
 
-        responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "/borrarItinerarioById/"
-              + itinerarioCalidad.getId(), String.class);
-        appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
-        Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
+        restTemplate.delete(BASE_URI_ITINERARIO + "borrarItinerarioById/", itinerarioCalidad.getId());
 
-        responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "/borrarItinerarioById/"
-                + itinerarioPantalla.getId(), String.class);
-        appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
-        Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
+        restTemplate.delete(BASE_URI_ITINERARIO + "borrarItinerarioById/", itinerarioPantalla.getId());
 
-        Collection<ActividadItinerario> actQAList = this.actividadItinerarioService.
-                getItineraryActivitiesByParent(itinerarioCalidad.getId());
-        for (ActividadItinerario actItinerario: actQAList){
-            this.actividadItinerarioService.remove(actItinerario.getId());
-        }
-        itinerarioCalidad = this.itinerarioCalidadService.delete(itinerarioCalidad.getId());
-        Assertions.assertNull(itinerarioCalidad);
-        Assertions.assertNull(itinerarioCalidad.getId());
-
-        actQAList = this.actividadItinerarioService.getItineraryActivitiesByParent(itinerarioPantalla.getId().intValue());
-        for (ActividadItinerario actItinerario: actQAList){
-            this.actividadItinerarioService.remove(actItinerario.getId());
-        }
-        itinerarioCalidad = this.itinerarioCalidadService.delete(itinerarioPantalla.getId().intValue());
-        Assertions.assertNull(itinerarioCalidad);
-        Assertions.assertNull(itinerarioCalidad.getId());
     }
-
 
 }

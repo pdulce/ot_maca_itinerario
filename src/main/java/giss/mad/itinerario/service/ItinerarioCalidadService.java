@@ -74,7 +74,8 @@ public class ItinerarioCalidadService {
 
   public final ItinerarioCalidad delete(final Integer idItinerario) {
     ItinerarioCalidad itinerarioCalidad = this.itinerarioCalidadRepository.findByIdAndDeletedIsNull(idItinerario);
-    this.itinerarioCalidadRepository.delete(itinerarioCalidad);
+    itinerarioCalidad.setActividadesDeItinerario(new ArrayList<>());
+    this.itinerarioCalidadRepository.deleteById(idItinerario);
     return itinerarioCalidad;
   }
 
