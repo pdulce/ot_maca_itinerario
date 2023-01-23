@@ -109,8 +109,7 @@ public class ActividadItinerarioService {
   public final Collection<ActividadItinerario> getItineraryActivitiesByParent(final Integer idItinerario) {
     ActividadItinerario actividadItinerario = new ActividadItinerario();
     actividadItinerario.setQualityItineraryId(idItinerario);
-    Collection<ActividadItinerario> l1 = this.itinerarioCalidadRepo.findByIdAndDeletedIsNull(idItinerario).
-            getActividadesDeItinerario();
+    actividadItinerario.setIncludedInItinerary(null);
     Collection<ActividadItinerario> l = this.actividadItinerarioRepository.findAll(Example.of(actividadItinerario));
     return l;
   }

@@ -1,10 +1,7 @@
 package giss.mad.itinerario.service;
 
 import giss.mad.itinerario.Application;
-import giss.mad.itinerario.model.ActividadQA;
-import giss.mad.itinerario.model.EtapaPruebas;
 import giss.mad.itinerario.model.Peso;
-import giss.mad.itinerario.model.UmbralActividad;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -21,7 +18,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 
