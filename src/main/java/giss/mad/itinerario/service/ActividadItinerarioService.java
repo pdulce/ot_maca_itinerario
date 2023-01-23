@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -93,6 +94,22 @@ public class ActividadItinerarioService {
       updatedObject = this.actividadItinerarioRepository.save(actividadItinerario);
     }
     return updatedObject;
+  }
+
+  @Transactional
+  public final ActividadItinerario remove(final Integer idActividadItinerario) {
+    ActividadItinerario removedObject = this.actividadItinerarioRepository.
+            findByIdAndDeletedIsNull(idActividadItinerario) ;
+    if (removedObject != null) {
+      this.actividadItinerarioRepository.delete(removedObject);
+    }
+    return removedObject;
+  }
+
+  public final Collection<ActividadItinerario> getItineraryActivitiesByParent(final Integer idItinerario) {
+    ActividadItinerario actividadItinerario = new ActividadItinerario();
+    actividadItinerario.setQualityItineraryId(idItinerario);
+    return this.actividadItinerarioRepository.findAll(Example.of(actividadItinerario));
   }
 
   public final ItinerarioPantalla calculateItinerary(final ReplicaElementOEntrega elemOrDelivery) {

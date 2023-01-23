@@ -7,6 +7,7 @@ import giss.mad.itinerario.model.ItinerarioCalidad;
 import giss.mad.itinerario.model.volatilentities.ActividadQAPantalla;
 import giss.mad.itinerario.model.volatilentities.StageBuble;
 import giss.mad.itinerario.model.volatilentities.UmbralBuble;
+import giss.mad.itinerario.repository.ActividadItinerarioRepository;
 import giss.mad.itinerario.repository.ActividadQARepository;
 import giss.mad.itinerario.repository.EtapaPruebasRepository;
 import giss.mad.itinerario.repository.ItinerarioCalidadRepository;
@@ -18,6 +19,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,7 @@ public class ItinerarioCalidadService {
 
   @Autowired
   private EtapaPruebasRepository etapaPruebasRepository;
+
 
   public final void setItinerarioCalidadRepository(final ItinerarioCalidadRepository itinerarioCalidadRepository) {
     this.itinerarioCalidadRepository = itinerarioCalidadRepository;

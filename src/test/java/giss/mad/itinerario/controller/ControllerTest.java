@@ -4,18 +4,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import giss.mad.itinerario.Application;
 import giss.mad.itinerario.mapper.Samples;
-import giss.mad.itinerario.model.EjeHeredable;
-import giss.mad.itinerario.model.EtapaPruebas;
-import giss.mad.itinerario.model.ItinerarioCalidad;
+import giss.mad.itinerario.model.*;
 import giss.mad.itinerario.model.volatilentities.ActividadReduced;
 import giss.mad.itinerario.model.volatilentities.ReplicaElementOEntrega;
 import giss.mad.itinerario.model.volatilentities.ValorEje;
 import giss.mad.itinerario.model.volatilentities.ActividadQAPantalla;
 import giss.mad.itinerario.model.volatilentities.ItinerarioPantalla;
-import giss.mad.itinerario.model.PesoGraph;
 import giss.mad.itinerario.model.volatilentities.StageBuble;
 import giss.mad.itinerario.model.volatilentities.UmbralBuble;
 import giss.mad.itinerario.model.volatilentities.UmbralGraph;
+import giss.mad.itinerario.service.ActividadItinerarioService;
+import giss.mad.itinerario.service.ItinerarioCalidadService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -50,6 +49,12 @@ public class ControllerTest {
 
     @Autowired
     public ObjectMapper objectMapper;
+
+    @Autowired
+    private ItinerarioCalidadService itinerarioCalidadService;
+
+    @Autowired
+    private ActividadItinerarioService actividadItinerarioService;
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -359,6 +364,22 @@ public class ControllerTest {
         appearsItinerarioOfElem3 = responseTxt.contains("\"catalogueId\":3") || responseTxt.length() > 10;
         Assertions.assertEquals(appearsItinerarioOfElem3, true, "Itinerario no encontrado");
 
+        Collection<ActividadItinerario> actQAList = this.actividadItinerarioService.
+                getItineraryActivitiesByParent(itinerarioCalidad.getId());
+        for (ActividadItinerario actItinerario: actQAList){
+            this.actividadItinerarioService.remove(actItinerario.getId());
+        }
+        itinerarioCalidad = this.itinerarioCalidadService.delete(itinerarioCalidad.getId());
+        Assertions.assertNull(itinerarioCalidad);
+        Assertions.assertNull(itinerarioCalidad.getId());
+
+        actQAList = this.actividadItinerarioService.getItineraryActivitiesByParent(itinerarioPantalla.getId().intValue());
+        for (ActividadItinerario actItinerario: actQAList){
+            this.actividadItinerarioService.remove(actItinerario.getId());
+        }
+        itinerarioCalidad = this.itinerarioCalidadService.delete(itinerarioPantalla.getId().intValue());
+        Assertions.assertNull(itinerarioCalidad);
+        Assertions.assertNull(itinerarioCalidad.getId());
     }
 
 
