@@ -50,7 +50,7 @@ public class EtapaPruebasService {
 
   @Transactional
   public final EtapaPruebas borrar(final int idEtapaPruebas) {
-    EtapaPruebas deletedObject = this.etapaPruebasRepository.findByIdAndDeletedIsNull(idEtapaPruebas);
+    EtapaPruebas deletedObject = this.etapaPruebasRepository.findById(idEtapaPruebas).get();
     if (deletedObject != null) {
       this.etapaPruebasRepository.delete(deletedObject);
     }
