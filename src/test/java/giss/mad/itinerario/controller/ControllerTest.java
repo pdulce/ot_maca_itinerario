@@ -62,7 +62,7 @@ public class ControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @BeforeAll
+    /*@BeforeAll
     public static void setContextVariables() {
         System.setProperty(SPRING_BANNER, "off");
         System.setProperty(SERVER_PORT, "8084");
@@ -74,7 +74,7 @@ public class ControllerTest {
         System.setProperty(SERVER_PORT, "");
 
         logger.info(">>>>>>>>>>>>>>>>>>>>>>> ApplicationTest COMPLETADO");
-    }
+    }*/
 
     @Test
     void testActivitiesStages() throws JsonProcessingException {

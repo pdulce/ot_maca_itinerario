@@ -291,14 +291,13 @@ public final class ItinerarioController {
   }
 
   @DeleteMapping("/borrarItinerarioById/{idOfItinerary}")
-  public ItinerarioCalidad deleteItinerary(final @PathVariable @NotEmpty @NotNull Integer idOfItinerary) {
+  public void deleteItinerary(final @PathVariable @NotEmpty @NotNull Integer idOfItinerary) {
     Collection<ActividadItinerario> actQAList = this.actividadItinerarioService.
             getItineraryActivitiesByParent(idOfItinerary);
     for (ActividadItinerario actItinerario: actQAList) {
       this.actividadItinerarioService.remove(actItinerario.getId());
     }
-    return itinerarioCalidadService.delete(idOfItinerary);
-
+    itinerarioCalidadService.delete(idOfItinerary);
   }
 
 
