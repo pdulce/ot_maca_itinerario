@@ -1,5 +1,7 @@
 package giss.mad.itinerario.controller;
 
+import es.giss.arch.common.exception.GissBusinessException;
+import es.giss.arch.common.exception.model.GissBusinessError;
 import giss.mad.itinerario.model.ActividadItinerario;
 import giss.mad.itinerario.model.ActividadQA;
 import giss.mad.itinerario.model.EtapaPruebas;
@@ -118,31 +120,24 @@ public final class ItinerarioController {
 
   @GetMapping("/QAStages/getAll")
   public Collection<EtapaPruebas> getEtapasPruebas() {
-    Collection<EtapaPruebas> c = this.etapaPruebasService.getAll();
-    if (c == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    }
-    return c;
+    return this.etapaPruebasService.getAll();
   }
 
   @GetMapping("/QAStages/getById/{id}")
   public EtapaPruebas getEtapaPruebas(final @PathVariable @NotNull @NotEmpty Integer id) {
     EtapaPruebas c = this.etapaPruebasService.get(id);
     if (c == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_FOUND));
     }
     return c;
   }
 
   @GetMapping("/QAactivities/getAll")
   public Collection<ActividadQA> getActividadesQA() {
-    Collection<ActividadQA> c = this.actividadQAService.getAll();
-    if (c == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    }
-    return c;
+    return this.actividadQAService.getAll();
   }
 
+  @org.jetbrains.annotations.NotNull
   @GetMapping("/QAactivities/getreduced")
   public Collection<ActividadReduced> getIdAndNameOfActivities() {
     return this.actividadQAService.getIdAndNameOfActivities();
@@ -152,7 +147,7 @@ public final class ItinerarioController {
   public ActividadQA getActividadQA(final @PathVariable @NotNull @NotEmpty Integer id) {
     ActividadQA c = this.actividadQAService.get(id);
     if (c == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_FOUND));
     }
     return c;
   }
@@ -221,35 +216,31 @@ public final class ItinerarioController {
   public ItinerarioCalidad getItinerarioById(final @PathVariable @NotNull @NotEmpty Integer idItinerario) {
     ItinerarioCalidad c = this.itinerarioCalidadService.getByIdItinerario(idItinerario);
     if (c == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_FOUND));
     }
     return c;
   }
   @GetMapping("/getActivitiesIncludedById/{idItinerario}")
   public Collection<ActividadQAPantalla> getActivitiesIncludedById(
       final @PathVariable @NotNull @NotEmpty Integer idItinerario) {
-    return this.itinerarioCalidadService.getActivitiesByItineraryId(
-        idItinerario, Constantes.NUMBER_1);
+    return this.itinerarioCalidadService.getActivitiesByItineraryId(idItinerario, Constantes.NUMBER_1);
   }
 
   @GetMapping("/getActivitiesExcludedById/{idItinerario}")
   public Collection<ActividadQAPantalla> getActivitiesExcludedById(
       final @PathVariable @NotNull @NotEmpty Integer idItinerario) {
-    return this.itinerarioCalidadService.getActivitiesByItineraryId(
-        idItinerario, Constantes.NUMBER_0);
+    return this.itinerarioCalidadService.getActivitiesByItineraryId(idItinerario, Constantes.NUMBER_0);
   }
 
   @GetMapping("/getActivitiesById/{idItinerario}")
   public Collection<ActividadQAPantalla> getActivitiesByItineraryId(
       final @PathVariable @NotNull @NotEmpty Integer idItinerario) {
-    return this.itinerarioCalidadService.getActivitiesByItineraryId(
-        idItinerario);
+    return this.itinerarioCalidadService.getActivitiesByItineraryId(idItinerario);
   }
 
   @GetMapping("/getOnlyIncludedById/{idItinerario}")
   public Collection<StageBuble> getOnlyIncludedById(final @PathVariable @NotNull @NotEmpty Integer idItinerario) {
-    return this.itinerarioCalidadService.getByIdItinerarioOnlyIncluded(
-        idItinerario);
+    return this.itinerarioCalidadService.getByIdItinerarioOnlyIncluded(idItinerario);
   }
 
   @GetMapping("/getMoreRecentByIdElement/{idElementInstance}")
@@ -258,7 +249,7 @@ public final class ItinerarioController {
     ItinerarioCalidad c = this.itinerarioCalidadService.getItinerarioMasRecienteByIdElementOrEntrega(
         idElementInstance, Constantes.NUMBER_0);
     if (c == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_FOUND));
     }
     return c;
   }
@@ -266,12 +257,7 @@ public final class ItinerarioController {
   @GetMapping("/getAllByIdElement/{idElementInstance}")
   public Collection<ItinerarioCalidad> getAllItinerariosByIdElement(
       final @PathVariable @NotNull @NotEmpty Integer idElementInstance) {
-    Collection<ItinerarioCalidad> c = this.itinerarioCalidadService.getAllItinerariosByIdElementOrEntrega(
-        idElementInstance, Constantes.NUMBER_0);
-    if (c == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    }
-    return c;
+    return this.itinerarioCalidadService.getAllItinerariosByIdElementOrEntrega(idElementInstance, Constantes.NUMBER_0);
   }
 
   @PostMapping("/calculate")
