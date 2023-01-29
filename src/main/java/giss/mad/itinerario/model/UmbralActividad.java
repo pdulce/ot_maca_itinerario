@@ -113,7 +113,7 @@ public final class UmbralActividad {
     this.help = help;
   }
 
-  public Integer isForDelivery() {
+  public Integer getForDelivery() {
     return forDelivery;
   }
 
@@ -121,7 +121,7 @@ public final class UmbralActividad {
     this.forDelivery = isForDelivery;
   }
 
-  public Integer isExcludeUnreachedThreshold() {
+  public Integer getExcludeUnreachedThreshold() {
     return excludeUnreachedThreshold;
   }
 
