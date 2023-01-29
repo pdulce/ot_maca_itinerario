@@ -137,7 +137,6 @@ public final class ItinerarioController {
     return this.actividadQAService.getAll();
   }
 
-  @org.jetbrains.annotations.NotNull
   @GetMapping("/QAactivities/getreduced")
   public Collection<ActividadReduced> getIdAndNameOfActivities() {
     return this.actividadQAService.getIdAndNameOfActivities();
