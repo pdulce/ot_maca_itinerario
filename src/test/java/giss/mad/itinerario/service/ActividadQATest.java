@@ -18,6 +18,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
@@ -53,7 +54,7 @@ public class ActividadQATest {
     }
 
     @Test
-    @Transactional
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public void actividadesOperaciones() {
 
        Timestamp timeStampNow = new Timestamp(Calendar.getInstance().getTime().getTime());

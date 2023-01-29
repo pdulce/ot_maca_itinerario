@@ -33,6 +33,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -60,21 +62,8 @@ public class ControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    /*@BeforeAll
-    public static void setContextVariables() {
-        System.setProperty(SPRING_BANNER, "off");
-        System.setProperty(SERVER_PORT, "8084");
-    }
-
-    @AfterAll
-    public static void cleanContextVariables() {
-        System.setProperty(SPRING_BANNER, "");
-        System.setProperty(SERVER_PORT, "");
-
-        logger.info(">>>>>>>>>>>>>>>>>>>>>>> ApplicationTest COMPLETADO");
-    }*/
-
     @Test
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     void testActivitiesStages() throws JsonProcessingException {
         String responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "QAStages/getAll", String.class);
         Collection<LinkedHashMap> etapasLinkedMap = objectMapper.readValue(responseTxt, Collection.class);
@@ -99,6 +88,7 @@ public class ControllerTest {
     }
 
     @Test
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     void testActivities() throws JsonProcessingException {
         String responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "QAactivities/getAll", String.class);
 
@@ -135,6 +125,7 @@ public class ControllerTest {
     }
 
     @Test
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     void testPesos() throws JsonProcessingException {
         int idTypeOfCatalogo = 1;
         String responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "pesosByElementCat/"
@@ -167,6 +158,7 @@ public class ControllerTest {
     }
 
     @Test
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     void testUmbrales() throws JsonProcessingException {
         int idTypeOfCatalogo = 1;
         String responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "threshold/getByElementCat/"
@@ -246,6 +238,7 @@ public class ControllerTest {
     }
 
     @Test
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     void testMaxPesos() {
         int idActivity = 10;
         String responseTxt = restTemplate.getForObject(BASE_URI_ITINERARIO + "maxPesosOfActElemPromo/" + idActivity,
@@ -261,6 +254,7 @@ public class ControllerTest {
     }
 
     @Test
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     void testItinerarios() throws JsonProcessingException {
         HttpHeaders headersPost = new HttpHeaders();
         headersPost.setContentType(MediaType.APPLICATION_JSON);
