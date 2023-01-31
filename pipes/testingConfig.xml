@@ -1,0 +1,16 @@
+<testing>
+    <comun GIT_URL_TEST="https://gitlab.pro.portal.ss/ot/mad/ot_maca_itinerario_testing.git">
+        <default CT="true" TAG_TESTING="0.0.1-0-RC"/>
+        <int    CT="true"/>
+        <cer    CT="false"/>
+    </comun>
+	<regresion>
+                <default BROWSER= "edge"
+                        GIT_REGRESION_RELATIVE_PATH="SELENIUM_MAVEN"/>
+                <int	TEST_PARAMETERS="-Dtest='ItineraryTestSuite'"
+                        BROWSER= "chrome"/>
+                <cer	BROWSER= "edge"/>
+                <pre	BROWSER= "firefox"
+                        TEST_PARAMETERS="-Dtest='ItineraryTestSuite'"/>
+	</regresion>
+</testing>
