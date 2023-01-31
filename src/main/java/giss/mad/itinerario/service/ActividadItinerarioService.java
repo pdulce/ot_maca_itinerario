@@ -145,11 +145,13 @@ public class ActividadItinerarioService {
       }
     }
     List<StagePantalla> stageListForPantalla = new ArrayList<>();
+    int i = 1;
     for (String stageKey : stagesMap.keySet()) {
       StagePantalla stage = new StagePantalla();
       stage.setStage(stageKey);
       stage.setIdStage(this.etapaPruebasRepository.findByNameAndDeletedIsNull(stageKey).getId());
       stage.setActivities(stagesMap.get(stageKey));
+      stage.setId(stage.getIdStage() * (Constantes.NUMBER_10 + (i++)));
       stageListForPantalla.add(stage);
     }
     Collections.sort(stageListForPantalla, new Comparator<StagePantalla>() {
