@@ -1,7 +1,7 @@
 package giss.mad.itinerario.controller;
 
-import es.giss.arch.common.exception.GissBusinessException;
-import es.giss.arch.common.exception.model.GissBusinessError;
+import es.giss.arch.restclient.exceptions.GissWebClientException;
+import es.giss.arch.restclient.exceptions.model.GissWebClientError;
 import giss.mad.itinerario.model.ActividadItinerario;
 import giss.mad.itinerario.model.ActividadQA;
 import giss.mad.itinerario.model.EtapaPruebas;
@@ -127,7 +127,7 @@ public final class ItinerarioController {
   public EtapaPruebas getEtapaPruebas(final @PathVariable @NotNull @NotEmpty Integer id) {
     EtapaPruebas c = this.etapaPruebasService.get(id);
     if (c == null) {
-      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_FOUND));
+      throw new GissWebClientException(GissWebClientError.NOT_FOUND);
     }
     return c;
   }
@@ -146,7 +146,7 @@ public final class ItinerarioController {
   public ActividadQA getActividadQA(final @PathVariable @NotNull @NotEmpty Integer id) {
     ActividadQA c = this.actividadQAService.get(id);
     if (c == null) {
-      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_FOUND));
+      throw new GissWebClientException(GissWebClientError.NOT_FOUND);
     }
     return c;
   }
@@ -215,7 +215,7 @@ public final class ItinerarioController {
   public ItinerarioCalidad getItinerarioById(final @PathVariable @NotNull @NotEmpty Integer idItinerario) {
     ItinerarioCalidad c = this.itinerarioCalidadService.getByIdItinerario(idItinerario);
     if (c == null) {
-      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_FOUND));
+      throw new GissWebClientException(GissWebClientError.NOT_FOUND);
     }
     return c;
   }
@@ -248,7 +248,7 @@ public final class ItinerarioController {
     ItinerarioCalidad c = this.itinerarioCalidadService.getItinerarioMasRecienteByIdElementOrEntrega(
         idElementInstance, Constantes.NUMBER_0);
     if (c == null) {
-      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_FOUND));
+      throw new GissWebClientException(GissWebClientError.NOT_FOUND);
     }
     return c;
   }
