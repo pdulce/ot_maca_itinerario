@@ -270,7 +270,7 @@ public final class ItinerarioController {
   calculateItineraryElemen(final @RequestBody @NotNull @NotEmpty ReplicaElementOEntrega elementCatalogue) {
     if (elementCatalogue.getAttributeValuesCollection() == null
             || elementCatalogue.getAttributeValuesCollection().isEmpty()) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+      throw new ResponseStatusException(HttpStatus.ACCEPTED);
     }
     return actividadItinerarioService.calculateItinerary(elementCatalogue);
   }

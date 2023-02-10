@@ -42,7 +42,7 @@ giss:
     
   webclient:
     basic-auth-config:
-      user: ${SECRET_MACA_WEBCLIENT_USER}
+      user: ${SECRET_MACA_WEBCLIENT_USERNAME}
       password: ${SECRET_MACA_WEBCLIENT_PASSWORD}
     
     
