@@ -9,7 +9,6 @@ FwDevOps("java17", "https://gitlab.pro.portal.ss/ot/mad/ot_maca_itinerario.git",
 	"UNIT_TEST":"true",
 	"CD": "true",
 	"COMPILABLES":"java",
-	"KIUWAN_APP":"MAC1",
-    "TYPE_REGRESION":"SELENIUM_MAVEN"
+	"KIUWAN_APP":"MAC1"
     ]
 )
