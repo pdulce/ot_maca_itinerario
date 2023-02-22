@@ -39,7 +39,7 @@ public class EtapaPruebasService {
   }
 
   @Transactional
-  public final EtapaPruebas update(final EtapaPruebas etapaPruebas) {
+  public final EtapaPruebas actualizar(final EtapaPruebas etapaPruebas) {
     EtapaPruebas updatedObject = null;
     if (this.etapaPruebasRepository.findByIdAndDeletedIsNull(etapaPruebas.getId()) != null) {
       etapaPruebas.setUpdateDate(new Timestamp(Calendar.getInstance().getTime().getTime()));
