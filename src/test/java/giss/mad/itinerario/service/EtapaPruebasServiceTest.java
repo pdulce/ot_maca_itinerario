@@ -48,7 +48,7 @@ public class EtapaPruebasServiceTest {
         etapaPruebas = new EtapaPruebas();
         etapaPruebas.setId(1099);
         etapaPruebas.setName("etapa Pruebas A");
-        etapaPruebas.setDescription("Descripción etapa pruebas");
+        etapaPruebas.setDescription("Descripcion etapa pruebas");
         etapaPruebas.setDeleted(null);
         etapaPruebas.setActividadesQA(actividadesQA);
         etapasPruebas = new ArrayList<>();
