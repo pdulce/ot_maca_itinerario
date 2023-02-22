@@ -56,6 +56,18 @@ public class EtapaPruebasServiceTest {
     }
 
     @Test
+    public void testCreateStage() {
+
+        etapaPruebas = etapaPruebasService.alta(etapaPruebas);
+        assertEquals(etapaPruebas.getId() > 0, true);
+
+        etapaPruebasService.borrar(etapaPruebas.getId());
+        Collection<EtapaPruebas> allEtapas = etapaPruebasService.getAll();
+        assertEquals(0, allEtapas.size());
+
+    }
+
+    @Test
     public void testGetAllStages() {
 
         etapaPruebas = etapaPruebasService.alta(etapaPruebas);
@@ -64,15 +76,38 @@ public class EtapaPruebasServiceTest {
         Collection<EtapaPruebas> allEtapas = etapaPruebasService.getAll();
         assertEquals(1, allEtapas.size());
 
-        etapaPruebasService.actualizar(etapaPruebas);
-        assertEquals(etapaPruebas.getUpdateDate() != null, true);
-
         etapaPruebasService.borrar(etapaPruebas.getId());
         allEtapas = etapaPruebasService.getAll();
         assertEquals(0, allEtapas.size());
 
+    }
+
+    @Test
+    public void testUpdateStage() {
+        etapaPruebas = etapaPruebasService.alta(etapaPruebas);
+        assertEquals(etapaPruebas.getId() > 0, true);
+        etapaPruebasService.actualizar(etapaPruebas);
+        assertEquals(etapaPruebas.getUpdateDate() != null, true);
+        etapaPruebasService.borrar(etapaPruebas.getId());
+        Collection<EtapaPruebas> allEtapas = etapaPruebasService.getAll();
+        assertEquals(0, allEtapas.size());
+    }
+
+    @Test
+    public void testDeleteStage() {
+
+        etapaPruebas = etapaPruebasService.alta(etapaPruebas);
+        assertEquals(etapaPruebas.getId() > 0, true);
+
+        etapaPruebasService.borrar(etapaPruebas.getId());
+        Collection<EtapaPruebas> allEtapas = etapaPruebasService.getAll();
+        assertEquals(0, allEtapas.size());
 
     }
+
+
+
+
 
 
 
