@@ -6,7 +6,7 @@ import giss.mad.itinerario.model.ActividadItinerario;
 import giss.mad.itinerario.model.ActividadQA;
 import giss.mad.itinerario.model.EtapaPruebas;
 import giss.mad.itinerario.model.ItinerarioCalidad;
-import giss.mad.itinerario.model.PesoGraph;
+import giss.mad.itinerario.model.volatilentities.PesoGraph;
 import giss.mad.itinerario.model.volatilentities.ActividadReduced;
 import giss.mad.itinerario.model.volatilentities.ReplicaElementOEntrega;
 import giss.mad.itinerario.model.volatilentities.ActividadQAPantalla;

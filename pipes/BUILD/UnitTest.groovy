@@ -2,11 +2,12 @@
 // devuelve 0 si OK  y <>0 si ERROR
 def start() {
 	log.info "PRUEBAS UNITARIAS"
+	int result = 0;
 
-	junit allowEmptyResults: true, healthScaleFactor: 1.0, keepLongStdio: true, testResults: "**/build/test-results/test/*.xml"
-	
-	
-	return 0; // devolveremos como error la fase de compilacion para que no continue el pipe
+	configFileProvider([configFile(fileId: 'backend-settings', variable: 'MAVEN_SETTINGS')]) {
+		sh "mvn test -s ${MAVEN_SETTINGS} "
+	}
+	junit allowEmptyResults: true, healthScaleFactor: 1.0, keepLongStdio: true, testResults: "**/target/surefire-reports/*.xml"
+	return result;
 }
-
 return this;

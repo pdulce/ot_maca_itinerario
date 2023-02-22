@@ -1,4 +1,4 @@
-package giss.mad.itinerario.model;
+package giss.mad.itinerario.model.volatilentities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Id;

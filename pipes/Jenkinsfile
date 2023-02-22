@@ -1,4 +1,4 @@
-@Library('GissFwDevOps@3.8.1') _
+@Library('GissFwDevOps@3.10.1') _
 
 FwDevOps("java17", "https://gitlab.pro.portal.ss/ot/mad/ot_maca_itinerario.git",
 	[ 
