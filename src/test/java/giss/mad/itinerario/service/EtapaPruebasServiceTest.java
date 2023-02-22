@@ -61,8 +61,15 @@ public class EtapaPruebasServiceTest {
     @Test
     public void testGetAllStages() {
 
+        etapaPruebas = etapaPruebasService.alta(etapaPruebas);
+        assertEquals(etapaPruebas.getId() > 0, true);
+
         Collection<EtapaPruebas> allEtapas = etapaPruebasService.getAll();
-        assertEquals(false, allEtapas.size() > 0);
+        assertEquals(1, allEtapas.size());
+
+        etapaPruebasService.borrar(etapaPruebas.getId());
+        allEtapas = etapaPruebasService.getAll();
+        assertEquals(0, allEtapas.size());
 
 
     }

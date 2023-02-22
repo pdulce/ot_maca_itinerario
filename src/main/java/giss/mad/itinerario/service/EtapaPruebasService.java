@@ -32,6 +32,7 @@ public class EtapaPruebasService {
   public final EtapaPruebas alta(final EtapaPruebas etapaPruebas) {
     EtapaPruebas updatedObject = null;
     if (this.etapaPruebasRepository.findByIdAndDeletedIsNull(etapaPruebas.getId()) == null) {
+      etapaPruebas.setCreationDate(new Timestamp(Calendar.getInstance().getTime().getTime()));
       updatedObject = this.etapaPruebasRepository.save(etapaPruebas);
     }
     return updatedObject;
@@ -41,8 +42,7 @@ public class EtapaPruebasService {
   public final EtapaPruebas update(final EtapaPruebas etapaPruebas) {
     EtapaPruebas updatedObject = null;
     if (this.etapaPruebasRepository.findByIdAndDeletedIsNull(etapaPruebas.getId()) != null) {
-      Timestamp timeStampNow = new Timestamp(Calendar.getInstance().getTime().getTime());
-      etapaPruebas.setUpdateDate(timeStampNow);
+      etapaPruebas.setUpdateDate(new Timestamp(Calendar.getInstance().getTime().getTime()));
       updatedObject = this.etapaPruebasRepository.save(etapaPruebas);
     }
     return updatedObject;
