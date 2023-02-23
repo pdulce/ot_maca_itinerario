@@ -5,7 +5,7 @@ spring:
 
     datasource:
       driverClassName: org.h2.Driver
-      url:  jdbc:h2:mem:testdb;INIT=create schema if not exists MACA_ITINERARIO
+      url:  jdbc:h2:mem:testdb
       username: sa
       password:
 
@@ -16,9 +16,7 @@ spring:
       ddl-auto: create
     properties:
       hibernate:
-        default_schema: MACA_ITINERARIO
         format_sql: true
-        globally_quoted_identifiers: false
 
 kafka:
   bootstrap:
