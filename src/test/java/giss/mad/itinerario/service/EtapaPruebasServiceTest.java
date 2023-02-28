@@ -32,6 +32,9 @@ public class EtapaPruebasServiceTest {
     private static List<EtapaPruebas> etapasPruebas;
     private static List<ActividadQA> actividadesQA;
 
+    //private static Peso actividadQA;
+    //private static List<ActividadQA> actividadesQA;
+
 
     @BeforeAll
     public static void setUp() {
@@ -41,8 +44,8 @@ public class EtapaPruebasServiceTest {
         actividadQA.setDescription("Descr. Actividad ficticia");
         actividadQA.setId(988);
         actividadQA.setHelp("help");
-        //actividadQA.set
-        //actividadQA.set
+        actividadQA.setIdealThreshold("80%");
+        //actividadQA.setPesos(pesos);
 
         etapaPruebas = new EtapaPruebas();
         etapaPruebas.setId(1099);

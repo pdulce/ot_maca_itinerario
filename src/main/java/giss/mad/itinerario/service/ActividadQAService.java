@@ -1,14 +1,22 @@
 package giss.mad.itinerario.service;
 
 import giss.mad.itinerario.model.ActividadQA;
+import giss.mad.itinerario.model.Peso;
+import giss.mad.itinerario.model.UmbralActividad;
 import giss.mad.itinerario.model.volatilentities.ActividadReduced;
 import giss.mad.itinerario.repository.ActividadQARepository;
+import giss.mad.itinerario.repository.EtapaPruebasRepository;
+import giss.mad.itinerario.repository.PesoRepository;
+import giss.mad.itinerario.repository.UmbralActividadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 
 
@@ -18,38 +26,26 @@ public class ActividadQAService {
   @Autowired
   private ActividadQARepository actividadQARepository;
 
+  @Autowired
+  private UmbralActividadRepository umbralActividadRepository;
+
+  @Autowired
+  private PesoRepository pesoRepository;
+
+  @Autowired
+  private EtapaPruebasRepository etapaPruebasRepository;
+
   public final void setActividadQARepository(final ActividadQARepository actividadQARepository) {
     this.actividadQARepository = actividadQARepository;
   }
-
-  public final Collection<ActividadQA> getAll() {
-    return this.actividadQARepository.findAllByDeletedIsNull(
-        Sort.by(Sort.Order.asc("testingStageId")));
+  public final void setEtapaPruebasRepository(final EtapaPruebasRepository etapaPruebasRepository) {
+    this.etapaPruebasRepository = etapaPruebasRepository;
   }
-
-  public final ActividadQA get(final Integer idActividadQA) {
-    return this.actividadQARepository.findByIdAndDeletedIsNull(idActividadQA);
+  public final void setPesoRepository(final PesoRepository pesoRepository) {
+    this.pesoRepository = pesoRepository;
   }
-
-  @Transactional
-  public final ActividadQA removePhysical(final Integer idActividadQA) {
-    ActividadQA actividad = this.get(idActividadQA);
-    this.actividadQARepository.delete(actividad);
-    return actividad;
-  }
-
-  @Transactional
-  public final ActividadQA save(final ActividadQA actividadQA) {
-    return this.actividadQARepository.save(actividadQA);
-  }
-
-  @Transactional
-  public final ActividadQA update(final ActividadQA actividadQA) {
-    ActividadQA updatedObject = null;
-    if (this.actividadQARepository.findByIdAndDeletedIsNull(actividadQA.getId()) != null) {
-      updatedObject = this.actividadQARepository.save(actividadQA);
-    }
-    return updatedObject;
+  public final void setUmbralActividadRepository(final UmbralActividadRepository umbralActividadRepository) {
+    this.umbralActividadRepository = umbralActividadRepository;
   }
 
   public final Collection<ActividadReduced> getIdAndNameOfActivities() {
@@ -61,5 +57,74 @@ public class ActividadQAService {
     }
     return listaActividadesReduced;
   }
+  public final Collection<ActividadQA> getAll() {
+    Collection<ActividadQA> c = this.actividadQARepository.findAllByDeletedIsNull(
+        Sort.by(Sort.Order.asc("testingStageId")));
+    for (ActividadQA actividadQA : c) {
+      actividadQA.setStageQAName(this.etapaPruebasRepository.
+              findByIdAndDeletedIsNull(actividadQA.getTestingStageId()).getName());
+    }
+    return c;
+  }
+
+  public final ActividadQA get(final Integer idActividadQA) {
+    return this.actividadQARepository.findByIdAndDeletedIsNull(idActividadQA);
+  }
+
+  @Transactional
+  public final ActividadQA borradoLogico(final Integer idActividadQA) {
+    ActividadQA actividad = this.get(idActividadQA);
+    if (actividad != null) {
+      Timestamp timeStamp = new Timestamp(Calendar.getInstance().getTime().getTime());
+      actividad.setUpdateDate(timeStamp);
+      actividad.setName(actividad.getName() + "[deleted at " + timeStamp.getTime() + "]");
+      actividad.setDeleted(1);
+      this.actividadQARepository.save(actividad);
+      //borramos sus pesos y umbrales
+      Peso pesoFilter = new Peso();
+      pesoFilter.setActivityId(idActividadQA);
+      Collection<Peso> pesos = this.pesoRepository.findAll(Example.of(pesoFilter));
+      this.pesoRepository.deleteAll(pesos);
+
+      UmbralActividad umbralFilter = new UmbralActividad();
+      umbralFilter.setActivityId(idActividadQA);
+      Collection<UmbralActividad> umbrales = this.umbralActividadRepository.findAll(Example.of(umbralFilter));
+      this.umbralActividadRepository.deleteAll(umbrales);
+    }
+    return actividad;
+  }
+
+  @Transactional
+  public final ActividadQA insertar(final ActividadQA actividadQA) {
+    actividadQA.setCreationDate(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    actividadQA.setStageQAName(this.etapaPruebasRepository.
+            findByIdAndDeletedIsNull(actividadQA.getTestingStageId()).getName());
+    /*for (Peso peso: actividadQA.getPesos()) {
+      peso = pesoRepository.findByIdAndDeletedIsNull(peso.getId());
+    }
+    for (UmbralActividad umbral: actividadQA.getUmbrales()) {
+      umbral = umbralActividadRepository.findByIdAndDeletedIsNull(umbral.getId());
+    }*/
+    return this.actividadQARepository.save(actividadQA);
+  }
+
+  @Transactional
+  public final ActividadQA actualizar(final ActividadQA actividadQA) {
+    ActividadQA updatedObject = null;
+    if (this.actividadQARepository.findByIdAndDeletedIsNull(actividadQA.getId()) != null) {
+      updatedObject = this.actividadQARepository.save(actividadQA);
+      updatedObject.setStageQAName(this.etapaPruebasRepository.
+              findByIdAndDeletedIsNull(actividadQA.getTestingStageId()).getName());
+      for (Peso peso: actividadQA.getPesos()) {
+        peso = pesoRepository.findByIdAndDeletedIsNull(peso.getId());
+      }
+      for (UmbralActividad umbral: actividadQA.getUmbrales()) {
+        umbral = umbralActividadRepository.findByIdAndDeletedIsNull(umbral.getId());
+      }
+    }
+    return updatedObject;
+  }
+
+
 
 }

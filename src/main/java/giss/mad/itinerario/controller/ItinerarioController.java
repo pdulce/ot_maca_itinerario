@@ -1,5 +1,7 @@
 package giss.mad.itinerario.controller;
 
+import es.giss.arch.common.exception.GissBusinessException;
+import es.giss.arch.common.exception.model.GissBusinessError;
 import es.giss.arch.restclient.exceptions.GissWebClientException;
 import es.giss.arch.restclient.exceptions.model.GissWebClientError;
 import giss.mad.itinerario.model.ActividadItinerario;
@@ -34,6 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -101,7 +104,11 @@ public final class ItinerarioController {
     this.actividadItinerarioService.setUmbralActividadRepository(this.umbralActividadRepository);
     this.actividadItinerarioService.setEjeHeredableRepository(this.ejeHeredableRepository);
     this.actividadItinerarioService.setActividadQARepositoryRepository(this.actividadQARepository);
+
+    this.actividadQAService.setUmbralActividadRepository(this.umbralActividadRepository);
+    this.actividadQAService.setPesoRepository(this.pesoRepository);
     this.actividadQAService.setActividadQARepository(this.actividadQARepository);
+    this.actividadQAService.setEtapaPruebasRepository(this.etapaPruebasRepository);
 
     this.etapaPruebasService.setEtapaPruebasRepository(this.etapaPruebasRepository);
 
@@ -151,6 +158,33 @@ public final class ItinerarioController {
     return c;
   }
 
+  @PostMapping("/QAactivities/create")
+  public ActividadQA createActividadQA(final @RequestBody @NotNull @NotEmpty ActividadQA actividadQA) {
+    ActividadQA c = this.actividadQAService.insertar(actividadQA);
+    if (c == null) {
+      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_MODIFIED));
+    }
+    return c;
+  }
+
+  @PutMapping("/QAactivities/update")
+  public ActividadQA updateActividadQA(final @RequestBody @NotNull @NotEmpty ActividadQA actividadQA) {
+    ActividadQA c = this.actividadQAService.actualizar(actividadQA);
+    if (c == null) {
+      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_MODIFIED));
+    }
+    return c;
+  }
+
+  @DeleteMapping("/QAactivities/delete/{id}")
+  public ActividadQA deleteActividadQA(final @RequestBody @NotNull @NotEmpty Integer id) {
+    ActividadQA c = this.actividadQAService.borradoLogico(id);
+    if (c == null) {
+      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_MODIFIED));
+    }
+    return c;
+  }
+
   /**** Mappings para operaciones de visualizacion grafica ***/
 
   @GetMapping("/threshold/getByElementCat/{idTypeOfCatalogo}")
@@ -177,7 +211,6 @@ public final class ItinerarioController {
     return umbralActividadService.getUmbralesByStage(idTypeOfCatalogo, Constantes.NUMBER_0);
   }
 
-
   @GetMapping("/pesosByElementCat/{idTypeOfCatalogo}")
   public Collection<PesoGraph> getPesosByElementCatalogo(
           final @PathVariable @NotNull @NotEmpty Integer idTypeOfCatalogo) {
@@ -189,7 +222,6 @@ public final class ItinerarioController {
           final @PathVariable @NotNull @NotEmpty Integer idTypeOfCatalogo) {
     return pesoService.getAllByElement(idTypeOfCatalogo, Constantes.NUMBER_1);
   }
-
 
   @GetMapping("/maxPesosOfActElemPromo/{idActivity}")
   public Integer getMaxSumOfPesosOfActElemPromo(

@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.List;
 
 @Entity
@@ -22,13 +23,10 @@ public final class ActividadQA {
   @SequenceGenerator(sequenceName = "ACTIVIDADQA_SEQ", allocationSize = 1, name = "ACTIVIDAD_SEQ")
   @Column(name = "id", nullable = false)
   private Integer id;
-
-  @Column(name = "testing_stage_id", nullable = false)
-  private Integer testingStageId;
-
   @Column(name = "name", unique = true, length = 50, nullable = false)
   private String name;
-
+  @Column(name = "testing_stage_id", nullable = false)
+  private Integer testingStageId;
   @Column(name = "description")
   private String description;
 
@@ -55,6 +53,8 @@ public final class ActividadQA {
   @JoinColumn(name = "activity_id")
   private List<UmbralActividad> umbrales;
 
+  @Transient
+  private String stageQAName;
 
   public ActividadQA() {
 
@@ -146,5 +146,12 @@ public final class ActividadQA {
 
   public void setUmbrales(final List<UmbralActividad> umbrales) {
     this.umbrales = umbrales;
+  }
+
+  public String getStageQAName() {
+    return stageQAName;
+  }
+  public void setStageQAName(final String stageQAName) {
+    this.stageQAName = stageQAName;
   }
 }
