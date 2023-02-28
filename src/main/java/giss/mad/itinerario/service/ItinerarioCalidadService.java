@@ -130,7 +130,7 @@ public class ItinerarioCalidadService {
         idItinerario);
     List<StageBuble> stages4Bubles = new ArrayList<>();
     for (ActividadItinerario actividadItinerario : itinerarioCalidad.getActividadesDeItinerario()) {
-      if (actividadItinerario.getIncludedInItinerary() == Constantes.NUMBER_0) {
+      if (actividadItinerario.getIncludedInItinerary() == Constantes.NUMBER_1) {
         ActividadQA actividad = this.actividadQARepository.findByIdAndDeletedIsNull(
                 actividadItinerario.getActivityId());
         UmbralBuble umbralBuble = new UmbralBuble(actividad.getName(),
