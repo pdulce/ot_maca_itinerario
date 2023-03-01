@@ -61,8 +61,11 @@ public class ActividadQAService {
     Collection<ActividadQA> c = this.actividadQARepository.findAllByDeletedIsNull(
         Sort.by(Sort.Order.asc("testingStageId")));
     for (ActividadQA actividadQA : c) {
-      actividadQA.setStageQAName(this.etapaPruebasRepository.
-              findByIdAndDeletedIsNull(actividadQA.getTestingStageId()).getName());
+      String nameOfEtapa = "";
+      if (actividadQA.getTestingStageId() != null) {
+        nameOfEtapa = this.etapaPruebasRepository.findByIdAndDeletedIsNull(actividadQA.getTestingStageId()).getName();
+      }
+      actividadQA.setStageQAName(nameOfEtapa);
     }
     return c;
   }
@@ -97,8 +100,11 @@ public class ActividadQAService {
   @Transactional
   public final ActividadQA insertar(final ActividadQA actividadQA) {
     actividadQA.setCreationDate(new Timestamp(Calendar.getInstance().getTime().getTime()));
-    actividadQA.setStageQAName(this.etapaPruebasRepository.
-            findByIdAndDeletedIsNull(actividadQA.getTestingStageId()).getName());
+    String nameOfEtapa = "";
+    if (actividadQA.getTestingStageId() != null) {
+      nameOfEtapa = this.etapaPruebasRepository.findByIdAndDeletedIsNull(actividadQA.getTestingStageId()).getName();
+    }
+    actividadQA.setStageQAName(nameOfEtapa);
     /*for (Peso peso: actividadQA.getPesos()) {
       peso = pesoRepository.findByIdAndDeletedIsNull(peso.getId());
     }
@@ -109,18 +115,25 @@ public class ActividadQAService {
   }
 
   @Transactional
-  public final ActividadQA actualizar(final ActividadQA actividadQA) {
-    ActividadQA updatedObject = null;
-    if (this.actividadQARepository.findByIdAndDeletedIsNull(actividadQA.getId()) != null) {
-      updatedObject = this.actividadQARepository.save(actividadQA);
-      updatedObject.setStageQAName(this.etapaPruebasRepository.
-              findByIdAndDeletedIsNull(actividadQA.getTestingStageId()).getName());
-      for (Peso peso: actividadQA.getPesos()) {
+  public final ActividadQA actualizar(final ActividadQA actividadQAInput) {
+    ActividadQA updatedObject = this.actividadQARepository.findByIdAndDeletedIsNull(actividadQAInput.getId());
+    if (updatedObject != null) {
+      actividadQAInput.setUpdateDate(new Timestamp(Calendar.getInstance().getTime().getTime()));
+      actividadQAInput.setCreationDate(updatedObject.getCreationDate());
+      actividadQAInput.setPesos(actividadQAInput.getPesos());
+      actividadQAInput.setUmbrales(actividadQAInput.getUmbrales());
+      updatedObject = this.actividadQARepository.save(actividadQAInput);
+      String nameOfEtapa = "";
+      if (actividadQAInput.getTestingStageId() != null) {
+        nameOfEtapa = this.etapaPruebasRepository.findByIdAndDeletedIsNull(updatedObject.getTestingStageId()).getName();
+      }
+      updatedObject.setStageQAName(nameOfEtapa);
+      /*for (Peso peso: actividadQA.getPesos()) {
         peso = pesoRepository.findByIdAndDeletedIsNull(peso.getId());
       }
       for (UmbralActividad umbral: actividadQA.getUmbrales()) {
         umbral = umbralActividadRepository.findByIdAndDeletedIsNull(umbral.getId());
-      }
+      }*/
     }
     return updatedObject;
   }

@@ -111,6 +111,7 @@ public final class ItinerarioController {
     this.actividadQAService.setEtapaPruebasRepository(this.etapaPruebasRepository);
 
     this.etapaPruebasService.setEtapaPruebasRepository(this.etapaPruebasRepository);
+    this.etapaPruebasService.setActividadQARepository(this.actividadQARepository);
 
     this.itinerarioCalidadService.setItinerarioCalidadRepository(this.itinerarioCalidadRepository);
     this.itinerarioCalidadService.setActividadQARepository(this.actividadQARepository);
@@ -138,6 +139,34 @@ public final class ItinerarioController {
     }
     return c;
   }
+
+  @PostMapping("/QAStages/create")
+  public EtapaPruebas createStageQA(final @RequestBody @NotNull @NotEmpty EtapaPruebas etapaPruebas) {
+    EtapaPruebas c = this.etapaPruebasService.insertar(etapaPruebas);
+    if (c == null) {
+      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_MODIFIED));
+    }
+    return c;
+  }
+
+  @PutMapping("/QAStages/update")
+  public EtapaPruebas updateStageQA(final @RequestBody @NotNull @NotEmpty EtapaPruebas etapaPruebas) {
+    EtapaPruebas c = this.etapaPruebasService.actualizar(etapaPruebas);
+    if (c == null) {
+      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_MODIFIED));
+    }
+    return c;
+  }
+
+  @DeleteMapping("/QAStages/delete/{idEtapa}")
+  public EtapaPruebas deleteStageQA(final @PathVariable @NotNull @NotEmpty Integer idEtapa) {
+    EtapaPruebas c = this.etapaPruebasService.borradoLogico(idEtapa);
+    if (c == null) {
+      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_MODIFIED));
+    }
+    return c;
+  }
+
 
   @GetMapping("/QAactivities/getAll")
   public Collection<ActividadQA> getActividadesQA() {
@@ -177,7 +206,7 @@ public final class ItinerarioController {
   }
 
   @DeleteMapping("/QAactivities/delete/{id}")
-  public ActividadQA deleteActividadQA(final @RequestBody @NotNull @NotEmpty Integer id) {
+  public ActividadQA deleteActividadQA(final @PathVariable @NotNull @NotEmpty Integer id) {
     ActividadQA c = this.actividadQAService.borradoLogico(id);
     if (c == null) {
       throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_MODIFIED));

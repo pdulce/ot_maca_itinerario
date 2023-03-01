@@ -3,6 +3,7 @@ package giss.mad.itinerario.service;
 import giss.mad.itinerario.Application;
 import giss.mad.itinerario.model.ActividadQA;
 import giss.mad.itinerario.model.EtapaPruebas;
+import giss.mad.itinerario.repository.ActividadQARepository;
 import giss.mad.itinerario.repository.EtapaPruebasRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,9 @@ import static org.junit.Assert.assertEquals;
         properties = {"spring.datasource.url:jdbc:h2:mem:testdb;INIT=create schema if not exists MACA_ITINERARIO"})
 @ActiveProfiles("test")
 public class EtapaPruebasServiceTest {
+
+    @Autowired
+    private ActividadQARepository actividadQARepository;
     @Autowired
     private EtapaPruebasRepository etapaPruebasRepository;
     @Autowired
@@ -45,6 +49,8 @@ public class EtapaPruebasServiceTest {
         actividadQA.setId(988);
         actividadQA.setHelp("help");
         actividadQA.setIdealThreshold("80%");
+        actividadesQA = new ArrayList<>();
+        //actividadesQA.add(actividadQA);
         //actividadQA.setPesos(pesos);
 
         etapaPruebas = new EtapaPruebas();
@@ -54,16 +60,16 @@ public class EtapaPruebasServiceTest {
         etapaPruebas.setDeleted(null);
         etapaPruebas.setActividadesQA(actividadesQA);
         etapasPruebas = new ArrayList<>();
-        etapasPruebas.add(etapaPruebas);
+        //etapasPruebas.add(etapaPruebas);
     }
 
     @Test
     public void testCreateStage() {
 
-        etapaPruebas = etapaPruebasService.alta(etapaPruebas);
+        etapaPruebas = etapaPruebasService.insertar(etapaPruebas);
         assertEquals(etapaPruebas.getId() > 0, true);
 
-        etapaPruebasService.borrar(etapaPruebas.getId());
+        etapaPruebasService.borradoLogico(etapaPruebas.getId());
         Collection<EtapaPruebas> allEtapas = etapaPruebasService.getAll();
         assertEquals(0, allEtapas.size());
 
@@ -72,13 +78,13 @@ public class EtapaPruebasServiceTest {
     @Test
     public void testGetAllStages() {
 
-        etapaPruebas = etapaPruebasService.alta(etapaPruebas);
+        etapaPruebas = etapaPruebasService.insertar(etapaPruebas);
         assertEquals(etapaPruebas.getId() > 0, true);
 
         Collection<EtapaPruebas> allEtapas = etapaPruebasService.getAll();
         assertEquals(1, allEtapas.size());
 
-        etapaPruebasService.borrar(etapaPruebas.getId());
+        etapaPruebasService.borradoLogico(etapaPruebas.getId());
         allEtapas = etapaPruebasService.getAll();
         assertEquals(0, allEtapas.size());
 
@@ -86,11 +92,11 @@ public class EtapaPruebasServiceTest {
 
     @Test
     public void testUpdateStage() {
-        etapaPruebas = etapaPruebasService.alta(etapaPruebas);
+        etapaPruebas = etapaPruebasService.insertar(etapaPruebas);
         assertEquals(etapaPruebas.getId() > 0, true);
         etapaPruebasService.actualizar(etapaPruebas);
         assertEquals(etapaPruebas.getUpdateDate() != null, true);
-        etapaPruebasService.borrar(etapaPruebas.getId());
+        etapaPruebasService.borradoLogico(etapaPruebas.getId());
         Collection<EtapaPruebas> allEtapas = etapaPruebasService.getAll();
         assertEquals(0, allEtapas.size());
     }
@@ -98,19 +104,13 @@ public class EtapaPruebasServiceTest {
     @Test
     public void testDeleteStage() {
 
-        etapaPruebas = etapaPruebasService.alta(etapaPruebas);
+        etapaPruebas = etapaPruebasService.insertar(etapaPruebas);
         assertEquals(etapaPruebas.getId() > 0, true);
 
-        etapaPruebasService.borrar(etapaPruebas.getId());
+        etapaPruebasService.borradoLogico(etapaPruebas.getId());
         Collection<EtapaPruebas> allEtapas = etapaPruebasService.getAll();
         assertEquals(0, allEtapas.size());
 
     }
-
-
-
-
-
-
 
 }

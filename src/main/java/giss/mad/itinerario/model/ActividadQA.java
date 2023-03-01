@@ -25,7 +25,7 @@ public final class ActividadQA {
   private Integer id;
   @Column(name = "name", unique = true, length = 50, nullable = false)
   private String name;
-  @Column(name = "testing_stage_id", nullable = false)
+  @Column(name = "testing_stage_id")
   private Integer testingStageId;
   @Column(name = "description")
   private String description;
