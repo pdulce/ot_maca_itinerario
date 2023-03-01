@@ -75,8 +75,9 @@ public class EtapaPruebasService {
 
       List<ActividadQA> newListaActividades = new ArrayList<>();
       for (ActividadQA activityIn : listaActividades) {
+        Integer activityInTestingId = activityIn.getTestingStageId();
         activityIn = this.actividadQARepository.findByIdAndDeletedIsNull(activityIn.getId());
-        activityIn.setTestingStageId(updatedObject.getId());
+        activityIn.setTestingStageId(activityInTestingId);
         activityIn.setUpdateDate(new Timestamp(Calendar.getInstance().getTime().getTime()));
         newListaActividades.add(activityIn);
       }
