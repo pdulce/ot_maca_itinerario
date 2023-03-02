@@ -105,12 +105,6 @@ public class ActividadQAService {
       nameOfEtapa = this.etapaPruebasRepository.findByIdAndDeletedIsNull(actividadQA.getTestingStageId()).getName();
     }
     actividadQA.setStageQAName(nameOfEtapa);
-    /*for (Peso peso: actividadQA.getPesos()) {
-      peso = pesoRepository.findByIdAndDeletedIsNull(peso.getId());
-    }
-    for (UmbralActividad umbral: actividadQA.getUmbrales()) {
-      umbral = umbralActividadRepository.findByIdAndDeletedIsNull(umbral.getId());
-    }*/
     return this.actividadQARepository.save(actividadQA);
   }
 
@@ -120,20 +114,60 @@ public class ActividadQAService {
     if (updatedObject != null) {
       actividadQAInput.setUpdateDate(new Timestamp(Calendar.getInstance().getTime().getTime()));
       actividadQAInput.setCreationDate(updatedObject.getCreationDate());
-      actividadQAInput.setPesos(actividadQAInput.getPesos());
-      actividadQAInput.setUmbrales(actividadQAInput.getUmbrales());
+      actividadQAInput.setUmbrales(updatedObject.getUmbrales());
+      actividadQAInput.setPesos(updatedObject.getPesos());
+
       updatedObject = this.actividadQARepository.save(actividadQAInput);
       String nameOfEtapa = "";
       if (actividadQAInput.getTestingStageId() != null) {
         nameOfEtapa = this.etapaPruebasRepository.findByIdAndDeletedIsNull(updatedObject.getTestingStageId()).getName();
       }
       updatedObject.setStageQAName(nameOfEtapa);
-      /*for (Peso peso: actividadQA.getPesos()) {
-        peso = pesoRepository.findByIdAndDeletedIsNull(peso.getId());
+    }
+    return updatedObject;
+  }
+
+  @Transactional
+  public final ActividadQA actualizarPesos(final ActividadQA actividadQAInput) {
+    ActividadQA updatedObject = this.actividadQARepository.findByIdAndDeletedIsNull(actividadQAInput.getId());
+    if (updatedObject != null) {
+      String nameOfEtapa = "";
+      if (updatedObject.getTestingStageId() != null) {
+        nameOfEtapa = this.etapaPruebasRepository.findByIdAndDeletedIsNull(updatedObject.getTestingStageId()).getName();
       }
-      for (UmbralActividad umbral: actividadQA.getUmbrales()) {
-        umbral = umbralActividadRepository.findByIdAndDeletedIsNull(umbral.getId());
-      }*/
+      updatedObject.setStageQAName(nameOfEtapa);
+      //tomamos los pesos de la entrada
+      for (Peso peso: actividadQAInput.getPesos()) {
+        Peso pesoBBDD = this.pesoRepository.findByIdAndDeletedIsNull(peso.getId());
+        pesoBBDD.setWeightValue(peso.getWeightValue());
+        pesoBBDD.setForDelivery(peso.getForDelivery());
+        pesoBBDD.setUpdateDate(new Timestamp(Calendar.getInstance().getTime().getTime()));
+        this.pesoRepository.save(pesoBBDD);
+      }
+    }
+    return updatedObject;
+  }
+
+  @Transactional
+  public final ActividadQA actualizarUmbrales(final ActividadQA actividadQAInput) {
+    ActividadQA updatedObject = this.actividadQARepository.findByIdAndDeletedIsNull(actividadQAInput.getId());
+    if (updatedObject != null) {
+      String nameOfEtapa = "";
+      if (updatedObject.getTestingStageId() != null) {
+        nameOfEtapa = this.etapaPruebasRepository.findByIdAndDeletedIsNull(updatedObject.getTestingStageId()).getName();
+      }
+      updatedObject.setStageQAName(nameOfEtapa);
+      //tomamos los umbrales de la entrada
+      for (UmbralActividad umbralActividad: actividadQAInput.getUmbrales()) {
+        UmbralActividad umbralActividadBBDD = this.umbralActividadRepository.findByIdAndDeletedIsNull(
+                umbralActividad.getId());
+        umbralActividadBBDD.setLowerLimit(umbralActividad.getLowerLimit());
+        umbralActividadBBDD.setUpperLimit(umbralActividad.getUpperLimit());
+        umbralActividadBBDD.setThreshold(umbralActividad.getThreshold());
+        umbralActividadBBDD.setForDelivery(umbralActividad.getForDelivery());
+        umbralActividadBBDD.setUpdateDate(new Timestamp(Calendar.getInstance().getTime().getTime()));
+        this.umbralActividadRepository.save(umbralActividadBBDD);
+      }
     }
     return updatedObject;
   }

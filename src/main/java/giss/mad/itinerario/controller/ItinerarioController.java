@@ -205,6 +205,25 @@ public final class ItinerarioController {
     return c;
   }
 
+  @PutMapping("/QAactivities/updateWeights")
+  public ActividadQA updatePesosActividadQA(final @RequestBody @NotNull @NotEmpty ActividadQA actividadQA) {
+    ActividadQA c = this.actividadQAService.actualizarPesos(actividadQA);
+    if (c == null) {
+      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_MODIFIED));
+    }
+    return c;
+  }
+
+  @PutMapping("/QAactivities/updateThresholds")
+  public ActividadQA updateUmbralesActividadQA(final @RequestBody @NotNull @NotEmpty ActividadQA actividadQA) {
+    ActividadQA c = this.actividadQAService.actualizarUmbrales(actividadQA);
+    if (c == null) {
+      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_MODIFIED));
+    }
+    return c;
+  }
+
+
   @DeleteMapping("/QAactivities/delete/{id}")
   public ActividadQA deleteActividadQA(final @PathVariable @NotNull @NotEmpty Integer id) {
     ActividadQA c = this.actividadQAService.borradoLogico(id);
