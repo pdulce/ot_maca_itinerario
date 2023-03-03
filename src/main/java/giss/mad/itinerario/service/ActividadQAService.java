@@ -8,6 +8,8 @@ import giss.mad.itinerario.repository.ActividadQARepository;
 import giss.mad.itinerario.repository.EtapaPruebasRepository;
 import giss.mad.itinerario.repository.PesoRepository;
 import giss.mad.itinerario.repository.UmbralActividadRepository;
+import giss.mad.itinerario.util.PesoComparator;
+import giss.mad.itinerario.util.UmbralComparator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
@@ -18,6 +20,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 
 
 @Service
@@ -66,6 +69,9 @@ public class ActividadQAService {
         nameOfEtapa = this.etapaPruebasRepository.findByIdAndDeletedIsNull(actividadQA.getTestingStageId()).getName();
       }
       actividadQA.setStageQAName(nameOfEtapa);
+      //ordenamos la lista de umbrales y pesos
+      Collections.sort(actividadQA.getPesos(), new PesoComparator());
+      Collections.sort(actividadQA.getUmbrales(), new UmbralComparator());
     }
     return c;
   }
