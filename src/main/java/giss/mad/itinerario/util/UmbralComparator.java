@@ -9,13 +9,14 @@ public class UmbralComparator implements Comparator<UmbralActividad> {
 
     @Override
     public int compare(final UmbralActividad o1, final UmbralActividad o2) {
-        if (o1.getElemenTypeId() < o2.getElemenTypeId()) {
-            return 1;
-        } else if (o1.getElemenTypeId() > o2.getElemenTypeId()) {
-            return -1;
-        } else {
-            return 0;
+        int result = o1.getElemenTypeId().compareTo(o2.getElemenTypeId());
+        if (result == 0) {
+            result = o1.getForDelivery().compareTo(o2.getForDelivery());
+            if (result == 0) {
+                result = o1.getLowerLimit().compareTo(o2.getLowerLimit());
+            }
         }
+        return result;
     }
 
 }

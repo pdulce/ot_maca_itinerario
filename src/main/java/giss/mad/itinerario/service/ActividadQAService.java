@@ -62,7 +62,7 @@ public class ActividadQAService {
   }
   public final Collection<ActividadQA> getAll() {
     Collection<ActividadQA> c = this.actividadQARepository.findAllByDeletedIsNull(
-        Sort.by(Sort.Order.asc("testingStageId")));
+            Sort.by("testingStageId", "id"));
     for (ActividadQA actividadQA : c) {
       String nameOfEtapa = "";
       if (actividadQA.getTestingStageId() != null) {
