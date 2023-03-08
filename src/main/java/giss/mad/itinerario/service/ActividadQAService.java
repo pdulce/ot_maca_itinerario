@@ -151,6 +151,8 @@ public class ActividadQAService {
         this.pesoRepository.save(pesoBBDD);
       }
     }
+    Collections.sort(updatedObject.getPesos(), new PesoComparator());
+    Collections.sort(updatedObject.getUmbrales(), new UmbralComparator());
     return updatedObject;
   }
 
@@ -175,6 +177,8 @@ public class ActividadQAService {
         this.umbralActividadRepository.save(umbralActividadBBDD);
       }
     }
+    Collections.sort(updatedObject.getPesos(), new PesoComparator());
+    Collections.sort(updatedObject.getUmbrales(), new UmbralComparator());
     return updatedObject;
   }
 
