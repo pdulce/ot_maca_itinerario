@@ -6,6 +6,7 @@ import giss.mad.itinerario.repository.ActividadQARepository;
 import giss.mad.itinerario.repository.EtapaPruebasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -33,7 +34,7 @@ public class EtapaPruebasService {
   }
 
   public final Collection<EtapaPruebas> getAll() {
-    return this.etapaPruebasRepository.findAllByDeletedIsNull();
+    return this.etapaPruebasRepository.findAllByDeletedIsNull(Sort.by("id"));
   }
 
   public final EtapaPruebas get(final Integer idActividadQA) {
