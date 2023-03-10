@@ -222,12 +222,12 @@ public class ActividadItinerarioService {
         Constantes.NUMBER_19, Constantes.NUMBER_20, Constantes.NUMBER_21, Constantes.NUMBER_22);
     Map<Integer, Integer> mapOfAxisWithValuesDomain = new HashMap<>();
     for (ValorEje valorEjeOatributo : valoresAttrsYejes) {
-      Integer valueOfDomainId = valorEjeOatributo.getDomainValueId();
       Integer axisOrAttributeId = valorEjeOatributo.getAxisAttributeId();
-      for (Integer ejeId : ejes) {
-        if (ejeId == axisOrAttributeId) {
-          mapOfAxisWithValuesDomain.put(axisOrAttributeId, valueOfDomainId);
-        }
+      if (ejes.contains(axisOrAttributeId)) {
+        Integer valueOfDomainId = valorEjeOatributo.getDomainValues() != null
+                && !valorEjeOatributo.getDomainValues().isEmpty()
+                ? valorEjeOatributo.getDomainValues().get(0).getDomainValueId() : null;
+        mapOfAxisWithValuesDomain.put(axisOrAttributeId, valueOfDomainId);
       }
     }
     Timestamp fecCreacion = new Timestamp(Calendar.getInstance().getTime().getTime());

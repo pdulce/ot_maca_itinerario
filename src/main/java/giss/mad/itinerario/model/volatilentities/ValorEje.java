@@ -3,6 +3,7 @@ package giss.mad.itinerario.model.volatilentities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Id;
+import java.util.List;
 
 public final class ValorEje {
 
@@ -11,7 +12,8 @@ public final class ValorEje {
   private Long id;
 
   private Integer axisAttributeId;
-  private Integer domainValueId;
+  private List<DomainValue> domainValues;
+
 
   public Long getId() {
     return id;
@@ -29,11 +31,11 @@ public final class ValorEje {
     this.axisAttributeId = axisAttributeId;
   }
 
-  public Integer getDomainValueId() {
-    return domainValueId;
+  public List<DomainValue> getDomainValues() {
+    return domainValues;
+  }
+  public void setDomainValues(final List<DomainValue> domainValues) {
+    this.domainValues = domainValues;
   }
 
-  public void setDomainValueId(final Integer domainValueId) {
-    this.domainValueId = domainValueId;
-  }
 }
