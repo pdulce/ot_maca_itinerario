@@ -52,3 +52,14 @@ _Descripción de propiedades configurables en el servicio_
 ## Contacto
 
 Para cualquier problema o sugerencia: [ODT-CORE.GISS-SSCC.DED@seg-social.es](mailto:ODT-CORE.GISS-SSCC.DED@seg-social.es)
+
+Para crear este repo se ha usado esta secuencia de comandos git:
+git init
+git add README.md
+git commit -m "first commit itinerary"
+git branch -M main
+git remote add origin git@github.com:pdulce/ot_maca_itinerario.git
+git push -u origin main
+
+Para crear una ssh key de nuevo colaborador:
+ssh-keygen -t ed25519 -C "<mail-colaborador>"
