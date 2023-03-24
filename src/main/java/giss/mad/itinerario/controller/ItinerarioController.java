@@ -1,9 +1,5 @@
 package giss.mad.itinerario.controller;
 
-import es.giss.arch.common.exception.GissBusinessException;
-import es.giss.arch.common.exception.model.GissBusinessError;
-import es.giss.arch.restclient.exceptions.GissWebClientException;
-import es.giss.arch.restclient.exceptions.model.GissWebClientError;
 import giss.mad.itinerario.model.ActividadItinerario;
 import giss.mad.itinerario.model.ActividadQA;
 import giss.mad.itinerario.model.EtapaPruebas;
@@ -135,7 +131,7 @@ public final class ItinerarioController {
   public EtapaPruebas getEtapaPruebas(final @PathVariable @NotNull @NotEmpty Integer id) {
     EtapaPruebas c = this.etapaPruebasService.get(id);
     if (c == null) {
-      throw new GissWebClientException(GissWebClientError.NOT_FOUND);
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
     return c;
   }
@@ -144,7 +140,7 @@ public final class ItinerarioController {
   public EtapaPruebas createStageQA(final @RequestBody @NotNull @NotEmpty EtapaPruebas etapaPruebas) {
     EtapaPruebas c = this.etapaPruebasService.insertar(etapaPruebas);
     if (c == null) {
-      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_MODIFIED));
+      throw new ResponseStatusException(HttpStatus.NOT_MODIFIED);
     }
     return c;
   }
@@ -153,7 +149,7 @@ public final class ItinerarioController {
   public EtapaPruebas updateStageQA(final @RequestBody @NotNull @NotEmpty EtapaPruebas etapaPruebas) {
     EtapaPruebas c = this.etapaPruebasService.actualizar(etapaPruebas);
     if (c == null) {
-      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_MODIFIED));
+      throw new ResponseStatusException(HttpStatus.NOT_MODIFIED);
     }
     return c;
   }
@@ -162,7 +158,7 @@ public final class ItinerarioController {
   public EtapaPruebas deleteStageQA(final @PathVariable @NotNull @NotEmpty Integer idEtapa) {
     EtapaPruebas c = this.etapaPruebasService.borradoLogico(idEtapa);
     if (c == null) {
-      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_MODIFIED));
+      throw new ResponseStatusException(HttpStatus.NOT_MODIFIED);
     }
     return c;
   }
@@ -182,7 +178,7 @@ public final class ItinerarioController {
   public ActividadQA getActividadQA(final @PathVariable @NotNull @NotEmpty Integer id) {
     ActividadQA c = this.actividadQAService.get(id);
     if (c == null) {
-      throw new GissWebClientException(GissWebClientError.NOT_FOUND);
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
     return c;
   }
@@ -191,7 +187,7 @@ public final class ItinerarioController {
   public ActividadQA createActividadQA(final @RequestBody @NotNull @NotEmpty ActividadQA actividadQA) {
     ActividadQA c = this.actividadQAService.insertar(actividadQA);
     if (c == null) {
-      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_MODIFIED));
+      throw new ResponseStatusException(HttpStatus.NOT_MODIFIED);
     }
     return c;
   }
@@ -200,7 +196,7 @@ public final class ItinerarioController {
   public ActividadQA updateActividadQA(final @RequestBody @NotNull @NotEmpty ActividadQA actividadQA) {
     ActividadQA c = this.actividadQAService.actualizar(actividadQA);
     if (c == null) {
-      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_MODIFIED));
+      throw new ResponseStatusException(HttpStatus.NOT_MODIFIED);
     }
     return c;
   }
@@ -209,7 +205,7 @@ public final class ItinerarioController {
   public ActividadQA updatePesosActividadQA(final @RequestBody @NotNull @NotEmpty ActividadQA actividadQA) {
     ActividadQA c = this.actividadQAService.actualizarPesos(actividadQA);
     if (c == null) {
-      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_MODIFIED));
+      throw new ResponseStatusException(HttpStatus.NOT_MODIFIED);
     }
     return c;
   }
@@ -218,7 +214,7 @@ public final class ItinerarioController {
   public ActividadQA updateUmbralesActividadQA(final @RequestBody @NotNull @NotEmpty ActividadQA actividadQA) {
     ActividadQA c = this.actividadQAService.actualizarUmbrales(actividadQA);
     if (c == null) {
-      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_MODIFIED));
+      throw new ResponseStatusException(HttpStatus.NOT_MODIFIED);
     }
     return c;
   }
@@ -228,7 +224,7 @@ public final class ItinerarioController {
   public ActividadQA deleteActividadQA(final @PathVariable @NotNull @NotEmpty Integer id) {
     ActividadQA c = this.actividadQAService.borradoLogico(id);
     if (c == null) {
-      throw new GissBusinessException(GissBusinessError.BUSINESS_CUSTOM_ERROR, String.valueOf(HttpStatus.NOT_MODIFIED));
+      throw new ResponseStatusException(HttpStatus.NOT_MODIFIED);
     }
     return c;
   }
@@ -295,7 +291,7 @@ public final class ItinerarioController {
   public ItinerarioCalidad getItinerarioById(final @PathVariable @NotNull @NotEmpty Integer idItinerario) {
     ItinerarioCalidad c = this.itinerarioCalidadService.getByIdItinerario(idItinerario);
     if (c == null) {
-      throw new GissWebClientException(GissWebClientError.NOT_FOUND);
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
     return c;
   }
@@ -328,7 +324,7 @@ public final class ItinerarioController {
     ItinerarioCalidad c = this.itinerarioCalidadService.getItinerarioMasRecienteByIdElementOrEntrega(
         idElementInstance, Constantes.NUMBER_0);
     if (c == null) {
-      throw new GissWebClientException(GissWebClientError.NOT_FOUND);
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
     return c;
   }
