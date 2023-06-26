@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {Application.class},
-        properties = {"spring.datasource.url:jdbc:h2:mem:testdbIti;INIT=create schema if not exists MACA_ITINERARIO"})
+        properties = {"spring.datasource.url:jdbc:h2:mem:testdbIti-4;INIT=create schema if not exists MACA_ITINERARIO"})
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ItinerarioCalidadServiceTest {

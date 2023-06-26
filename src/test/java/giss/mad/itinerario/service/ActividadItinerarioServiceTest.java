@@ -20,13 +20,14 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {Application.class},
-        properties = {"spring.datasource.url:jdbc:h2:mem:testdb;INIT=create schema if not exists MACA_ITINERARIO"})
+        properties = {"spring.datasource.url:jdbc:h2:mem:testdb-1;INIT=create schema if not exists MACA_ITINERARIO"})
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ActividadItinerarioServiceTest {
@@ -69,11 +70,21 @@ public class ActividadItinerarioServiceTest {
         itinerarioCalidad.setCreationDate(new Timestamp(Calendar.getInstance().getTime().getTime()));
         itinerarioCalidad.setActividadesDeItinerario(actividadesItinerario);
 
+        ValorEje valorEje = new ValorEje();
+        valorEje.setAxisAttributeId(1);
+        DomainValue domainValue = new DomainValue();
+        domainValue.setDomainValueId(1);
+        List<DomainValue> domainValues = new ArrayList<>();
+        domainValues.add(domainValue);
+        valorEje.setDomainValues(domainValues);
+        List<ValorEje> valoresEje = new ArrayList<>();
+        valoresEje.add(valorEje);
+
         replicaElementOEntrega = new ReplicaElementOEntrega();
         replicaElementOEntrega.setId(1);
         replicaElementOEntrega.setCatalogElementTypeId(1);
         replicaElementOEntrega.setDelivery(1);
-        replicaElementOEntrega.setAttributeValuesCollection(new ArrayList<>());
+        replicaElementOEntrega.setAttributeValuesCollection(valoresEje);
 
         testStage = new EtapaPruebas();
         testStage.setName("Dummy stage");
